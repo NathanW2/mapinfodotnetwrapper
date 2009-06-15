@@ -38,7 +38,7 @@ This page contains some sample code examples which show the difference between u
      //Open a table in Mapinfo using wrapped OpenTable command
      Table table = Table.OpenTable(wrapper, @"C:\Temp\Lines");
      //Loop through each row in the open table and print the value of the road column to the console.
-     foreach (var item in table.Rows)
+     foreach (BaseEntity item in table.Rows)
      {
         //You can access the rowId column by calling the RowId property which is built into the wrapper.        
         Console.WriteLine(item.RowId);
@@ -55,7 +55,7 @@ _Note! I am in the process of writing a tool that will generate entities based o
     //Define a entity as a POCO(Plain old C object) and inherit from BaseEntity or                                                            
     //MappableRow.  The MappableRow base object will give you access to the RowID and obj
     //column in the table.
-    class LineEntity : MappableEntity
+    class RoadEntity : MappableEntity
     {
         public string Road { get; set;}
         public int AssetID {get; set:}    
@@ -70,7 +70,7 @@ _Using the Entity_
    //the generic type.
    Table<LineEntity> table = Table.OpenTable<LineEntity>(wrapper, @"C:\Temp\Lines");
    //We can now loop through all the rows in the table, but we now have a strong typed
-   //LineEntity rather then a generic object.
+   //RoadEntity rather then a just a BaseEntity object.
    foreach (LineEntity item in table.Rows)
    {
         //Because we are getting back a LineEntity we have access to the Road property, 
@@ -86,14 +86,15 @@ _Using LINQ against the table_
 {{{
    //Because we gave our open table command an entity object we can use LINQ against the 
    //table.
-   var query = from row in table
-               where row.Road == "Some Road Name"
-               select row;
+   IQueryable<RoadEntity>query = from row in table
+                                 where row.Road == "Some Road Name"
+                                 select row;
+
    //We can print out the string that the query will generate using an extension method.
    Console.WriteLine(query.ToQueryString());
 
    //Loop
-   foreach (LineEntity item in query)
+   foreach (RoadEntity item in query)
    {
      Console.WriteLine(item.Road);
    }
