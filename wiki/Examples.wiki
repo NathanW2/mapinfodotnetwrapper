@@ -1,102 +1,100 @@
-#labels Featured,Phase-Design,Deprecated
+#labels Featured,Phase-Design
 ==Code Examples==
 This page contains some sample code examples which show the difference between using the wrapper and not.
 
 ===Open a table,loop through all rows and print the column values to the console===
 *Without Mapinfo OLE wrapper*
 {{{
-            MapInfo.MapInfoApplicationClass mapinfoinstance = new MapInfo.MapInfoApplicationClass();
-            //Open the table in mapinfo using the string open table command
-            mapinfoinstance.Do(String.Format("OpenTable({0})", @"C:\Temp\Lines"));
-            //Get the number of rows from the currently open mapinfo table, because the eval function just
-            //returns a string we convert it to an integer so that we can use it in the loop below.
-            string tablename = "Lines";
-            int noofrows = Convert.ToInt32(mapinfoinstance.Eval(string.Format("Tableinfo({0},8)", tablename)));
-            //Pass the command to mapinfo to fetch the first record from the table in mapinfo.
-            mapinfoinstance.Do("Fetch First From Lines");
-            for (int row = 0; row < NoOfRows - 1; row++)
-	    {
-                //Retrun the value of the selected row for the Road column.
-                String value = mapinfoinstance.Eval("Lines.Road");
-                Console.WriteLine(value);
-                //Pass the command to mapinfo to fetch the next record from the table in mapinfo.
-                mapinfoinstance.Do("Fetch Next From Lines");
-            }
+      MapInfo.MapInfoApplicationClass mapinfoinstance = new MapInfo.MapInfoApplicationClass();
+
+      //Open the table in mapinfo using the string open table command
+      mapinfoinstance.Do(String.Format("OpenTable({0})", @"C:\Temp\Lines"));
+      
+      //Get the number of rows from the currently open mapinfo table, because the eval function just
+      //returns a string we convert it to an integer so that we can use it in the loop below.
+      string tablename = "Lines";
+      int noofrows = Convert.ToInt32(mapinfoinstance.Eval(string.Format("Tableinfo({0},8)", tablename)));
+
+      //Pass the command to mapinfo to fetch the first record from the table in mapinfo.
+      mapinfoinstance.Do("Fetch First From Lines");
+      for (int row = 0; row < NoOfRows - 1; row++)
+      {
+         //Retrun the value of the selected row for the Road column.
+
+         String value = mapinfoinstance.Eval("Lines.Road");
+         Console.WriteLine(value);
+
+         //Pass the command to mapinfo to fetch the next record from the table in mapinfo.
+         mapinfoinstance.Do("Fetch Next From Lines");
+       }
 }}}
 
-*With Mapinfo OLE wrapper* - Method 1 - semi strong typed.
+*With Mapinfo OLE wrapper* - Method 1
 
 {{{
-            //Create an instance of Mapinfo's COM object.
-            COMMapinfo wrapper = new COMMapinfo.CreateInstance();
-            //Open a table in Mapinfo using wrapped OpenTable command
-            Table table = Table.OpenTable(wrapper, @"C:\Temp\Lines");
-            //Loop through each row in the open table and print the value of the road column to the console.
-            foreach (var item in table.Rows)
-            {
-                //You can access the rowId column by calling the RowId property which is built into the wrapper.        
-                Console.WriteLine(item.RowId);
-                //Print the value of the Asset_ID column.
-                Console.WriteLine(item.GetValue("Road"));
-            }
+     //Create an instance of Mapinfo's COM object.
+     MapinfoFactory factory = new MapinfoFactory();
+     COMMapinfo wrapper = factory.CreateCOMInstance();
+     //Open a table in Mapinfo using wrapped OpenTable command
+     Table table = Table.OpenTable(wrapper, @"C:\Temp\Lines");
+     //Loop through each row in the open table and print the value of the road column to the console.
+     foreach (var item in table.Rows)
+     {
+        //You can access the rowId column by calling the RowId property which is built into the wrapper.        
+        Console.WriteLine(item.RowId);
+     }
 }}}
 
-*With Mapinfo OLE wrapper* - Method 2 - strong typed.
+*With Mapinfo OLE wrapper* - Method 2 - using entity object(strong typed)
 
-You can also define a template for a table, which can be used to get strong typed access to the columns in the table
-_Note! I will be releasing a tool that will generate these templates for you from a Mapinfo TAB file, once I am happy with the way the wrapper is operating_
+You can also define a entity for the table, which will be used to get strong typed access to the columns in table.
+
+_Note! I am in the process of writing a tool that will generate entities based on the columns in a Mapinfo TAB file.
+
+{{{   
+    //Define a entity as a POCO(Plain old C object) and inherit from BaseEntity or                                                            
+    //MappableRow.  The MappableRow base object will give you access to the RowID and obj
+    //column in the table.
+    class LineEntity : MappableEntity
+    {
+        public string Road { get; set;}
+        public int AssetID {get; set:}    
+    }
+
+}}}
+
+_Using the Entity_
 
 {{{
-    //This interface allows us to get strong typed access to the columns of the table.
-    //see note above.
-    interface ILineEntity
-    {
-        int LineID { get; set; }
-        int SegmentID { get; set; }
-        string Road { get; set; }
-        string Locality { get; set; }
-    }
-    
-    //A entity object for the line table, using ILineEntity as the underlying table template.
-    class LineEntity : MappableRow<ILineEntity>
-    {
-        public LineEntity() : base() { }
-        public LineEntity(IMapinfoWrapper wrapper) : base(wrapper, "Lines", null) { }
-        
-        //This property allows access to the Road column in the table, because base.GetValue only returns an object
-        //we can do the cast to a string here so that we don't have to worry about in our program.
-        public string Road
-        {
-            get
-            {
-                object retured = base.GetValue("Road");
-                return (string)retured;
-            }
-            set
-            {
-                base.SetValue("Road", value);
-            }
-        }
-    }
-
-//----Using the template--------
-
-   //Open a table in Mapinfo using wrapped OpenTable command, and using our LineEntity as the generic type.
+   //Open a table in Mapinfo using wrapped OpenTable command, and using our LineEntity as 
+   //the generic type.
    Table<LineEntity> table = Table.OpenTable<LineEntity>(wrapper, @"C:\Temp\Lines");
-   //We can now loop through all the rows in the table, but we now have a strong typed LineEntity rather then a generic object.
+   //We can now loop through all the rows in the table, but we now have a strong typed
+   //LineEntity rather then a generic object.
    foreach (LineEntity item in table.Rows)
    {
         //Because we are getting back a LineEntity we have access to the Road property, 
-        //which matches the Road column in the table and has been casted into a string for us in our entity.
+        //which matches the Road column in the table and has been casted into a string for 
+        //us in our entity.
         string roadname = item.Road;   //<-item.Road will return a string not object.         
-        Console.WriteLine(roadname); 
-
-        //We haven't created properties for all our columns, so will can get access to them using a lambda expression.
-        //We are able to do this because we gave our entity the interface to use as the underlying table template.
-         object segmentid = item.GetValue(col => col.SegmentID);  //<-item.GetValue will return an object.
-         Console.WriteLine(segmentid)); 
-        
-        //We can also set the road name using the Road property like so.
-        item.Road = "Hello World";       
-     }
+        Console.WriteLine(roadname);        
+   }
 }}}
+
+_Using LINQ against the table_
+
+{{{
+   //Because we gave our open table command an entity object we can use LINQ against the 
+   //table.
+   var query = from row in table
+               where row.Road == "Some Road Name"
+               select row;
+   //We can print out the string that the query will generate using an extension method.
+   Console.WriteLine(query.ToQueryString());
+
+   //Loop
+   foreach (LineEntity item in query)
+   {
+     Console.WriteLine(item.Road);
+   }
+}}}   
