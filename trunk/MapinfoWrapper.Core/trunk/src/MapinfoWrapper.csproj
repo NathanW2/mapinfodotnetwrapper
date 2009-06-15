@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FDA41A1F-5922-493C-AD86-DDF8D447023E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapinfoWrapper</RootNamespace>
+    <AssemblyName>MapinfoDotNetWrapper</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Wrapper\MapinfoWrapper.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Stacey Anne\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\MapinfoDotNetWrapper.XML</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\MapinfoDotNetWrapper.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Guard.cs" />
+    <Compile Include="Core\IoC\DependencyResolver.cs" />
+    <Compile Include="Core\IoC\IDependencyResolver.cs" />
+    <Compile Include="Core\IoC\IoC.cs" />
+    <Compile Include="Core\Extensions\LINQExtensions.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\IVariableExtender.cs" />
+    <Compile Include="Wrapper\MapinfoCallback.cs" />
+    <Compile Include="Wrapper\Mapinfo\MapinfoFactory.cs" />
+    <Compile Include="Wrapper\Mapinfo\MapinfoLogger.cs" />
+    <Compile Include="Wrapper\Geometries\Coordinate.cs" />
+    <Compile Include="Wrapper\Geometries\Geometry.cs" />
+    <Compile Include="Wrapper\Geometries\GeometryFactory.cs" />
+    <Compile Include="Wrapper\Geometries\IGeometry.cs" />
+    <Compile Include="Wrapper\Geometries\IMapbasicObject.cs" />
+    <Compile Include="Wrapper\Geometries\Lines\ILine.cs" />
+    <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
+    <Compile Include="Wrapper\Geometries\ObjVariableExtendor.cs" />
+    <Compile Include="Wrapper\Table Operations\ITable.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjection.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjector.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\Evaluator.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ExpressionVisitor.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\SqlStringGenerator.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\Entities\BaseEntity.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\Entities\MappableEntity.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\Enumerators\ProjectionReader.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\Query.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\QueryTranslator.cs" />
+    <Compile Include="Wrapper\Table Operations\LINQ\MapinfoQueryProvider.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\ColumnTypesEnum.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\DataReader.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\IDataReader.cs" />
+    <Compile Include="Wrapper\CommandBuilders\CommandStringBuilder.cs" />
+    <Compile Include="Wrapper\CommandBuilders\ICommandStringBuilder.cs" />
+    <Compile Include="Wrapper\Embedding\ControlExtensions.cs" />
+    <Compile Include="Wrapper\Embedding\MapinfoWindowHandle.cs" />
+    <Compile Include="Wrapper\Embedding\NextDocumentEnum.cs" />
+    <Compile Include="Wrapper\Embedding\SystemInfo.cs" />
+    <Compile Include="Wrapper\Embedding\SystemInfoEnum.cs" />
+    <Compile Include="Wrapper\Exceptions\MapinfoException.cs" />
+    <Compile Include="Core\Extensions\StringExtensions.cs" />
+    <Compile Include="Wrapper\IMapinfoWrapper.cs" />
+    <Compile Include="Wrapper\LayerOperations\Layer.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\IMapbasicVariable.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\MapbasicVariable.cs" />
+    <Compile Include="Wrapper\Mapinfo\Internals\DMapinfoCOMInterface.cs" />
+    <Compile Include="Wrapper\Mapinfo\Internals\IMapinfo.cs" />
+    <Compile Include="Wrapper\Mapinfo\Internals\IMapinfo2.cs" />
+    <Compile Include="Wrapper\Mapinfo\MapbasicInvokedMapinfo.cs" />
+    <Compile Include="Wrapper\Mapinfo\OleMapinfo.cs" />
+    <Compile Include="Wrapper\MapOperations\Map.cs" />
+    <Compile Include="Wrapper\Geometries\MapbasicObject.cs" />
+    <Compile Include="Wrapper\Geometries\ObjectInfoEnum.cs" />
+    <Compile Include="Wrapper\Geometries\ObjectTypeEnum.cs" />
+    <Compile Include="Wrapper\Geometries\Points\Point.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\Enumerators\RowEnumerator.cs" />
+    <Compile Include="Wrapper\Table Operations\Table.cs" />
+    <Compile Include="Wrapper\Table Operations\GridHandleEnum.cs" />
+    <Compile Include="Wrapper\Table Operations\ITablecs.cs" />
+    <Compile Include="Wrapper\CommandBuilders\OpenTableCommandBuilder.cs" />
+    <Compile Include="Wrapper\Table Operations\Row\Enumerators\RowList.cs" />
+    <Compile Include="Wrapper\Table Operations\Table-Nongeneric.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wrapper\Table Operations\TableInfoEnum.cs" />
+    <Compile Include="Wrapper\Workspace.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Wrapper\MapinfoWrapper.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

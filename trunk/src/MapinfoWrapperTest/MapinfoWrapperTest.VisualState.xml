@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\MapinfoWrapperTest.nunit</TopNode>
+  <SelectedNode>[0-1009]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.InstanceRunTableInfoCommandReturnsTableNameUsingNumber</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\MapinfoWrapperTest.nunit" Expanded="true">
+      <Nodes>
+        <Node UniqueName="[0-1077]C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\bin\Debug\MapinfoWrapperTest.dll" Expanded="true">
+          <Nodes>
+            <Node UniqueName="[0-1078]MapinfoWrapperTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1079]MapinfoWrapperTest.WrapperTest" Expanded="true">
+                  <Nodes>
+                    <Node UniqueName="[0-1083]MapinfoWrapperTest.WrapperTest.Embedding" Expanded="true">
+                      <Nodes>
+                        <Node UniqueName="[0-1072]MapinfoWrapperTest.WrapperTest.Embedding.ControlExtensionTests">
+                          <Nodes>
+                            <Node UniqueName="[0-1073]MapinfoWrapperTest.WrapperTest.Embedding.ControlExtensionTests.SetApplicationWindowToControlHandle" />
+                            <Node UniqueName="[0-1074]MapinfoWrapperTest.WrapperTest.Embedding.ControlExtensionTests.SetNextDocumentAsControlTest" />
+                          </Nodes>
+                        </Node>
+                        <Node UniqueName="[0-1059]MapinfoWrapperTest.WrapperTest.Embedding.MapinfoWindowHandleTests">
+                          <Nodes>
+                            <Node UniqueName="[0-1060]MapinfoWrapperTest.WrapperTest.Embedding.MapinfoWindowHandleTests.ConstructorTest" />
+                          </Nodes>
+                        </Node>
+                        <Node UniqueName="[0-1066]MapinfoWrapperTest.WrapperTest.Embedding.SystemInfoTests">
+                          <Nodes>
+                            <Node UniqueName="[0-1067]MapinfoWrapperTest.WrapperTest.Embedding.SystemInfoTests.GetMapinfoFrameHandleHandleTest" />
+                            <Node UniqueName="[0-1068]MapinfoWrapperTest.WrapperTest.Embedding.SystemInfoTests.GetMapinfoFrameHandleZeroTest" />
+                            <Node UniqueName="[0-1069]MapinfoWrapperTest.WrapperTest.Embedding.SystemInfoTests.GetMdiClientHandleTest" />
+                            <Node UniqueName="[0-1070]MapinfoWrapperTest.WrapperTest.Embedding.SystemInfoTests.GetMdiClientHandleZeroTest" />
+                            <Node UniqueName="[0-1071]MapinfoWrapperTest.WrapperTest.Embedding.SystemInfoTests.RunSystemInfoCommandTest" />
+                          </Nodes>
+                        </Node>
+                      </Nodes>
+                    </Node>
+                    <Node UniqueName="[0-1082]MapinfoWrapperTest.WrapperTest.MapOperations" Expanded="true">
+                      <Nodes>
+                        <Node UniqueName="[0-1042]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests">
+                          <Nodes>
+                            <Node UniqueName="[0-1048]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.GetFrontWindowIDCallsFrontWindowCommand" />
+                            <Node UniqueName="[0-1047]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.GetFrontWindowIDReturnsVaildInt" />
+                            <Node UniqueName="[0-1046]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.MapTableShouldCallCallJoinedMapForEachTablePassedIn" />
+                            <Node UniqueName="[0-1045]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.MapTableShouldCallFrontWindowToGetTheLatestWindow" />
+                            <Node UniqueName="[0-1044]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.MapTableShouldCallMapFromTestCommand" />
+                            <Node UniqueName="[0-1043]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.MapTableShouldReturnMap" />
+                            <Node UniqueName="[0-1049]MapinfoWrapperTest.WrapperTest.MapOperations.MapTests.TableIsNotMappableMapTable" />
+                          </Nodes>
+                        </Node>
+                      </Nodes>
+                    </Node>
+                    <Node UniqueName="[0-1080]MapinfoWrapperTest.WrapperTest.Table_Operations" Expanded="true">
+                      <Nodes>
+                        <Node UniqueName="[0-1075]MapinfoWrapperTest.WrapperTest.Table_Operations.GenericTableTests">
+                          <Nodes>
+                            <Node UniqueName="[0-1076]MapinfoWrapperTest.WrapperTest.Table_Operations.GenericTableTests.RowsShouldReturnIEumerableOfGenericMapinfoRow" />
+                          </Nodes>
+                        </Node>
+                        <Node UniqueName="[0-1024]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest">
+                          <Nodes>
+                            <Node UniqueName="[0-1035]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.MaximunPossibleBuilderReturnString" />
+                            <Node UniqueName="[0-1032]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetAutoView" />
+                            <Node UniqueName="[0-1033]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetDenyWrite" />
+                            <Node UniqueName="[0-1034]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetGridType" />
+                            <Node UniqueName="[0-1027]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetHidden" />
+                            <Node UniqueName="[0-1029]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetInteractive" />
+                            <Node UniqueName="[0-1031]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetNoIndex" />
+                            <Node UniqueName="[0-1030]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetPassword" />
+                            <Node UniqueName="[0-1028]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetReadOnly" />
+                            <Node UniqueName="[0-1026]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetTableName" />
+                            <Node UniqueName="[0-1025]MapinfoWrapperTest.WrapperTest.Table_Operations.OpenTableCommandBuilderTest.SetTablePath" />
+                          </Nodes>
+                        </Node>
+                        <Node UniqueName="[0-1081]MapinfoWrapperTest.WrapperTest.Table_Operations.Row">
+                          <Nodes>
+                            <Node UniqueName="[0-1036]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.GenericMapinfoRowTests">
+                              <Nodes>
+                                <Node UniqueName="[0-1037]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.GenericMapinfoRowTests.GenericGetValueMustClassTableNameDotColumnNameUsingGenerics" />
+                                <Node UniqueName="[0-1038]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.GenericMapinfoRowTests.GenericGetValueShouldCallFetchWithRecordNumber" />
+                                <Node UniqueName="[0-1039]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.GenericMapinfoRowTests.GetValueMustClassTableNameDotColumnName" />
+                                <Node UniqueName="[0-1040]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.GenericMapinfoRowTests.GetValueShouldCallFetchWithRecordNumber" />
+                                <Node UniqueName="[0-1041]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.GenericMapinfoRowTests.MethodPassedToGetValueShouldThrow" />
+                              </Nodes>
+                            </Node>
+                            <Node UniqueName="[0-1064]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowCollectionTests">
+                              <Nodes>
+                                <Node UniqueName="[0-1065]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowCollectionTests.GetEnumeratorMustReturnRowEnumerator" />
+                              </Nodes>
+                            </Node>
+                            <Node UniqueName="[0-1050]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests">
+                              <Nodes>
+                                <Node UniqueName="[0-1056]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.CurrentMustCallMethodToGetRowId" />
+                                <Node UniqueName="[0-1057]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.CurrentMustReturnMapinfoRow" />
+                                <Node UniqueName="[0-1055]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.DisposeMustCallFetchRec0" />
+                                <Node UniqueName="[0-1051]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.FetchNextMustBeCalledOnMoveNext" />
+                                <Node UniqueName="[0-1053]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.MoveNextMustCallEOTAndReturnFalseOnTrueEOTReturn" />
+                                <Node UniqueName="[0-1052]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.MoveNextMustCallEOTAndReturnTrueOnFalseEOTReturn" />
+                                <Node UniqueName="[0-1058]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.NonGenericCurrentMustReturnMapinfoRow" />
+                                <Node UniqueName="[0-1054]MapinfoWrapperTest.WrapperTest.Table_Operations.Row.RowEnumeratorTests.ResetMustCallFetchRec0" />
+                              </Nodes>
+                            </Node>
+                          </Nodes>
+                        </Node>
+                        <Node UniqueName="[0-1001]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests" Expanded="true">
+                          <Nodes>
+                            <Node UniqueName="[0-1022]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.CloseTableShouldCallMapinfoCloseCommand" />
+                            <Node UniqueName="[0-1023]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.CloseTablesShouldCallCloseTableForEachTable" />
+                            <Node UniqueName="[0-1019]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GenericOpenTableShouldCallMapinfoOpenTable" />
+                            <Node UniqueName="[0-1018]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GenericOpenTableShouldReturnGenericTable" />
+                            <Node UniqueName="[0-1012]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GetNumberOfColumnsShouldReturnFive" />
+                            <Node UniqueName="[0-1002]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GetTableNameShouldReturnWater_Mains" />
+                            <Node UniqueName="[0-1003]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GetTableNumberShouldReturnOne" />
+                            <Node UniqueName="[0-1010]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GetTablePathFromNumber" />
+                            <Node UniqueName="[0-1011]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.GetTablePathFromNumberNullReturn" />
+                            <Node UniqueName="[0-1008]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.InstanceRunTableInfoCommandReturnsTableNameUsingName" />
+                            <Node UniqueName="[0-1009]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.InstanceRunTableInfoCommandReturnsTableNameUsingNumber" />
+                            <Node UniqueName="[0-1021]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.MappableReturnsFalse" />
+                            <Node UniqueName="[0-1020]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.MappableReturnsTrue" />
+                            <Node UniqueName="[0-1016]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.OpenTablePassingOnlyFileNameShouldCallOpenTableMapinfoCommand" />
+                            <Node UniqueName="[0-1017]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.OpenTablePassingOnlyFileNameShouldReturnTable" />
+                            <Node UniqueName="[0-1014]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.OpenTableUsingCommandBuilderShouldCallOpenTableCommand" />
+                            <Node UniqueName="[0-1015]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.OpenTableUsingCommandBuilderShouldReturnTableInfoTest" />
+                            <Node UniqueName="[0-1013]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.RowsPropertyReturnsRowCollection" />
+                            <Node UniqueName="[0-1007]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.RunTableInfoCommandPassingTableNameShouldReturnExpectedName" />
+                            <Node UniqueName="[0-1006]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.RunTableInfoCommandPassingTableNumberShouldReturnExpectedName" />
+                            <Node UniqueName="[0-1005]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.RunTableInfoCommandShouldCallTableINfoWithName" />
+                            <Node UniqueName="[0-1004]MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.RunTableInfoCommandShouldCallTableInfoWithNumber" />
+                          </Nodes>
+                        </Node>
+                      </Nodes>
+                    </Node>
+                    <Node UniqueName="[0-1061]MapinfoWrapperTest.WrapperTest.WorkspaceTests">
+                      <Nodes>
+                        <Node UniqueName="[0-1063]MapinfoWrapperTest.WrapperTest.WorkspaceTests.OpenWorkspaceCallsRunApplicationInMapinfo" />
+                        <Node UniqueName="[0-1062]MapinfoWrapperTest.WrapperTest.WorkspaceTests.OpenWorkSpaceReturnsWorkspaceObject" />
+                      </Nodes>
+                    </Node>
+                  </Nodes>
+                </Node>
+              </Nodes>
+            </Node>
+          </Nodes>
+        </Node>
+      </Nodes>
+    </Node>
+  </Nodes>
+</VisualState>
