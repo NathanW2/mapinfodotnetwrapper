@@ -1,39 +1,39 @@
 #labels Featured,Phase-Implementation
 _Create a new Mapinfo instace_
 {{{
-          MapinfoFactory factory = new MapinfoFactory();
-	  COMMapinfo mapinfo = factory.CreateCOMInstance();
+ MapinfoFactory factory = new MapinfoFactory();
+ COMMapinfo mapinfo = factory.CreateCOMInstance();
 }}}
 
 _Opening a table_
 {{{
-        Table table = Table.OpenTable(mapinfo,@"c:\Temp\TestTable.Tab");
+ Table table = Table.OpenTable(mapinfo,@"c:\Temp\TestTable.Tab");
 }}}
 _or_
 {{{
-        Table<TestEntity> table = Table.OpenTable<TestEntity>(mapinfo,@"C:\Temp\TestTable.Tab");
+ Table<TestEntity> table = Table.OpenTable<TestEntity>(mapinfo,@"C:\Temp\TestTable.Tab");
         
-        //where TestEntity is:
-       public class TestEntity : BaseEntity
-       {
-		public int AssetId {get;set;}
-		public string AssetName {get;set;}
-	}
+ //where TestEntity is:
+ public class TestEntity : BaseEntity
+ {
+    public int AssetId {get;set;}
+    public string AssetName {get;set;}
+ }
 }}}
 
 _Using LINQ against a table_
 {{{
-        IQueryable<TestEntity> query = from row in table
-				where row.AssetName == "TestAsset"
-				select row;
+  IQueryable<TestEntity> query = from row in table
+				 where row.AssetName == "TestAsset"
+				 select row;
 }}}
 _Using LINQ against a table(mapping to anonymous type_
 {{{
-        var query2 = from row in table
-			 select new {id = row.AssetId, name = row.AssetName};
+  var query2 = from row in table
+	       select new {id = row.AssetId, name = row.AssetName};
        
-       foreach(TestEntity item in query2)
-       {
-               Console.WriteLine("{0} || {1}",item.id,item.name);
-       }
+  foreach(TestEntity item in query2)
+  {
+      Console.WriteLine("{0} || {1}",item.id,item.name);
+  }
 }}}
