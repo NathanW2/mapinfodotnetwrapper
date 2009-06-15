@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper", "MapinfoWrapper\MapinfoWrapper.csproj", "{FDA41A1F-5922-493C-AD86-DDF8D447023E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapperTests", "MapinfoWrapperTest\MapinfoWrapperTests.csproj", "{AD417C06-1A89-46A5-8339-2CA728B08DA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication2", "ConsoleApplication2\ConsoleApplication2.csproj", "{33AC712D-549E-415C-8442-B6B6F424D8B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper.Example", "MapinfoWrapperExample\MapinfoWrapper.Example.csproj", "{E42A7FCE-4823-4123-A295-B9FD517BAAB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQTests", "LINQTests\LINQTests.csproj", "{A2C1036B-FABF-4143-A2F8-C6DF395DDCF7}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33AC712D-549E-415C-8442-B6B6F424D8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33AC712D-549E-415C-8442-B6B6F424D8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33AC712D-549E-415C-8442-B6B6F424D8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33AC712D-549E-415C-8442-B6B6F424D8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E42A7FCE-4823-4123-A295-B9FD517BAAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E42A7FCE-4823-4123-A295-B9FD517BAAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E42A7FCE-4823-4123-A295-B9FD517BAAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E42A7FCE-4823-4123-A295-B9FD517BAAB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C1036B-FABF-4143-A2F8-C6DF395DDCF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C1036B-FABF-4143-A2F8-C6DF395DDCF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C1036B-FABF-4143-A2F8-C6DF395DDCF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C1036B-FABF-4143-A2F8-C6DF395DDCF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

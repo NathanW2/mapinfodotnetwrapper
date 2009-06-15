@@ -1,0 +1,52 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 3
+    Capital Char (25) ;
+    Country Char (30) ;
+    Cap_Pop Decimal (8, 0) ;
+ReadOnly
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\Quality" = ""
+"\Quality\Lineage" = ""
+"\Quality\Lineage\Source" = ""
+"\Quality\Lineage\Source\Vintage" = "1995"
+"\Quality\Lineage\Source\Scale" = "~ 1:20,000,000"
+"\Quality\Lineage\Source\Citation" = "MapInfo from Digital Chart of the World"
+"\Spatial Reference" = ""
+"\Spatial Reference\Geographic" = ""
+"\Spatial Reference\Geographic\Projection" = ""
+"\Spatial Reference\Geographic\Projection\Name" = "Robinson"
+"\Spatial Reference\Geographic\Projection\Clause" = "CoordSys Earth Projection 12, 62, ""m"", 0 Bounds (-34012036.7393, -8625248.51472) (34012036.7393, 8625248.51472)"
+"\Spatial Reference\Geographic\Coordinate Units" = "m"
+"\Identification" = ""
+"\Identification\Description" = ""
+"\Identification\Description\Abstract" = "Location of world capitals.   Also included regional and colonial capitals of significant areas belonging to other countries.    Based on current World Almanac and UN definitions of Countries."
+"\Identification\Use Constraints" = "For Use with MapInfo Professional"
+"\Identification\Access Constraints" = "Licensed Users"
+"\Identification\Domain" = ""
+"\Identification\Domain\Bounds" = ""
+"\Identification\Domain\Bounds\minx" = "-223.82"
+"\Identification\Domain\Bounds\maxx" = "229.58"
+"\Identification\Domain\Bounds\maxy" = "64.24"
+"\Identification\Domain\Bounds\miny" = "-51.7"
+"\Identification\Citation" = "MapInfo Professional Bundled Data"
+"\Identification\Time Period" = ""
+"\Identification\Time Period\Currentness" = "1995"
+"\Spatial Organization" = ""
+"\Spatial Organization\Object" = ""
+"\Spatial Organization\Object\Type1" = "Regions"
+"\Spatial Organization\Object\Type1\Count" = "0"
+"\Spatial Organization\Object\Type2" = "Points"
+"\Spatial Organization\Object\Type2\Count" = "223"
+"\Spatial Organization\Object\Type3" = "Polylines"
+"\Spatial Organization\Object\Type3\Count" = "0"
+"\Spatial Organization\Object\Type4" = "Lines"
+"\Spatial Organization\Object\Type4\Count" = "0"
+"\Spatial Organization\Object\All" = "Sum of all objects"
+"\Spatial Organization\Object\All\Count" = "223"
+end_metadata
