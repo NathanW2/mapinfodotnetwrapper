@@ -27,12 +27,12 @@ _Using LINQ against a table_
 				 where row.AssetName == "TestAsset"
 				 select row;
 }}}
-_Using LINQ against a table(mapping to anonymous type_
+_Using LINQ against a table(mapping to anonymous type)
 {{{
   var query2 = from row in table
 	       select new {id = row.AssetId, name = row.AssetName};
        
-  foreach(TestEntity item in query2)
+  foreach(var item in query2)
   {
       Console.WriteLine("{0} || {1}",item.id,item.name);
   }
