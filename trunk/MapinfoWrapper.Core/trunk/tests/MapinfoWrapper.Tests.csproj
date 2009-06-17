@@ -87,7 +87,7 @@
     <Compile Include="WrapperTest\Table Operations\TableInfoTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wrapper\MapinfoWrapper.csproj">
+    <ProjectReference Include="..\src\MapinfoWrapper.csproj">
       <Project>{FDA41A1F-5922-493C-AD86-DDF8D447023E}</Project>
       <Name>MapinfoWrapper</Name>
     </ProjectReference>
