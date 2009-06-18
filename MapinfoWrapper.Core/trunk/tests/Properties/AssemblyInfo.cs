@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MockMapinfoWrapperTest")]
+[assembly: AssemblyTitle("MapinfoWrapper.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Warwick Shire Council")]
-[assembly: AssemblyProduct("MockMapinfoWrapperTest")]
-[assembly: AssemblyCopyright("Copyright © Warwick Shire Council 2008")]
+[assembly: AssemblyCompany("Nathan Woodrow")]
+[assembly: AssemblyProduct("Mapinfo .NET OLE Wrapper")]
+[assembly: AssemblyCopyright("Copyright © Nathan Woodrow 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
