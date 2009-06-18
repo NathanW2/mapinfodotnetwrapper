@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Guard.cs" />
+    <Compile Include="Core\Internals\ITableCommandRunner.cs" />
+    <Compile Include="Core\Internals\TableCommandRunner.cs" />
     <Compile Include="Core\IoC\DependencyResolver.cs" />
     <Compile Include="Core\IoC\IDependencyResolver.cs" />
     <Compile Include="Core\IoC\IoC.cs" />
@@ -117,10 +119,12 @@
     <Compile Include="Wrapper\Table Operations\Row\Enumerators\RowList.cs" />
     <Compile Include="Wrapper\Table Operations\Table-Nongeneric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wrapper\Table Operations\TableFactory.cs" />
     <Compile Include="Wrapper\Table Operations\TableInfoEnum.cs" />
     <Compile Include="Wrapper\Workspace.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Wrapper\MapinfoWrapper.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
