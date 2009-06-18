@@ -22,7 +22,7 @@ namespace MapinfoWrapper.Core
     	}
     	
         [DebuggerStepThrough]
-        public static void AgainstNull(object @object,string name)
+        public static void AgainstNull(object @object, string name)
         {
             if (@object == null)
             {
@@ -31,8 +31,7 @@ namespace MapinfoWrapper.Core
         }
 
         [DebuggerStepThrough]
-        public static void AgainstNotInserted<TTableDef>(TTableDef entity, string name)
-            where TTableDef : BaseEntity
+        public static void AgainstNotInserted(BaseEntity entity, string name)
         {
             if (entity.RowId == 0)
             {

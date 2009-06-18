@@ -22,8 +22,6 @@ namespace MapinfoWrapper.Embedding
             this.handle = mapinfoHandle;     
         }
 
-        #region IWin32Window Members
-
         /// <summary>
         /// Returns the handle of the mapinfo window in the form of a <see cref="System.IntPrt"/>
         /// </summary>
@@ -31,7 +29,5 @@ namespace MapinfoWrapper.Embedding
         {
             get { return this.handle; }
         }
-
-        #endregion
     }
 }
