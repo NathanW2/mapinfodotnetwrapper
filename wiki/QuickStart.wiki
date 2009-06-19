@@ -1,4 +1,4 @@
-#labels Featured,Phase-Implementation
+#labels Featured,Phase-Implementation,Example
 _Create a new Mapinfo instace_
 {{{
  COMMapinfo mapinfo = new MapinfoFactory().CreateCOMInstance();
@@ -6,11 +6,15 @@ _Create a new Mapinfo instace_
 
 _Opening a table_
 {{{
- Table table = Table.OpenTable(mapinfo,@"c:\Temp\TestTable.Tab");
+ //First create a new table factory, which lets us create and open tables.
+ TableFactory tabfactory = new TableFactory();
+ //Then we can call the open table command on the factory.
+ Table table = tabfactory.OpenTable(@"c:\Temp\TestTable.Tab");
 }}}
 _or_
 {{{
- Table<TestEntity> table = Table.OpenTable<TestEntity>(mapinfo,@"C:\Temp\TestTable.Tab");
+ //Or we can supply a entity template for the table using generics.
+ Table<TestEntity> table = tabfactory.OpenTable<TestEntity>(@"C:\Temp\TestTable.Tab");
         
  //where TestEntity is:
  public class TestEntity : BaseEntity
@@ -22,15 +26,22 @@ _or_
 
 _Using LINQ against a table_
 {{{
+  //After a table has been opened we can use a LINQ query to query the table in Mapinfo.
+  //The LINQ query will map the return results into the supplied entity type.
   IQueryable<TestEntity> query = from row in table
 				 where row.AssetName == "TestAsset"
 				 select row;
 }}}
 _Using LINQ against a table(mapping to anonymous type)
 {{{
+  //We can also query against the table using the select function and map the result to
+  //anonymous types.
   var query2 = from row in table
 	       select new {id = row.AssetId, name = row.AssetName};
        
+  //Will produce the following SQL:
+  SELECT AssetId, AssetName FROM TestTable INTO WrapperTempTable
+
   foreach(var item in query2)
   {
       Console.WriteLine("{0} || {1}",item.id,item.name);
