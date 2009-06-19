@@ -22,17 +22,22 @@ namespace MapinfoWrapper.TableOperations
 
         public ITable OpenTable(string tablePath)
         {
-            tablerunner.OpenTable(tablePath);
-            string name = tablerunner.GetName(0);
+            string name = this.OpenTableAndGetName(tablePath);
             return new Table(name);
         }
 
         public ITable<T> OpenTable<T>(string tablePath)
             where T : BaseEntity, new()
         {
-            tablerunner.OpenTable(tablePath);
-            string name = tablerunner.GetName(0);
+        	string name = this.OpenTableAndGetName(tablePath);
             return new Table<T>(tablePath);
+        }
+        
+        private string OpenTableAndGetName(string tablePath)
+        {
+			tablerunner.OpenTable(tablePath);
+            string name = tablerunner.GetName(0);        	
+        	return name;
         }
     }
 }
