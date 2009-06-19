@@ -11,8 +11,8 @@ namespace MapinfoWrapper.Core.Internals
 {
     internal class TableCommandRunner : ITableCommandRunner
     {
-        private IMapinfoWrapper wrapper;
-
+        private readonly IMapinfoWrapper wrapper;
+        
         public TableCommandRunner() 
             : this(IoC.IoC.Resolve<IMapinfoWrapper>())
         { }
@@ -24,14 +24,25 @@ namespace MapinfoWrapper.Core.Internals
 
         public string GetName(int tableNumber)
         {
-            int enumValue = (int)TableInfo.Name;
-            string command = "TableInfo(0,{0})".FormatWith(enumValue);
-            return this.wrapper.Evaluate(command);
+        	return (String)this.RunTableInfo(tableNumber.ToString(), TableInfo.Name);
         }
 
         public void OpenTable(string tablePath)
         {
             this.wrapper.RunCommand("Open Table {0}".FormatWith(tablePath.InQuotes()));
+        }
+        
+        public virtual object RunTableInfo(string tableName, TableInfo attribute)
+        {
+        	int enumvalue = (int)attribute;
+        	string command = "TableInfo({0},{1})".FormatWith(tableName,enumvalue);
+        	string value = this.wrapper.Evaluate(command);
+        	switch (attribute) {
+        		case TableInfo.Name:
+        			return value;
+        		default:
+        			return value;
+        	}
         }
     }
 }

@@ -43,14 +43,36 @@ namespace MapinfoWrapperTest.CoreTests.InternalsTests
         }
 
         [Test]
-        public void GetNameCallsTableInfoForName()
+        public void GetNameCallsRunTableInfoForName()
         {
-            TableCommandRunner runner = new TableCommandRunner();
+        	OverriddenTableCommandRunner runner = new OverriddenTableCommandRunner();
             string name = runner.GetName(0);
-
-            int enumValue = (int)TableInfo.Name;
-			string command = "TableInfo(0,{0})".FormatWith(enumValue);
+			
+            Assert.True(runner.NameWasCalled,"Name attribute was not called");
+        }
+        
+        [Test]
+        public void RunTableInfoCallsMapinfoTablInfo()
+        {
+			TableCommandRunner runner = new TableCommandRunner();
+            
+			string value = (string)runner.RunTableInfo("DummyTable", TableInfo.Name);
+			
+			int enumValue = (int)TableInfo.Name;
+			string command = "TableInfo(DummyTable,{0})".FormatWith(enumValue);
             mockmapinfo.Verify(m => m.Evaluate(command));
         }
+    }
+    
+    internal class OverriddenTableCommandRunner
+    	: TableCommandRunner
+    {
+    	public bool NameWasCalled;
+		public override object RunTableInfo(string tableName, TableInfo attribute)
+		{
+			if (attribute == TableInfo.Name)
+				this.NameWasCalled = true;
+			return base.RunTableInfo(tableName,attribute);
+		}
     }
 }

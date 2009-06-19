@@ -90,7 +90,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void GetTableNameShouldReturnWater_Mains()
 //        {
-//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NAME);
+//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.NAME);
 //            mockmapinfo.Setup(f => f.Evaluate(ExpectedCommand))
 //                       .Returns("Water_Mains");
 //
@@ -103,7 +103,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void GetTableNumberShouldReturnOne()
 //        {
-//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NUM);
+//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.NUM);
 //            mockmapinfo.Setup(f => f.Evaluate(ExpectedCommand))
 //                       .Returns("1");
 //
@@ -117,14 +117,14 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void RunTableInfoCommandPassingTableNumberShouldReturnExpectedName()
 //        {
-//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NAME);
+//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.NAME);
 //
 //            mockmapinfo.Setup(m => m.Evaluate(ExpectedCommand))
 //                       .Returns("Water_Mains");
 //
 //            string name = Table.TableInfo(mockmapinfo.Object,
 //                                                    1,
-//                                                    TableInfoEnum.TAB_INFO_NAME);
+//                                                    TableInfoEnum.NAME);
 //
 //            Assert.AreEqual("Water_Mains", name);
 //        }
@@ -132,13 +132,13 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void RunTableInfoCommandPassingTableNameShouldReturnExpectedName()
 //        {
-//            string ExpectedCommand = "TableInfo(Water_Mains,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NAME);
+//            string ExpectedCommand = "TableInfo(Water_Mains,{0})".FormatWith((int)TableInfoEnum.NAME);
 //            mockmapinfo.Setup(m => m.Evaluate(ExpectedCommand))
 //                       .Returns("Water_Mains");
 //
 //            string name = Table.TableInfo(mockmapinfo.Object,
 //                                                    "Water_Mains",
-//                                                    TableInfoEnum.TAB_INFO_NAME);
+//                                                    TableInfoEnum.NAME);
 //
 //            Assert.AreEqual("Water_Mains", name);
 //        }
@@ -146,13 +146,13 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void InstanceRunTableInfoCommandReturnsTableNameUsingName()
 //        {
-//            string ExpectedCommand = "TableInfo(Water_Mains,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NAME);
+//            string ExpectedCommand = "TableInfo(Water_Mains,{0})".FormatWith((int)TableInfoEnum.NAME);
 //            
 //            mockmapinfo.Setup(m => m.Evaluate(ExpectedCommand))
 //                       .Returns("Water_Mains");
 //
 //            Table<DummyTableDef> table = new Table<DummyTableDef>(mockmapinfo.Object, "Water_Mains");
-//            string name = table.RunTableInfoCommand(TableInfoEnum.TAB_INFO_NAME);
+//            string name = table.RunTableInfoCommand(TableInfoEnum.NAME);
 //
 //            Assert.AreEqual("Water_Mains",name);
 //        
@@ -161,14 +161,14 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void InstanceRunTableInfoCommandReturnsTableNameUsingNumber()
 //        {
-//            string expectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NAME);
+//            string expectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.NAME);
 //
 //            mockmapinfo.Setup(m => m.Evaluate(expectedCommand))
 //                       .Returns("Water_Mains");
 //
 //            Table<DummyTableDef> table = new Table<DummyTableDef>(mockmapinfo.Object,
 //                                                            1);
-//            string name = table.RunTableInfoCommand(TableInfoEnum.TAB_INFO_NAME);
+//            string name = table.RunTableInfoCommand(TableInfoEnum.NAME);
 //
 //            Assert.AreEqual("Water_Mains", name);
 //        
@@ -177,7 +177,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void GetTablePathFromNumber()
 //        {
-//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_TABFILE);
+//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TABFILE);
 //            mockmapinfo.Setup(m => m.Evaluate(ExpectedCommand))
 //                       .Returns(@"C:\Temp\Water_Mains");
 //
@@ -191,7 +191,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void GetTablePathFromNumberNullReturn()
 //        {
-//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_TABFILE);
+//            string ExpectedCommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TABFILE);
 //            mockmapinfo.Setup(m => m.Evaluate(ExpectedCommand))
 //                       .Returns("");
 //
@@ -204,7 +204,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void GetNumberOfColumnsShouldReturnFive()
 //        {
-//            string expectedcommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_NCOLS);
+//            string expectedcommand = "TableInfo(1,{0})".FormatWith((int)TableInfoEnum.NCOLS);
 //            mockmapinfo.Setup(m => m.Evaluate(expectedcommand))
 //                       .Returns("5");
 //
@@ -280,7 +280,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void MappableReturnsTrue()
 //        {
-//            mockmapinfo.Setup(m => m.Evaluate("TableInfo(0,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_MAPPABLE)))
+//            mockmapinfo.Setup(m => m.Evaluate("TableInfo(0,{0})".FormatWith((int)TableInfoEnum.MAPPABLE)))
 //                       .Returns("T");
 //
 //            ITable<DummyTableDef> table = new Table<DummyTableDef>(mockmapinfo.Object, 0);
@@ -290,7 +290,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 //        [Test]
 //        public void MappableReturnsFalse()
 //        {
-//            mockmapinfo.Setup(m => m.Evaluate("TableInfo(0,{0})".FormatWith((int)TableInfoEnum.TAB_INFO_MAPPABLE)))
+//            mockmapinfo.Setup(m => m.Evaluate("TableInfo(0,{0})".FormatWith((int)TableInfoEnum.MAPPABLE)))
 //                           .Returns("F");
 //
 //            ITable<DummyTableDef> table = new Table<DummyTableDef>(mockmapinfo.Object, 0);

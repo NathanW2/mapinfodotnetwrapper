@@ -25,8 +25,8 @@ namespace MapinfoWrapper.TableOperations
 	public class Table<TTableDef> : ITable<TTableDef>
         where TTableDef : BaseEntity ,new()
 	{
-		private string tablename;
-		private IMapinfoWrapper wrapper;
+		private readonly string tablename;
+		private readonly IMapinfoWrapper wrapper;
 
 		public Table(string tableName)
 			: this(IoC.Resolve<IMapinfoWrapper>(), tableName)
@@ -118,7 +118,7 @@ namespace MapinfoWrapper.TableOperations
 
 		public static string ResolveTableNameFromNumber(IMapinfoWrapper wrapper, int tableNumber)
 		{
-			return Table.TableInfo(wrapper, tableNumber, TableInfoEnum.TAB_INFO_NAME);
+			return Table.RunTableInfo(wrapper, tableNumber, TableInfo.Name);
 		}
 
         private string name;
@@ -131,7 +131,7 @@ namespace MapinfoWrapper.TableOperations
             {
                 if (this.name == null)
                 {
-                    name = this.TableInfo(TableInfoEnum.TAB_INFO_NAME);
+                    name = this.RunTableInfo(TableInfo.Name);
                 }
                 return name;
             }
@@ -145,7 +145,7 @@ namespace MapinfoWrapper.TableOperations
 		{
 			get
 			{
-				string returnValue = this.TableInfo(TableInfoEnum.TAB_INFO_TABFILE);
+				string returnValue = this.RunTableInfo(TableInfo.Tabfile);
 
 				if (string.IsNullOrEmpty(returnValue))
 					return null;
@@ -161,7 +161,7 @@ namespace MapinfoWrapper.TableOperations
 		{
 			get
 			{
-				return Convert.ToInt32(this.TableInfo(TableInfoEnum.TAB_INFO_NUM));
+				return Convert.ToInt32(this.RunTableInfo(TableInfo.Number));
 			}
 		}
 
@@ -173,7 +173,7 @@ namespace MapinfoWrapper.TableOperations
 		{
 			get
 			{
-				string mapinforeturn = TableInfo(TableInfoEnum.TAB_INFO_MAPPABLE);
+				string mapinforeturn = this.RunTableInfo(TableInfo.Mappable);
 				return (mapinforeturn == "T");
 
 			}
@@ -184,9 +184,9 @@ namespace MapinfoWrapper.TableOperations
 		/// </summary>
 		/// <param name="infoToReturn">A enum specifing the type of info to return.</param>
 		/// <returns>A string containing the value returned from the evaluation of the Table commnd.</returns>
-		public string TableInfo(TableInfoEnum infoToReturn)
+		public string RunTableInfo(TableInfo infoToReturn)
 		{
-			return Table.TableInfo(this.wrapper,this.tablename, infoToReturn);
+			return Table.RunTableInfo(this.wrapper,this.tablename, infoToReturn);
 		}
 
 		/// <summary>
@@ -195,7 +195,7 @@ namespace MapinfoWrapper.TableOperations
 		/// <returns>The number of columns in the current table.</returns>
 		public int GetNumberOfColumns()
 		{
-			return Convert.ToInt32(this.TableInfo(TableInfoEnum.TAB_INFO_NCOLS));
+			return Convert.ToInt32(this.RunTableInfo(TableInfo.Ncols));
 		}
 
 		/// <summary>
@@ -281,9 +281,9 @@ namespace MapinfoWrapper.TableOperations
 		/// <param name="tableNumber">The number of the table to run the tableinfo command against.</param>
 		/// <param name="infoToReturn">A enum specifing the type of info to return.</param>
 		/// <returns>A string containing the value returned from the evaluation of the Table commnd.</returns>
-		public static string TableInfo(IMapinfoWrapper wrapper, int tableNumber, TableInfoEnum infoToReturn)
+		public static string RunTableInfo(IMapinfoWrapper wrapper, int tableNumber, TableInfo infoToReturn)
 		{
-			return Table.TableInfo(wrapper, tableNumber.ToString(), infoToReturn);
+			return Table.RunTableInfo(wrapper, tableNumber.ToString(), infoToReturn);
 		}
 
 		/// <summary>
@@ -292,7 +292,7 @@ namespace MapinfoWrapper.TableOperations
 		/// <param name="tableName">The name of the table to run the tableinfo command against.</param>
 		/// <param name="infoToReturn">A enum specifing the type of info to return.</param>
 		/// <returns>A string containing the value returned from the evaluation of the Table commnd.</returns>
-		public static string TableInfo(IMapinfoWrapper wrapper, string tableName, TableInfoEnum infoToReturn)
+		public static string RunTableInfo(IMapinfoWrapper wrapper, string tableName, TableInfo infoToReturn)
 		{
 			int enumValue = (int)infoToReturn;
 			string command = String.Format("TableInfo({0},{1})", tableName, (int)enumValue);
