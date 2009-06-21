@@ -11,19 +11,14 @@ namespace MapinfoWrapper.Geometries.Lines
 {
 	public class Line : Geometry, ILine
 	{
-		public Line(IVariableExtender variable) : this(IoC.Resolve<IMapinfoWrapper>(), variable)
-		{
-		}
-
-		public Line(IMapinfoWrapper wrapper, IVariableExtender variable) : base(wrapper, variable)
-		{
-		}
+		public Line(IVariable variable) : base(variable)
+		{ }
 
 		public decimal GetLength(string unit)
 		{
-			string length = base.mapinfoinstance.Evaluate("ObjectLen({0},{1})".FormatWith(base.expression, unit.InQuotes()));
+		    string expression = base.Variable.GetExpression();
+            string length = base.mapinfoinstance.Evaluate("ObjectLen({0},{1})".FormatWith(expression, unit.InQuotes()));
 			return Convert.ToDecimal(length);
 		}
-
 	}
 }

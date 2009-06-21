@@ -50,7 +50,7 @@ namespace MapinfoWrapper.TableOperations.LINQ.SQLBuilders
                         IGeometry obj = value as IGeometry;
                         if (obj != null)
                         {
-                            value = obj.expression.ToString();
+                            value = obj.Variable.GetExpression();
                             break;
                         }
                         break;

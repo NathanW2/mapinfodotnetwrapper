@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.Core.IoC;
+﻿using MapinfoWrapper.Core.IoC;
 using NUnit.Framework;
 using MapinfoWrapper.Mapinfo;
 using Moq;

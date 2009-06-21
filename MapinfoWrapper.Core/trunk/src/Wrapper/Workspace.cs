@@ -12,10 +12,6 @@ namespace MapinfoWrapper
     /// </summary>
     public class Workspace
     {
-        public Workspace()
-        {
-        }
-
         /// <summary>
         /// Opens a workspace in a instance of Mapinfo.
         /// </summary>

@@ -16,12 +16,10 @@ namespace MapinfoWrapper.TableOperations.LINQ
     public class MapinfoQueryProvider : IQueryProvider
     {
         private IMapinfoWrapper wrapper;
-        private String tablename;
 
-        public MapinfoQueryProvider(IMapinfoWrapper wrapper, string tableName)
+        public MapinfoQueryProvider(IMapinfoWrapper wrapper)
         {
             this.wrapper = wrapper;
-            this.tablename = tableName;
         }
 
         public object Execute(Expression expression)

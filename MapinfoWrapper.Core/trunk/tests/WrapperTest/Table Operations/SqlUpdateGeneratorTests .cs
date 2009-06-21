@@ -43,7 +43,7 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
             [Values("DummyVar","DummyTable.Obj")] string variableName)
         {
             Mock<IGeometry> mockobj = new Mock<IGeometry>();
-            mockobj.Setup(obj => obj.expression)
+            mockobj.Setup(obj => obj.Variable.GetExpression())
                    .Returns(variableName);
 
             SqlStringGenerator gen = new SqlStringGenerator();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Mapinfo;
@@ -13,13 +14,12 @@ namespace MapinfoWrapper.Geometries
     /// </summary>
     public class MapbasicObject : IMapbasicObject
     {
-        protected IMapinfoWrapper mapinfoinstance;
-        private IVariableExtender variable;
+        protected IMapinfoWrapper mapinfoinstance = IoC.Resolve<IMapinfoWrapper>();
+        private readonly IVariable innervariable;
 
-        public MapbasicObject(IMapinfoWrapper wrapper,IVariableExtender variable)
+        public MapbasicObject(IVariable variable)
         {
-            this.mapinfoinstance = wrapper;
-            this.variable = variable;
+            this.innervariable = variable;
         }
 
         /// <summary>
@@ -29,9 +29,11 @@ namespace MapinfoWrapper.Geometries
         /// <param name="variable">The variable used by the ObjectInfo call.</param>
         /// <param name="attribute">The attribute specifying which information to return.</param>
         /// <returns>A string containing the retured result from calling the ObjectInfo command in Mapinfo.</returns>
-        public static string ObjectInfo(IMapinfoWrapper wrapper, IVariableExtender variable, ObjectInfoEnum attribute)
+        public static string ObjectInfo(IVariable variable, ObjectInfoEnum attribute)
         {
-            string returnedstring = wrapper.Evaluate("ObjectInfo({0},{1})".FormatWith(variable.ObjectExpression, (int)attribute));
+            IMapinfoWrapper wrapper = IoC.Resolve<IMapinfoWrapper>();
+            string expression = variable.GetExpression();
+            string returnedstring = wrapper.Evaluate("ObjectInfo({0},{1})".FormatWith(expression, (int)attribute));
             return returnedstring;
         }
 
@@ -42,7 +44,7 @@ namespace MapinfoWrapper.Geometries
         /// <returns>A string containing the returned result from calling the ObjectInfo command in Mapinfo.</returns>
         public string ObjectInfo(ObjectInfoEnum attribute)
         {
-            return MapbasicObject.ObjectInfo(this.mapinfoinstance, this.variable, attribute);
+            return MapbasicObject.ObjectInfo(this.Variable, attribute);
         }
 
         /// <summary>
@@ -58,12 +60,9 @@ namespace MapinfoWrapper.Geometries
             }
         }
 
-        public string expression 
+        public IVariable Variable
         {
-            get 
-            {
-                return this.variable.ObjectExpression;
-            }
-        }
+            get { return this.innervariable; }
+        } 
     }
 }

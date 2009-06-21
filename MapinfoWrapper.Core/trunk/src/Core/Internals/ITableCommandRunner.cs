@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MapinfoWrapper.TableOperations;
 
 namespace MapinfoWrapper.Core.Internals
 {
     internal interface ITableCommandRunner
     {
         string GetName(int tableNumber);
-
-        void OpenTable(string p);
+        string GetName(string tableName);
+        void OpenTable(string path);
+        string GetPath(string tableName);
+        object RunTableInfo(string tableName, TableInfo attribute);
     }
 }

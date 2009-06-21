@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo.Internals;
+using MapinfoWrapper.Core.Internals;
 
 namespace MapinfoWrapper.Mapinfo
 {
@@ -20,9 +21,17 @@ namespace MapinfoWrapper.Mapinfo
         {
             DMapInfo instance = CreateMapinfoInstance();
             COMMapinfo olemapinfo = new COMMapinfo(instance);
+
             DependencyResolver resolver = new DependencyResolver();
             resolver.Register(typeof(IMapinfoWrapper), olemapinfo);
             IoC.Initialize(resolver);
+
+            TableCommandRunner tablerunner = new TableCommandRunner();
+            VariableFactory varfactory = new VariableFactory();
+
+            resolver.Register(typeof(ITableCommandRunner),tablerunner);
+            resolver.Register(typeof(IVariableFactory),varfactory);
+            
             return olemapinfo; 
         }
     }
