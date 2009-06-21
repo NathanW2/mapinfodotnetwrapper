@@ -11,7 +11,7 @@ using MapinfoWrapper.TableOperations.RowOperations;
 using MapinfoWrapper.TableOperations.RowOperations.Entities;
 using MapinfoWrapper.TableOperations.RowOperations.Enumerators;
 using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.CommandBuilders;
+using MapinfoWrapper.Core.Internals;
 
 namespace MapinfoWrapper.TableOperations
 {
@@ -25,8 +25,9 @@ namespace MapinfoWrapper.TableOperations
 	public class Table<TTableDef> : ITable<TTableDef>
         where TTableDef : BaseEntity ,new()
 	{
-		private readonly string tablename;
+		private readonly string internalname;
 		private readonly IMapinfoWrapper wrapper;
+	    private readonly ITableCommandRunner tablecommandrunner = IoC.Resolve<ITableCommandRunner>();
 
 		public Table(string tableName)
 			: this(IoC.Resolve<IMapinfoWrapper>(), tableName)
@@ -41,8 +42,8 @@ namespace MapinfoWrapper.TableOperations
 		public Table(IMapinfoWrapper wrapper, string tablename)
 		{
 			this.wrapper = wrapper;
-			this.tablename = tablename;
-			this.Provider = new MapinfoQueryProvider(this.wrapper, this.Name);
+			this.internalname = tablename;
+			this.Provider = new MapinfoQueryProvider(this.wrapper);
 		}
 		
 		/// <summary>
@@ -116,11 +117,6 @@ namespace MapinfoWrapper.TableOperations
 			this.DeleteRowAt(entity.RowId);
 		}
 
-		public static string ResolveTableNameFromNumber(IMapinfoWrapper wrapper, int tableNumber)
-		{
-			return Table.RunTableInfo(wrapper, tableNumber, TableInfo.Name);
-		}
-
         private string name;
 		/// <summary>
 		/// Returns the name of the current table.
@@ -131,7 +127,7 @@ namespace MapinfoWrapper.TableOperations
             {
                 if (this.name == null)
                 {
-                    name = this.RunTableInfo(TableInfo.Name);
+                    name = this.tablecommandrunner.GetName(this.internalname);
                 }
                 return name;
             }
@@ -145,7 +141,7 @@ namespace MapinfoWrapper.TableOperations
 		{
 			get
 			{
-				string returnValue = this.RunTableInfo(TableInfo.Tabfile);
+			    string returnValue = this.tablecommandrunner.GetPath(this.Name);
 
 				if (string.IsNullOrEmpty(returnValue))
 					return null;
@@ -161,7 +157,8 @@ namespace MapinfoWrapper.TableOperations
 		{
 			get
 			{
-				return Convert.ToInt32(this.RunTableInfo(TableInfo.Number));
+			    string value = (String)this.tablecommandrunner.RunTableInfo(this.internalname, TableInfo.Number);
+			    return Convert.ToInt32(value);
 			}
 		}
 
@@ -173,20 +170,9 @@ namespace MapinfoWrapper.TableOperations
 		{
 			get
 			{
-				string mapinforeturn = this.RunTableInfo(TableInfo.Mappable);
-				return (mapinforeturn == "T");
-
+			    string value = (string)this.tablecommandrunner.RunTableInfo(this.internalname, TableInfo.Mappable);
+                return (value == "T");
 			}
-		}
-		
-		/// <summary>
-		/// Runs a tableinfo command in mapinfo against the supplied table in the construtor.
-		/// </summary>
-		/// <param name="infoToReturn">A enum specifing the type of info to return.</param>
-		/// <returns>A string containing the value returned from the evaluation of the Table commnd.</returns>
-		public string RunTableInfo(TableInfo infoToReturn)
-		{
-			return Table.RunTableInfo(this.wrapper,this.tablename, infoToReturn);
 		}
 
 		/// <summary>
@@ -195,7 +181,8 @@ namespace MapinfoWrapper.TableOperations
 		/// <returns>The number of columns in the current table.</returns>
 		public int GetNumberOfColumns()
 		{
-			return Convert.ToInt32(this.RunTableInfo(TableInfo.Ncols));
+            string value = (string)this.tablecommandrunner.RunTableInfo(this.internalname, TableInfo.Ncols);
+            return Convert.ToInt32(value);
 		}
 
 		/// <summary>
@@ -226,77 +213,6 @@ namespace MapinfoWrapper.TableOperations
 		public void DiscardChanges()
 		{
 			this.wrapper.RunCommand("Rollback Table {0}".FormatWith(this.Name));
-		}
-
-		/// <summary>
-		/// Opens a table in mapinfo and returns a <see cref="Table"/> object, which can be used to get
-		/// infomation about the table opened.
-		/// </summary>
-		/// <param name="wrapper">An instance of Mapinfo to open the table in.</param>
-		/// <param name="commandBuidler">A command builder object used to set all open table command
-		/// properties.</param>
-		/// <returns>A <see cref="Table"/> object containing information about the table opened.</returns>
-		public static Table OpenTable(IMapinfoWrapper wrapper, OpenTableCommandBuilder commandBuidler)
-		{
-			wrapper.RunCommand(commandBuidler.BuildCommandString());
-			string name = Table.ResolveTableNameFromNumber(wrapper,0);
-			return new Table(wrapper,name);
-		}
-
-		/// <summary>
-		/// Opens a table in mapinfo and returns a <see cref="Table"/> object, which can be used to get
-		/// infomation about the table opened.
-		/// </summary>
-		/// <param name="wrapper">An instance of Mapinfo to open the table in.</param>
-		/// <param name="tablePath">The path of the table that needs to be opened.</param>
-		/// <returns>A <see cref="Table"/> object containing information about the table opened.</returns>
-		public static Table OpenTable(IMapinfoWrapper wrapper, string tablePath)
-		{
-			OpenTableCommandBuilder commandbuilder = new OpenTableCommandBuilder(tablePath);
-			return OpenTable(wrapper, commandbuilder);
-		}
-
-		/// <summary>
-		/// Opens a table in mapinfo and returns a Generic Table which can be used to get strong typed access to
-		/// the table fields.
-		/// </summary>
-		/// <typeparam name="TTableDefinition">A strong typed table definition that will be used to access
-		/// columns, the table definition should be exact match of the Mapinfo table
-		/// structure. <see cref="TTableDefinition"/> for more info.</typeparam>
-		/// <param name="wrapper">An instance of Mapinfo to open the table in.</param>
-		/// <param name="tablePath">The path of the table which needs to be opened.</param>
-		/// <returns>A generic <see cref="Table"/> which will give strong typed access to column names.</returns>
-		public static Table<TTableDefinition> OpenTable<TTableDefinition>(IMapinfoWrapper wrapper, string tablePath)
-                where TTableDefinition : BaseEntity, new()
-        {
-			OpenTableCommandBuilder commandbuilder = new OpenTableCommandBuilder(tablePath);
-			wrapper.RunCommand(commandbuilder.BuildCommandString());
-			string name = Table.ResolveTableNameFromNumber(wrapper,0);
-			return new Table<TTableDefinition>(wrapper, name);
-		}
-        
-        /// <summary>
-		/// Runs a tableinfo command in mapinfo against the supplied table.
-		/// </summary>
-		/// <param name="tableNumber">The number of the table to run the tableinfo command against.</param>
-		/// <param name="infoToReturn">A enum specifing the type of info to return.</param>
-		/// <returns>A string containing the value returned from the evaluation of the Table commnd.</returns>
-		public static string RunTableInfo(IMapinfoWrapper wrapper, int tableNumber, TableInfo infoToReturn)
-		{
-			return Table.RunTableInfo(wrapper, tableNumber.ToString(), infoToReturn);
-		}
-
-		/// <summary>
-		/// Runs a tableinfo command in mapinfo against the supplied table.
-		/// </summary>
-		/// <param name="tableName">The name of the table to run the tableinfo command against.</param>
-		/// <param name="infoToReturn">A enum specifing the type of info to return.</param>
-		/// <returns>A string containing the value returned from the evaluation of the Table commnd.</returns>
-		public static string RunTableInfo(IMapinfoWrapper wrapper, string tableName, TableInfo infoToReturn)
-		{
-			int enumValue = (int)infoToReturn;
-			string command = String.Format("TableInfo({0},{1})", tableName, (int)enumValue);
-			return wrapper.Evaluate(command);
 		}
 
 		public IEnumerator<TTableDef> GetEnumerator()

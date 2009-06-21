@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Moq;
-using MapinfoWrapper;
 using MapinfoWrapper.TableOperations;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.TableOperations.RowOperations;
-using MapinfoWrapper.CommandBuilders;
 using MapinfoWrapper.Core.IoC;
-using Moq.Stub;
 using MapinfoWrapper.TableOperations.RowOperations.Entities;
 using MapinfoWrapper.Mapinfo;
+using MapinfoWrapper.Core.Internals;
 
 namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 {
@@ -20,14 +13,41 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
     public class GenericTableTests
     {
         private Mock<IMapinfoWrapper> mockmapinfo;
+        private Mock<ITableCommandRunner> mockcommandrunner;
 
         [SetUp]
         public void SetUp()
         {
             mockmapinfo = new Mock<IMapinfoWrapper>();
+            mockcommandrunner = new Mock<ITableCommandRunner>();
             DependencyResolver resolver = new DependencyResolver();
             resolver.Register(typeof(IMapinfoWrapper), mockmapinfo.Object);
+            resolver.Register(typeof(ITableCommandRunner),mockcommandrunner.Object);
             IoC.Initialize(resolver);
+        }
+
+        [Test]
+        public void NamePropertyShouldCallGetNameWithName()
+        {
+            Table table = new Table("DummyName");
+
+            string name = table.Name;
+
+            mockcommandrunner.Verify(cmd => cmd.GetName("DummyName"));
+        }
+
+        [Test]
+        public void GetNameShouldOnlyBeCalledOnce()
+        {
+            mockcommandrunner.Setup(cmd => cmd.GetName("DummyName"))
+                             .Returns("DummyName");
+
+            Table table = new Table("DummyName");
+
+            string namecall1 = table.Name;
+            string namecall2 = table.Name;
+
+            mockcommandrunner.Verify(cmd => cmd.GetName(It.IsAny<string>()),Times.AtMostOnce());
         }
 
         [Test]

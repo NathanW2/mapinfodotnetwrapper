@@ -56,12 +56,16 @@
   <ItemGroup>
     <Compile Include="Core\Guard.cs" />
     <Compile Include="Core\Internals\ITableCommandRunner.cs" />
+    <Compile Include="Core\Internals\IVariableFactory.cs" />
     <Compile Include="Core\Internals\TableCommandRunner.cs" />
+    <Compile Include="Core\Internals\VariableFactory.cs" />
     <Compile Include="Core\IoC\DependencyResolver.cs" />
     <Compile Include="Core\IoC\IDependencyResolver.cs" />
     <Compile Include="Core\IoC\IoC.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
-    <Compile Include="Wrapper\MapbasicOperations\IVariableExtender.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\TableObjVariable.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\Variable.cs" />
     <Compile Include="Wrapper\MapinfoCallback.cs" />
     <Compile Include="Wrapper\Mapinfo\MapinfoFactory.cs" />
     <Compile Include="Wrapper\Mapinfo\MapinfoLogger.cs" />
@@ -72,7 +76,6 @@
     <Compile Include="Wrapper\Geometries\IMapbasicObject.cs" />
     <Compile Include="Wrapper\Geometries\Lines\ILine.cs" />
     <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
-    <Compile Include="Wrapper\Geometries\ObjVariableExtendor.cs" />
     <Compile Include="Wrapper\Table Operations\ITable.cs" />
     <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjection.cs" />
     <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjector.cs" />
@@ -99,8 +102,6 @@
     <Compile Include="Core\Extensions\StringExtensions.cs" />
     <Compile Include="Wrapper\IMapinfoWrapper.cs" />
     <Compile Include="Wrapper\LayerOperations\Layer.cs" />
-    <Compile Include="Wrapper\MapbasicOperations\IMapbasicVariable.cs" />
-    <Compile Include="Wrapper\MapbasicOperations\MapbasicVariable.cs" />
     <Compile Include="Wrapper\Mapinfo\Internals\DMapinfoCOMInterface.cs" />
     <Compile Include="Wrapper\Mapinfo\Internals\IMapinfo.cs" />
     <Compile Include="Wrapper\Mapinfo\Internals\IMapinfo2.cs" />

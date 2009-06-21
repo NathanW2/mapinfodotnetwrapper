@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.Core;
+﻿using MapinfoWrapper.Core;
+using MapinfoWrapper.Core.Internals;
 using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.MapbasicOperations;
@@ -17,16 +14,8 @@ namespace MapinfoWrapper.Geometries
 	/// </summary>
     public class GeometryFactory
     {
-    	private IMapinfoWrapper wrapper;
-    	public GeometryFactory() : this(IoC.Resolve<IMapinfoWrapper>())
-    	{}
-    	
-    	
-    	public GeometryFactory(IMapinfoWrapper wrapper)
-    	{
-    		Guard.AgainstNull(wrapper,"wrapper");
-    		this.wrapper = wrapper;
-    	}
+	    private readonly IMapinfoWrapper wrapper = IoC.Resolve<IMapinfoWrapper>();
+	    private readonly IVariableFactory variablefactory = IoC.Resolve<IVariableFactory>();
     	
     	/// <summary>
     	/// Creates a new line in Mapinfo into the the supplied variable.
@@ -37,10 +26,11 @@ namespace MapinfoWrapper.Geometries
     	/// <param name="end">The coordinate of the end of the line.</param>
     	/// <param name="variable">The variable that will store the point object.</param>
     	/// <returns>A new line object, which can be used to get information about the object.</returns>
-    	public ILine CreateLine(Coordinate start, Coordinate end, IMapbasicVariable variable)
+    	public ILine CreateLine(Coordinate start, Coordinate end)
     	{
-    		this.wrapper.RunCommand("Create Line Into Variable {0} ({1},{2})({3},{4})".FormatWith(variable.Name, start.X, start.Y, end.X, end.Y));
-    		return new Lines.Line(this.wrapper,variable);
+            IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
+            this.wrapper.RunCommand("Create Line Into Variable {0} ({1},{2})({3},{4})".FormatWith(variable.GetExpression(), start.X, start.Y, end.X, end.Y));
+    		return new Line(variable);
     	}
     	
     	/// <summary>
@@ -50,17 +40,18 @@ namespace MapinfoWrapper.Geometries
         /// <param name="location">A coordinate that contains the X and Y to create the point.</param>
         /// <param name="variable">The variable that will be used to store the newly created object.</param>
         /// <returns>A new point object.</returns>
-        public Point CreatePoint(Coordinate location, IMapbasicVariable variable)
+        public Point CreatePoint(Coordinate location)
         {
-            this.wrapper.RunCommand("Create Point Into Variable {0} ({1},{2}) ".FormatWith(variable.Name, location.X, location.Y));
-            return new Point(wrapper,variable);
+    	    IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
+            this.wrapper.RunCommand("Create Point Into Variable {0} ({1},{2}) ".FormatWith(variable.GetExpression(), location.X, location.Y));
+            return new Point(variable);
         }
 
-        public Geometry GetGeometryFromObj(IVariableExtender variable)
+        public Geometry GetGeometryFromObj(IVariable variable)
         {
             Guard.AgainstNull(variable, "variable");
 
-            Geometry geo = new Geometry(this.wrapper, variable);
+            Geometry geo = new Geometry(variable);
             switch (geo.ObjectType)
             {
                 case ObjectTypeEnum.OBJ_TYPE_ARC:
@@ -68,11 +59,11 @@ namespace MapinfoWrapper.Geometries
                 case ObjectTypeEnum.OBJ_TYPE_ELLIPSE:
                     break;
                 case ObjectTypeEnum.OBJ_TYPE_LINE:
-                    return new Lines.Line(this.wrapper, variable);
+                    return new Lines.Line(variable);
                 case ObjectTypeEnum.OBJ_TYPE_PLINE:
                     break;
                 case ObjectTypeEnum.OBJ_TYPE_POINT:
-                    return new Points.Point(this.wrapper, variable);
+                    return new Points.Point(variable);
                 case ObjectTypeEnum.OBJ_TYPE_FRAME:
                     break;
                 case ObjectTypeEnum.OBJ_TYPE_REGION:

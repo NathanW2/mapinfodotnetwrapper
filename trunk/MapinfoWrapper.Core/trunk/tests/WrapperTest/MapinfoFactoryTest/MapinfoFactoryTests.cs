@@ -8,6 +8,7 @@ using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper;
 using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo.Internals;
+using MapinfoWrapper.Core.Internals;
 
 
 namespace MapinfoWrapperTest.WrapperTest.MapinfoFactoryTest
@@ -30,6 +31,7 @@ namespace MapinfoWrapperTest.WrapperTest.MapinfoFactoryTest
             TestFactory factory = new TestFactory();
             object result = factory.CreateCOMInstance();
             object iocmapinfo = IoC.Resolve<IMapinfoWrapper>();
+            object tablecommandrunner = IoC.Resolve<ITableCommandRunner>();
             Assert.AreEqual(result, iocmapinfo);
         }
     }

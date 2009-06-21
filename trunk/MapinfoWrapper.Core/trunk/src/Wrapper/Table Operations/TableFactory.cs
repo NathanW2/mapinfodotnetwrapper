@@ -30,7 +30,7 @@ namespace MapinfoWrapper.TableOperations
             where T : BaseEntity, new()
         {
         	string name = this.OpenTableAndGetName(tablePath);
-            return new Table<T>(tablePath);
+            return new Table<T>(name);
         }
         
         private string OpenTableAndGetName(string tablePath)

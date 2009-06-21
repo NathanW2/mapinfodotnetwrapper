@@ -11,10 +11,7 @@ namespace MapinfoWrapper.Geometries.Points
 {
     public class Point : Geometry
     {
-    	public Point(IVariableExtender variable)
-    		: this(IoC.Resolve<IMapinfoWrapper>(),variable) { }
-    	
-        public Point(IMapinfoWrapper wrapper, IVariableExtender variable) 
-            : base(wrapper,variable) { }
+    	public Point(IVariable variable)
+    		: base(variable) { }
     }
 }
