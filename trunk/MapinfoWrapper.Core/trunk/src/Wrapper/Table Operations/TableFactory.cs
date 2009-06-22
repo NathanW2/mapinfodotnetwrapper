@@ -1,36 +1,40 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.TableOperations;
 using MapinfoWrapper.TableOperations.RowOperations.Entities;
-using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper.Core.IoC;
-using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Core.Internals;
 
 namespace MapinfoWrapper.TableOperations
 {
-    public class TableFactory
+    /// <summary>
+    /// A factory that is used to Create or Open tables in Mapinfo.
+    /// </summary>
+    public class TableFactory : ITableFactory
     {
-        ITableCommandRunner tablerunner;
+        ITableCommandRunner tablerunner = IoC.Resolve<ITableCommandRunner>();
 
-        public TableFactory()
-        {
-            tablerunner = IoC.Resolve<ITableCommandRunner>();
-        }
-
+        /// <summary>
+        /// Opens a new table in Mapinfo and returns the opened table.
+        /// </summary>
+        /// <param name="tablePath">The path to the Mapinfo tab file to open.</param>
+        /// <returns>An instance of <see cref="T:MapinfoWrapper.TableOperations.ITable"/></returns>
         public ITable OpenTable(string tablePath)
         {
             string name = this.OpenTableAndGetName(tablePath);
             return new Table(name);
         }
 
-        public ITable<T> OpenTable<T>(string tablePath)
-            where T : BaseEntity, new()
+        /// <summary>
+        /// Opens a new table in Mapinfo, using the <typeparamref name="TEntity"/> as the entity type
+        /// for the table and returns the opened table.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to use a the entity for the table,
+        /// this will allow strong typed access to the columns in the table and LINQ support.</typeparam>
+        /// <param name="tablePath"></param>
+        /// <returns>An instance of <see cref="T:MapinfoWrapper.TableOperations.ITable&lt;TEntity&gt;"/></returns>
+        public ITable<TEntity> OpenTable<TEntity>(string tablePath)
+            where TEntity : BaseEntity, new()
         {
         	string name = this.OpenTableAndGetName(tablePath);
-            return new Table<T>(name);
+            return new Table<TEntity>(name);
         }
         
         private string OpenTableAndGetName(string tablePath)

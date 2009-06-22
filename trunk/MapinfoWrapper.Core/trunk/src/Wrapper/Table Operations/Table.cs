@@ -29,7 +29,7 @@ namespace MapinfoWrapper.TableOperations
 		private readonly IMapinfoWrapper wrapper;
 	    private readonly ITableCommandRunner tablecommandrunner = IoC.Resolve<ITableCommandRunner>();
 
-		public Table(string tableName)
+		internal Table(string tableName)
 			: this(IoC.Resolve<IMapinfoWrapper>(), tableName)
 		{ }
 
@@ -39,7 +39,7 @@ namespace MapinfoWrapper.TableOperations
 		/// </summary>
 		/// <param name="wrapper">A wrapper object containing the running instace of mapinfo.</param>
 		/// <param name="tablename">The name of the table for which to gather information about.</param>
-		public Table(IMapinfoWrapper wrapper, string tablename)
+        internal Table(IMapinfoWrapper wrapper, string tablename)
 		{
 			this.wrapper = wrapper;
 			this.internalname = tablename;
@@ -47,7 +47,7 @@ namespace MapinfoWrapper.TableOperations
 		}
 		
 		/// <summary>
-		/// Returns a <see cref="RowList&lt;TTableDef&gt;"/> using the TTableDef supplied with the
+		/// Returns a <see cref="RowList&lt;TEntity&gt;"/> using the TEntity supplied with the
 		/// table which can provide strongly typed access to column names.
 		/// </summary>
 		public IEnumerable<TTableDef> Rows
@@ -89,10 +89,10 @@ namespace MapinfoWrapper.TableOperations
 		}
 
 		/// <summary>
-		/// Returns a <see cref="T:TTableDef"/> at the supplied index in the table.
+		/// Returns a <see cref="T:TEntity"/> at the supplied index in the table.
 		/// </summary>
-		/// <param name="index">The index at which to get the <see cref="T:TTableDef"/></param>
-		/// <returns>An instace of <see cref="T:TTableDef"/> for the supplied index.</returns>
+		/// <param name="index">The index at which to get the <see cref="T:TEntity"/></param>
+		/// <returns>An instace of <see cref="T:TEntity"/> for the supplied index.</returns>
 		public TTableDef this[int index]
 		{
 			get
@@ -164,14 +164,14 @@ namespace MapinfoWrapper.TableOperations
 
 		/// <summary>
 		/// Returns true if the table is mappable.
-		/// If the table is mappable it may be passed to the <see cref="Map.MapTable"/> command.
+		/// If the table is mappable it may be passed to the <see cref="T:Map.MapTable"/> command.
 		/// </summary>
 		public bool IsMappable
 		{
 			get
 			{
 			    string value = (string)this.tablecommandrunner.RunTableInfo(this.internalname, TableInfo.Mappable);
-                return (value == "T");
+                return (value == "TEntity");
 			}
 		}
 
@@ -270,5 +270,30 @@ namespace MapinfoWrapper.TableOperations
             }
         }
 
-    }
+	    private readonly static ITableFactory tabfactory = IoC.Resolve<ITableFactory>();
+
+        /// <summary>
+        /// Opens a new table in Mapinfo and returns the opened table.
+        /// </summary>
+        /// <param name="path">The path to the Mapinfo tab file to open.</param>
+        /// <returns>An instance of <see cref="T:MapinfoWrapper.TableOperations.ITable"/></returns>
+        public static ITable OpenTable(string path)
+        {
+            return tabfactory.OpenTable(path);   
+        }
+
+        /// <summary>
+        /// Opens a new table in Mapinfo, using the <typeparamref name="TEntity"/> as the entity type
+        /// for the table and returns the opened table.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to use a the entity for the table,
+        /// this will allow strong typed access to the columns in the table and LINQ support.</typeparam>
+        /// <param name="path"></param>
+        /// <returns>An instance of <see cref="T:MapinfoWrapper.TableOperations.ITable&lt;TEntity&gt;"/></returns>
+	    public static ITable<TEntity> OpenTable<TEntity>(string path)
+            where TEntity : BaseEntity, new()
+	    {
+            return tabfactory.OpenTable<TEntity>(path);
+	    }
+	}
 }

@@ -39,6 +39,10 @@
     <DocumentationFile>bin\Release\MapinfoDotNetWrapper.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject.Core, Version=1.0.0.82, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Ninject.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -63,6 +67,7 @@
     <Compile Include="Core\IoC\IDependencyResolver.cs" />
     <Compile Include="Core\IoC\IoC.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
+    <Compile Include="Wrapper\Geometries\Polyline.cs" />
     <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />
     <Compile Include="Wrapper\MapbasicOperations\TableObjVariable.cs" />
     <Compile Include="Wrapper\MapbasicOperations\Variable.cs" />
@@ -77,6 +82,7 @@
     <Compile Include="Wrapper\Geometries\Lines\ILine.cs" />
     <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
     <Compile Include="Wrapper\Table Operations\ITable.cs" />
+    <Compile Include="Wrapper\Table Operations\ITableFactory.cs" />
     <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjection.cs" />
     <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjector.cs" />
     <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\Evaluator.cs" />
@@ -126,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Wrapper\MapinfoWrapper.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
