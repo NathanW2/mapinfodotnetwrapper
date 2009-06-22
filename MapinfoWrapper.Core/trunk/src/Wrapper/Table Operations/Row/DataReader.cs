@@ -82,7 +82,7 @@ namespace MapinfoWrapper.TableOperations.RowOperations
                 int index = Convert.ToInt32(this.Get("rowid"));
                 TableObjVariable objvariable = new TableObjVariable(this, index);
                 GeometryFactory factory = new GeometryFactory();
-                return factory.GetGeometryFromObj(objvariable);
+                return factory.GetGeometryFromVariable(objvariable);
             }
 
             string columntypestring = this.wrapper.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.tableName, columnName, 3));

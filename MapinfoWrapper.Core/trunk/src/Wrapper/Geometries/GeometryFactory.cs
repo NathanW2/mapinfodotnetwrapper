@@ -6,6 +6,7 @@ using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Geometries.Lines;
 using MapinfoWrapper.Geometries.Points;
 using MapinfoWrapper.Mapinfo;
+using MapinfoWrapper.Wrapper.Geometries;
 
 namespace MapinfoWrapper.Geometries
 {
@@ -16,16 +17,16 @@ namespace MapinfoWrapper.Geometries
     {
 	    private readonly IMapinfoWrapper wrapper = IoC.Resolve<IMapinfoWrapper>();
 	    private readonly IVariableFactory variablefactory = IoC.Resolve<IVariableFactory>();
-    	
-    	/// <summary>
-    	/// Creates a new line in Mapinfo into the the supplied variable.
-    	/// <para>If you need to store this object in a table, set the obj column of
-    	/// the table as the return value of this function.</para>
-    	/// </summary>
-    	/// <param name="start">The coordinate of the start of the line.</param>
-    	/// <param name="end">The coordinate of the end of the line.</param>
-    	/// <param name="variable">The variable that will store the point object.</param>
-    	/// <returns>A new line object, which can be used to get information about the object.</returns>
+
+        /// <summary>
+        /// Creates a new line object in Mapinfo. 
+        /// Returns a <see cref="TEntity:MapinfoWrapper.Geometries.Lines.Line"/> which can be inserted into a
+        /// <see cref="TEntity:MapinfoWrapper.TableOperations.Table"/>
+        /// <para>This function will create a new object variable in Mapinfo with a modified GUID as its name.</para>
+        /// </summary>
+        /// <param name="start">The <see cref="TEntity:MapinfoWrapper.Geometries.Coordinate"/> for the start of the line.</param>
+        /// <param name="end">The <see cref="TEntity:MapinfoWrapper.Geometries.Coordinate"/> for the end of the line.</param></param>
+        /// <returns>A new <see cref="TEntity:MapinfoWrapper.Geometries.Lines.ILine"/>.</returns>
     	public ILine CreateLine(Coordinate start, Coordinate end)
     	{
             IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
@@ -34,11 +35,13 @@ namespace MapinfoWrapper.Geometries
     	}
     	
     	/// <summary>
-        /// Creates a new point object in Mapinfo and returns a point object, which can be used to get information about
-        /// the object or stored in a table.
+        /// Creates a new point object in Mapinfo. 
+        /// Returns a <see cref="TEntity:MapinfoWrapper.Geometries.Points.Point"/> which can be inserted into a
+        /// <see cref="TEntity:MapinfoWrapper.TableOperations.Table"/>
+        /// <para>This function will create a new object variable in Mapinfo with a modified GUID as its name.</para>
         /// </summary>
-        /// <param name="location">A coordinate that contains the X and Y to create the point.</param>
-        /// <param name="variable">The variable that will be used to store the newly created object.</param>
+        /// <param name="location">A <see cref="TEntity:MapinfoWrapper.Geometries.Coordinate"/> that contains coordinates at
+        /// which to create the point.</param>
         /// <returns>A new point object.</returns>
         public Point CreatePoint(Coordinate location)
         {
@@ -47,10 +50,16 @@ namespace MapinfoWrapper.Geometries
             return new Point(variable);
         }
 
-        public Geometry GetGeometryFromObj(IVariable variable)
+        /// <summary>
+        /// Returns the a <see cref="TEntity:MapinfoWrapper.Geometries.Geometry"/> for the 
+        /// supplied <see cref="TEntity:MapinfoWrapper.MapbasicOperations.IVariable"/>.
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        public Geometry GetGeometryFromVariable(IVariable variable)
         {
             Guard.AgainstNull(variable, "variable");
-
+            
             Geometry geo = new Geometry(variable);
             switch (geo.ObjectType)
             {
@@ -59,11 +68,11 @@ namespace MapinfoWrapper.Geometries
                 case ObjectTypeEnum.OBJ_TYPE_ELLIPSE:
                     break;
                 case ObjectTypeEnum.OBJ_TYPE_LINE:
-                    return new Lines.Line(variable);
+                    return new Line(variable);
                 case ObjectTypeEnum.OBJ_TYPE_PLINE:
-                    break;
+                    return new Polyline(variable);
                 case ObjectTypeEnum.OBJ_TYPE_POINT:
-                    return new Points.Point(variable);
+                    return new Point(variable);
                 case ObjectTypeEnum.OBJ_TYPE_FRAME:
                     break;
                 case ObjectTypeEnum.OBJ_TYPE_REGION:
@@ -79,7 +88,7 @@ namespace MapinfoWrapper.Geometries
                 case ObjectTypeEnum.OBJ_TYPE_COLLECTION:
                     break;
                 default:
-                    return null;
+                    break;
             }
             return geo;
         }

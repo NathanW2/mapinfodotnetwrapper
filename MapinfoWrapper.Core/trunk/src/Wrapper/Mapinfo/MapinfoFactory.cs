@@ -5,6 +5,7 @@ using System.Text;
 using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo.Internals;
 using MapinfoWrapper.Core.Internals;
+using MapinfoWrapper.TableOperations;
 
 namespace MapinfoWrapper.Mapinfo
 {
@@ -31,6 +32,10 @@ namespace MapinfoWrapper.Mapinfo
 
             resolver.Register(typeof(ITableCommandRunner),tablerunner);
             resolver.Register(typeof(IVariableFactory),varfactory);
+
+            TableFactory tableFactory = new TableFactory();
+
+            resolver.Register(typeof(ITableCommandRunner), tableFactory);
             
             return olemapinfo; 
         }
