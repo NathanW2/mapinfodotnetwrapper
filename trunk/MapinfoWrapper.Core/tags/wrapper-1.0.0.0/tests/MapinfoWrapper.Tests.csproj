@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD417C06-1A89-46A5-8339-2CA728B08DA3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapinfoWrapperTest</RootNamespace>
+    <AssemblyName>MapinfoWrapper.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MapinfoWrapper.Test.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>TestFrameworks\Moq 3.1\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>TestFrameworks\nUnit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SpecificationExample, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>TestFrameworks\xunit\SpecificationExample.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Entity">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit, Version=1.1.0.1323, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>TestFrameworks\xunit\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CoreTests\InternalsTests\TableCommandRunnerTests.cs" />
+    <Compile Include="CoreTests\InternalsTests\VariableFactoryTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WrapperTest\Embedding\ControlExtensionTests.cs" />
+    <Compile Include="WrapperTest\Embedding\MapinfoWindowHandleTests.cs" />
+    <Compile Include="WrapperTest\Embedding\SystemInfoTests.cs" />
+    <Compile Include="WrapperTest\LayerOperations\LayerTest.cs" />
+    <Compile Include="WrapperTest\MapbasicOperations\MapbasicObjectVariableTests.cs" />
+    <Compile Include="WrapperTest\MapinfoFactoryTest\COMMapinfo.cs" />
+    <Compile Include="WrapperTest\MapinfoFactoryTest\MapbasicInvokedMapinfoTest.cs" />
+    <Compile Include="WrapperTest\MapinfoFactoryTest\MapinfoFactoryTests.cs" />
+    <Compile Include="WrapperTest\MapOperations\MapTests.cs" />
+    <Compile Include="WrapperTest\ObjectOperations\GeometryTests.cs" />
+    <Compile Include="WrapperTest\ObjectOperations\Points\PointTests.cs" />
+    <Compile Include="WrapperTest\Table Operations\GenericTableTests.cs" />
+    <Compile Include="WrapperTest\Table Operations\OpenTableCommandBuilderTests.cs" />
+    <Compile Include="WrapperTest\Table Operations\Row\DataReaderTests.cs" />
+    <Compile Include="WrapperTest\Table Operations\Row\RowCollectionTests.cs" />
+    <Compile Include="WrapperTest\Table Operations\Row\RowEnumeratorTest.cs" />
+    <Compile Include="WrapperTest\Table Operations\SqlUpdateGeneratorTests .cs" />
+    <Compile Include="WrapperTest\Table Operations\TableFactoryTests.cs" />
+    <Compile Include="WrapperTest\Table Operations\TableInfoTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\MapinfoWrapper.csproj">
+      <Project>{FDA41A1F-5922-493C-AD86-DDF8D447023E}</Project>
+      <Name>MapinfoWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MapinfoWrapper.Test.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WrapperTest\ExtensionTest\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
