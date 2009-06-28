@@ -39,10 +39,6 @@
     <DocumentationFile>bin\Release\MapinfoDotNetWrapper.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ninject.Core, Version=1.0.0.82, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Ninject.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -63,10 +59,14 @@
     <Compile Include="Core\Internals\IVariableFactory.cs" />
     <Compile Include="Core\Internals\TableCommandRunner.cs" />
     <Compile Include="Core\Internals\VariableFactory.cs" />
+    <Compile Include="Core\IoC\Bootstrapper.cs" />
+    <Compile Include="Core\IoC\DependencyFactory.cs" />
     <Compile Include="Core\IoC\DependencyResolver.cs" />
+    <Compile Include="Core\IoC\IFactoryBuilder.cs" />
     <Compile Include="Core\IoC\IDependencyResolver.cs" />
-    <Compile Include="Core\IoC\IoC.cs" />
+    <Compile Include="Core\IoC\ServiceLocator.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
+    <Compile Include="Wrapper\Geometries\IGeometryFactory.cs" />
     <Compile Include="Wrapper\Geometries\Polyline.cs" />
     <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />
     <Compile Include="Wrapper\MapbasicOperations\TableObjVariable.cs" />
@@ -81,22 +81,22 @@
     <Compile Include="Wrapper\Geometries\IMapbasicObject.cs" />
     <Compile Include="Wrapper\Geometries\Lines\ILine.cs" />
     <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
-    <Compile Include="Wrapper\Table Operations\ITable.cs" />
-    <Compile Include="Wrapper\Table Operations\ITableFactory.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjection.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjector.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\Evaluator.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\ExpressionVisitor.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\SqlStringGenerator.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\Entities\BaseEntity.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\Entities\MappableEntity.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\Enumerators\ProjectionReader.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\Query.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\SQL Builders\QueryTranslator.cs" />
-    <Compile Include="Wrapper\Table Operations\LINQ\MapinfoQueryProvider.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\ColumnTypesEnum.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\DataReader.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\IDataReader.cs" />
+    <Compile Include="Wrapper\DataAccess\ITable.cs" />
+    <Compile Include="Wrapper\DataAccess\ITableFactory.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\ColumnProjection.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\ColumnProjector.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\Evaluator.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\ExpressionVisitor.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\SqlStringGenerator.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\Entities\BaseEntity.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\Entities\MappableEntity.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\Enumerators\ProjectionReader.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\Query.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\QueryTranslator.cs" />
+    <Compile Include="Wrapper\DataAccess\LINQ\MapinfoQueryProvider.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\ColumnTypesEnum.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\DataReader.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\IDataReader.cs" />
     <Compile Include="Wrapper\CommandBuilders\CommandStringBuilder.cs" />
     <Compile Include="Wrapper\CommandBuilders\ICommandStringBuilder.cs" />
     <Compile Include="Wrapper\Embedding\ControlExtensions.cs" />
@@ -118,16 +118,16 @@
     <Compile Include="Wrapper\Geometries\ObjectInfoEnum.cs" />
     <Compile Include="Wrapper\Geometries\ObjectTypeEnum.cs" />
     <Compile Include="Wrapper\Geometries\Points\Point.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\Enumerators\RowEnumerator.cs" />
-    <Compile Include="Wrapper\Table Operations\Table.cs" />
-    <Compile Include="Wrapper\Table Operations\GridHandleEnum.cs" />
-    <Compile Include="Wrapper\Table Operations\ITablecs.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\Enumerators\RowEnumerator.cs" />
+    <Compile Include="Wrapper\DataAccess\Table.cs" />
+    <Compile Include="Wrapper\DataAccess\GridHandleEnum.cs" />
+    <Compile Include="Wrapper\DataAccess\ITablecs.cs" />
     <Compile Include="Wrapper\CommandBuilders\OpenTableCommandBuilder.cs" />
-    <Compile Include="Wrapper\Table Operations\Row\Enumerators\RowList.cs" />
-    <Compile Include="Wrapper\Table Operations\Table-Nongeneric.cs" />
+    <Compile Include="Wrapper\DataAccess\Row\Enumerators\RowList.cs" />
+    <Compile Include="Wrapper\DataAccess\Table-Nongeneric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wrapper\Table Operations\TableFactory.cs" />
-    <Compile Include="Wrapper\Table Operations\TableInfoEnum.cs" />
+    <Compile Include="Wrapper\DataAccess\TableFactory.cs" />
+    <Compile Include="Wrapper\DataAccess\TableInfoEnum.cs" />
     <Compile Include="Wrapper\Workspace.cs" />
   </ItemGroup>
   <ItemGroup>

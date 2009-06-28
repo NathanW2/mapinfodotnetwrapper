@@ -1,4 +1,4 @@
-﻿using MapinfoWrapper.TableOperations;
+﻿using MapinfoWrapper.DataAccess;
 
 namespace MapinfoWrapper.Core.Internals
 {
@@ -9,5 +9,7 @@ namespace MapinfoWrapper.Core.Internals
         void OpenTable(string path);
         string GetPath(string tableName);
         object RunTableInfo(string tableName, TableInfo attribute);
+        void RunCommand(string command);
+        string Evaluate(string command);
     }
 }

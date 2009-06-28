@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MapinfoWrapper.TableOperations.LINQ;
+using MapinfoWrapper.DataAccess.LINQ;
 using MapinfoWrapper.Core;
 using System.Linq.Expressions;
 using System.Reflection;

@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.Core.IoC;
 
 namespace MapinfoWrapper.Core.Internals
 {
     internal class VariableFactory : IVariableFactory
     {
-        private readonly IMapinfoWrapper wrapper = IoC.IoC.Resolve<IMapinfoWrapper>();
-        
-        public VariableFactory() {}
+        private readonly IMapinfoWrapper wrapper;
+
+        public VariableFactory() : this(null)
+        { }
+
+        public VariableFactory(IMapinfoWrapper mapinfoInstance) 
+        {
+            this.wrapper = mapinfoInstance ?? ServiceLocator.GetInstance<IMapinfoWrapper>();
+        }
 
         public IVariable CreateNewWithGUID(Variable.VariableType type)
         {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.Embedding
@@ -13,16 +11,19 @@ namespace MapinfoWrapper.Embedding
     /// </summary>
     public class SystemInfo
     {
-        IMapinfoWrapper wrapper;
+        private readonly IMapinfoWrapper wrapper;
+
+        public SystemInfo() : this(null)
+        { }
 
         /// <summary>
         /// Creates a new SystemInfo object used to retive information
         /// about the current instace of mapinfo.
         /// </summary>
         /// <param name="mapinfoWrapper">A wrapper object containing the running instace of mapinfo.</param>
-        public SystemInfo(IMapinfoWrapper mapinfoWrapper)
+        internal SystemInfo(IMapinfoWrapper mapinfoWrapper)
         {
-            this.wrapper = mapinfoWrapper;
+            this.wrapper = mapinfoWrapper ?? ServiceLocator.GetInstance<IMapinfoWrapper>();
         }
 
         /// <summary>

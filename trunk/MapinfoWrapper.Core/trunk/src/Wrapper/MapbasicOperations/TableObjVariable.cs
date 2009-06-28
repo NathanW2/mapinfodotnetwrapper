@@ -1,5 +1,4 @@
-using MapinfoWrapper.Core.IoC;
-using MapinfoWrapper.TableOperations.RowOperations;
+using MapinfoWrapper.DataAccess.RowOperations;
 namespace MapinfoWrapper.MapbasicOperations
 {
     public class TableObjVariable : Variable

@@ -24,7 +24,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MapinfoWrapper.CommandBuilders.OpenTableCommandBuilder">
-    <Position X="5.5" Y="7.25" Width="1.5" />
+    <Position X="2.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAAAAAEABAABQAIAAAIAAAAAAAAACQAAAgACAEAA=</HashCode>
       <FileName>Wrapper\CommandBuilders\OpenTableCommandBuilder.cs</FileName>
@@ -52,8 +52,8 @@
       <FileName>Wrapper\Exceptions\MapinfoException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MapinfoWrapper.Geometries.Geometry" Collapsed="true">
-    <Position X="1.75" Y="1.75" Width="1.5" />
+  <Class Name="MapinfoWrapper.Geometries.Geometry">
+    <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Wrapper\Geometries\Geometry.cs</FileName>
@@ -63,36 +63,29 @@
   <Class Name="MapinfoWrapper.Geometries.GeometryFactory">
     <Position X="9" Y="6.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAIAABIAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAAAAIAAAAAAAAAAAQBIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Wrapper\Geometries\GeometryFactory.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MapinfoWrapper.Geometries.MapbasicObject" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
+  <Class Name="MapinfoWrapper.Geometries.MapbasicObject">
+    <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAIIACAAEAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAIYACAAAAAA=</HashCode>
       <FileName>Wrapper\Geometries\MapbasicObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MapinfoWrapper.Geometries.ObjVariableExtender" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAA=</HashCode>
-      <FileName>Wrapper\Geometries\ObjVariableExtendor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MapinfoWrapper.Geometries.Lines.Line" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+  <Class Name="MapinfoWrapper.Geometries.Lines.Line">
+    <Position X="0.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Wrapper\Geometries\Lines\Line.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MapinfoWrapper.Geometries.Points.Point" Collapsed="true">
-    <Position X="2.75" Y="3.25" Width="1.5" />
+  <Class Name="MapinfoWrapper.Geometries.Points.Point">
+    <Position X="2.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Wrapper\Geometries\Points\Point.cs</FileName>
@@ -136,14 +129,6 @@
       <FileName>Wrapper\LayerOperations\Layer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MapinfoWrapper.MapbasicOperations.MapbasicVariable" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAICAAAAAEAAAAAAQBAAAAAAAAABAAAEAAAAA=</HashCode>
-      <FileName>Wrapper\MapbasicOperations\MapbasicVariable.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="MapinfoWrapper.MapinfoCallback">
     <Position X="12.75" Y="2" Width="1.5" />
     <TypeIdentifier>
@@ -175,7 +160,7 @@
   <Class Name="MapinfoWrapper.TableOperations.Table&lt;TTableDef&gt;">
     <Position X="7.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gCAARAACAAAEAFBAiEAAAAwAAYgEIgARAABAAACAAAI=</HashCode>
+      <HashCode>gCCARAACAAAEAFBAiEAAAA4AAIgEIgAQAAAQAACAAAI=</HashCode>
       <FileName>Wrapper\Table Operations\Table.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -183,7 +168,7 @@
   <Class Name="MapinfoWrapper.TableOperations.LINQ.MapinfoQueryProvider" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="19.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAACBAAAAIAABAAAEAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAACBAAAAIAAAAAAEAAAAAAA=</HashCode>
       <FileName>Wrapper\Table Operations\LINQ\MapinfoQueryProvider.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -322,7 +307,7 @@
   <Interface Name="MapinfoWrapper.Geometries.IMapbasicObject">
     <Position X="16.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAA=</HashCode>
       <FileName>Wrapper\Geometries\IMapbasicObject.cs</FileName>
     </TypeIdentifier>
   </Interface>

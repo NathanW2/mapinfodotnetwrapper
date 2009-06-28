@@ -13,6 +13,7 @@
         OBJ_TYPE_ROUNDRECT = 9,
         OBJ_TYPE_TEXT = 10,
         OBJ_TYPE_MPOINT = 11,
-        OBJ_TYPE_COLLECTION = 12
+        OBJ_TYPE_COLLECTION = 12,
+        NoObject
     }
 }

@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper.Core.IoC;
+using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.TableOperations;
+using MapinfoWrapper.DataAccess;
 
 namespace MapinfoWrapper.Core.Internals
 {
     internal class TableCommandRunner : ITableCommandRunner
     {
         private readonly IMapinfoWrapper wrapper;
-        
-        public TableCommandRunner() 
-            : this(IoC.IoC.Resolve<IMapinfoWrapper>())
+
+        public TableCommandRunner() : this(null)
         { }
 
         public TableCommandRunner(IMapinfoWrapper mapinfo)
         {
-            this.wrapper = mapinfo;
+            this.wrapper = mapinfo ?? ServiceLocator.GetInstance<IMapinfoWrapper>();
         }
 
         public string GetName(int tableNumber)
@@ -56,5 +52,14 @@ namespace MapinfoWrapper.Core.Internals
         	}
         }
 
+        public void RunCommand(string command)
+        {
+            this.wrapper.RunCommand(command);
+        }
+
+        public string Evaluate(string command)
+        {
+            return this.wrapper.Evaluate(command);
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace MapinfoWrapper.Mapinfo
     /// be Mapinfo version independent.</para>
     /// <para>If you are using a version of Mapinfo less then 9.5 you will need to use the <see cref="T:COMMapinfo"/> class/.</para>
     /// </summary>
-    public class MapbasicInvokedMapinfo : IMapinfoWrapper
+    internal class MapbasicInvokedMapinfo : IMapinfoWrapper
     {
         private IMapInfo2 mapinfoinstance;
 
@@ -23,7 +23,7 @@ namespace MapinfoWrapper.Mapinfo
         /// Initializes a new instance of the <see cref="MapbasicInvokedMapinfo"/> class.
         /// </summary>
         /// <param name="mapinfoInstance">The current running instance</param>
-        public MapbasicInvokedMapinfo(IMapInfo2 mapinfoInstance)
+        internal MapbasicInvokedMapinfo(IMapInfo2 mapinfoInstance)
         {
            this.mapinfoinstance = mapinfoInstance;
         }

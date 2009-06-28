@@ -36,7 +36,7 @@ namespace MapinfoWrapper.Mapinfo
         /// IoC.Initialize(resolver);
         /// </code>
         /// </example>
-        public COMMapinfo(DMapInfo mapinfoInstance)
+        internal COMMapinfo(DMapInfo mapinfoInstance)
         {
             this.mapinfoinstance = mapinfoInstance;
         }
@@ -47,10 +47,8 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>An instance of Mapinfo's COM object wrapped in <see cref="T:COMMapinfo"/></returns>
         public static COMMapinfo CreateInstance()
         {
-            Type mapinfotype = Type.GetTypeFromProgID("Mapinfo.Application");
-            DMapInfo instance = (DMapInfo)Activator.CreateInstance(mapinfotype);
-            COMMapinfo olemapinfo = new COMMapinfo(instance);
-            return olemapinfo;
+            MapinfoFactory mapinfoFactory = new MapinfoFactory();
+            return mapinfoFactory.CreateCOMInstance();
         }
         
         #region IMapinfoWrapper Members

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MapinfoWrapper.Mapinfo
 {
@@ -24,7 +21,7 @@ namespace MapinfoWrapper.Mapinfo
     ///</code>
     ///</example>
     ///</summary>
-    public class MapinfoLogger : IMapinfoWrapper
+    internal class MapinfoLogger : IMapinfoWrapper
     {
         private IMapinfoWrapper mapinfo;
         private Action<String> action;

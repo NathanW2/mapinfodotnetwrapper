@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.LayerOperations
@@ -12,42 +9,48 @@ namespace MapinfoWrapper.LayerOperations
     /// </summary>
     public class Layer
     {
-        int layernumber;
-        string layername;
+        private readonly int layernumber;
+        private readonly string layername;
         IMapinfoWrapper wrapper;
 
-        private Layer(IMapinfoWrapper mapinfoInstance,int layerNumber)
+        internal Layer(string layerName)
+            : this(null, layerName)
+        {}
+
+        internal Layer(int layerNumber)
+            : this(null, layerNumber)
+        { }
+
+        internal Layer(IMapinfoWrapper mapinfoInstance, int layerNumber)
         {
             this.layernumber = layerNumber;
             this.wrapper = mapinfoInstance;
         }
 
-        private Layer(IMapinfoWrapper mapinfoInstance, string layerName)
+        internal Layer(IMapinfoWrapper mapinfoInstance, string layerName)
         {
             this.layername = layerName;
-            this.wrapper = mapinfoInstance;
+            this.wrapper = mapinfoInstance ?? ServiceLocator.GetInstance<IMapinfoWrapper>();
         }
 
         /// <summary>
         /// Creates a new <see cref="T:Layer"/> using the layer number.
         /// </summary>
-        /// <param name="wrapper">An instance of Mapinfo.</param>
         /// <param name="layerNumber">The number of the layer.</param>
         /// <returns>An instance of <see cref="T:Layer"/>.</returns>
-        public static Layer GetLayerFromNumber(IMapinfoWrapper wrapper,int layerNumber)
+        public static Layer GetLayerFromNumber(int layerNumber)
         {
-            return new Layer(wrapper,layerNumber);
+            return new Layer(layerNumber);
         }
 
         /// <summary>
         /// Creates a new <see cref="T:Layer"/> using the layer name.
         /// </summary>
-        /// <param name="wrapper">An instance of Mapinfo.</param>
         /// <param name="layerName">The name of the layer.</param>
         /// <returns>An instance of <see cref="T:Layer"/>.</returns>
-        public static Layer GetLayerFromName(IMapinfoWrapper wrapper,string layerName)
+        public static Layer GetLayerFromName(string layerName)
         {
-            return new Layer(wrapper,layerName);
+            return new Layer(layerName);
         }
     }
 }
