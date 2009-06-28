@@ -75,6 +75,7 @@
     <Compile Include="MapInfoCallback.cs" />
     <Compile Include="Maps\Table Defs\IWorld.cs" />
     <Compile Include="Maps\Table Defs\World.cs" />
+    <Compile Include="Maps\Table Defs\WorldCapEntity.cs" />
     <Compile Include="Maps\Table Defs\WorldWorkspace.cs" />
     <Compile Include="NewDataForm.cs">
       <SubType>Form</SubType>
