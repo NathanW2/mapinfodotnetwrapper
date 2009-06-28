@@ -7,7 +7,7 @@ namespace MapinfoWrapper.Core.IoC
 {
     public interface IDependencyResolver
     {
-        void Register(Type type, object obj);
+        void Register<T>(T obj);
         T Resolve<T>();
     }
 }

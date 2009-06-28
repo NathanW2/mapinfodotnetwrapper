@@ -2,7 +2,7 @@ using MapinfoWrapper.MapbasicOperations;
 
 namespace MapinfoWrapper.Core.Internals
 {
-    internal interface IVariableFactory
+    public interface IVariableFactory
     {
         IVariable CreateNewWithGUID(Variable.VariableType type);
     }

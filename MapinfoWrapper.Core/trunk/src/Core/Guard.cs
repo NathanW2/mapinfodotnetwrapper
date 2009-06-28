@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.TableOperations.RowOperations;
+using MapinfoWrapper.DataAccess.RowOperations;
 using System.Diagnostics;
 using System.Threading;
-using MapinfoWrapper.TableOperations.RowOperations.Entities;
+using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
 namespace MapinfoWrapper.Core
 {

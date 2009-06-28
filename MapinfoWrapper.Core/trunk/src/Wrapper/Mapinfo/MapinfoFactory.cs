@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo.Internals;
-using MapinfoWrapper.Core.Internals;
-using MapinfoWrapper.TableOperations;
 
 namespace MapinfoWrapper.Mapinfo
 {
@@ -23,20 +20,8 @@ namespace MapinfoWrapper.Mapinfo
             DMapInfo instance = CreateMapinfoInstance();
             COMMapinfo olemapinfo = new COMMapinfo(instance);
 
-            DependencyResolver resolver = new DependencyResolver();
-            resolver.Register(typeof(IMapinfoWrapper), olemapinfo);
-            IoC.Initialize(resolver);
+            Bootstrapper.WireUp(olemapinfo);
 
-            TableCommandRunner tablerunner = new TableCommandRunner();
-            VariableFactory varfactory = new VariableFactory();
-
-            resolver.Register(typeof(ITableCommandRunner),tablerunner);
-            resolver.Register(typeof(IVariableFactory),varfactory);
-
-            TableFactory tableFactory = new TableFactory();
-
-            resolver.Register(typeof(ITableCommandRunner), tableFactory);
-            
             return olemapinfo; 
         }
     }

@@ -6,18 +6,17 @@ using System.Diagnostics;
 
 namespace MapinfoWrapper.Core.IoC
 {
-    public class DependencyResolver : IDependencyResolver
+    internal class DependencyResolver : IDependencyResolver
     {
         private IDictionary<Type, object> typelookup = new Dictionary<Type, object>();
 
         #region IDependencyResolver Members
         [DebuggerStepThrough]
-        public void Register(Type type, object obj)
+        public void Register<T>(T obj)
         {
-            Guard.AgainstNull(type, "type");
             Guard.AgainstNull(obj, "obj");
 
-            this.typelookup.Add(type, obj);
+            this.typelookup.Add(typeof(T), obj);
         }
 
         [DebuggerStepThrough]

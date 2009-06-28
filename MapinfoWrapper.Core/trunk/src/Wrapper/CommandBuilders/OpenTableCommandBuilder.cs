@@ -5,7 +5,7 @@ using System.Text;
 using MapinfoWrapper.CommandBuilders;
 using System.Text.RegularExpressions;
 using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.TableOperations;
+using MapinfoWrapper.DataAccess;
 
 namespace MapinfoWrapper.CommandBuilders
 {
