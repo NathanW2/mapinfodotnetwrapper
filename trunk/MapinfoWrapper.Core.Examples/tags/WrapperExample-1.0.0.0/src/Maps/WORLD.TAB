@@ -1,0 +1,80 @@
+!table
+!version 450
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 32
+    Country Char (50) ;
+    Capital Char (20) ;
+    Continent Char (30) ;
+    Numeric_code Integer ;
+    FIPS Char (2) ;
+    ISO_2 Char (2) ;
+    ISO_3 Char (3) ;
+    Pop_1994 Integer ;
+    Pop_Grw_Rt Decimal (6, 1) ;
+    Pop_Male Integer ;
+    Pop_Fem Integer ;
+    Pop_0_14 Integer ;
+    Pop_15_64 Integer ;
+    Pop_65Plus Integer ;
+    Male_0_14 Integer ;
+    Male_15_64 Integer ;
+    Male_65Plus Integer ;
+    Fem_0_14 Integer ;
+    Fem_15_64 Integer ;
+    Fem_65Plus Integer ;
+    Pop_Urban Integer ;
+    Pop_Rural Integer ;
+    Pop_Urb_Male Integer ;
+    Pop_Urb_Fem Integer ;
+    Pop_Rur_Male Integer ;
+    Pop_Rur_Fem Integer ;
+    Arable_Pct Decimal (6, 1) ;
+    Literacy Decimal (4, 1) ;
+    Inflat_Rate Decimal (4, 1) ;
+    Unempl_Rate Decimal (4, 1) ;
+    Indust_Growth Decimal (4, 1) ;
+    ColorCode Integer Index 1 ;
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\Quality" = ""
+"\Quality\Lineage" = ""
+"\Quality\Lineage\Source" = ""
+"\Quality\Lineage\Source\Vintage" = "1998"
+"\Quality\Lineage\Source\Scale" = "1:1,000,000"
+"\Quality\Lineage\Source\Citation" = "MapInfo Corporation from National Imagery and Mapping Agency (NIMA)"
+"\Spatial Reference" = ""
+"\Spatial Reference\Geographic" = ""
+"\Spatial Reference\Geographic\Projection" = ""
+"\Spatial Reference\Geographic\Projection\Name" = "Longitude / Latitude (WGS 84)"
+"\Spatial Reference\Geographic\Projection\Clause" = "CoordSys Earth Projection 1, 104"
+"\Spatial Reference\Geographic\Coordinate Units" = "degree"
+"\Identification" = ""
+"\Identification\Description" = ""
+"\Identification\Description\Abstract" = "Very generalized boundaries for world countries.   Based on current World Almanac and UN definitions of Countries."
+"\Identification\Use Constraints" = "For Use with MapInfo Professional"
+"\Identification\Access Constraints" = "Licensed Users"
+"\Identification\Domain" = ""
+"\Identification\Domain\Bounds" = ""
+"\Identification\Domain\Bounds\minx" = "-182.79"
+"\Identification\Domain\Bounds\maxx" = "180"
+"\Identification\Domain\Bounds\maxy" = "83.63"
+"\Identification\Domain\Bounds\miny" = "-90"
+"\Identification\Citation" = "MapInfo Professional Bundled Data"
+"\Identification\Time Period" = ""
+"\Identification\Time Period\Currentness" = "1998"
+"\Spatial Organization" = ""
+"\Spatial Organization\Object" = ""
+"\Spatial Organization\Object\Type1" = "Regions"
+"\Spatial Organization\Object\Type1\Count" = "27110"
+"\Spatial Organization\Object\Type2" = "Points"
+"\Spatial Organization\Object\Type2\Count" = "0"
+"\Spatial Organization\Object\Type3" = "Polylines"
+"\Spatial Organization\Object\Type3\Count" = "0"
+"\Spatial Organization\Object\Type4" = "Lines"
+"\Spatial Organization\Object\Type4\Count" = "0"
+"\Spatial Organization\Object\All" = "Sum of all objects"
+"\Spatial Organization\Object\All\Count" = "27110"
+end_metadata
