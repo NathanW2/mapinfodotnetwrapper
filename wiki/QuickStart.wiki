@@ -1,7 +1,7 @@
 #labels Featured,Phase-Implementation,Example
 _Create a new Mapinfo instace_
 {{{
- COMMapinfo mapinfo = new MapinfoFactory().CreateCOMInstance();
+ COMMapinfo mapinfo = COMMapinfo.CreateInstance();
 }}}
 
 _Opening a table_
