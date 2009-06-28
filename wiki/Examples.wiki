@@ -51,7 +51,7 @@ You can also define a entity for the table, which will be used to get strong typ
 _Note! I am in the process of writing a tool that will generate entities based on the columns in a Mapinfo TAB file.
 
 {{{   
-    //Define a entity as a POCO(Plain old C object) and inherit from BaseEntity or                                                            
+    //Define a entity as a POCO(Plain old CLR object) and inherit from BaseEntity or                                                            
     //MappableRow.  The MappableRow base object will give you access to the RowID and obj
     //column in the table.
     class RoadEntity : MappableEntity
