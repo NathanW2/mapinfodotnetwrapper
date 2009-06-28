@@ -49,15 +49,19 @@ namespace Wrapper.Example.Forms
             this.MapInformation = new System.Windows.Forms.PropertyGrid();
             this.mapPanel = new System.Windows.Forms.PictureBox();
             this.AddNewButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TableInfo = new System.Windows.Forms.GroupBox();
             this.TabInfoGrid = new System.Windows.Forms.PropertyGrid();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapPanel)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.TableInfo.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -233,10 +237,11 @@ namespace Wrapper.Example.Forms
             // 
             // MapInformation
             // 
+            this.MapInformation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MapInformation.HelpVisible = false;
-            this.MapInformation.Location = new System.Drawing.Point(6, 19);
+            this.MapInformation.Location = new System.Drawing.Point(3, 3);
             this.MapInformation.Name = "MapInformation";
-            this.MapInformation.Size = new System.Drawing.Size(214, 146);
+            this.MapInformation.Size = new System.Drawing.Size(249, 245);
             this.MapInformation.TabIndex = 0;
             this.MapInformation.ToolbarVisible = false;
             // 
@@ -262,34 +267,57 @@ namespace Wrapper.Example.Forms
             this.AddNewButton.UseVisualStyleBackColor = true;
             this.AddNewButton.Click += new System.EventHandler(this.AddNewButton_Click);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.MapInformation);
-            this.groupBox1.Location = new System.Drawing.Point(20, 337);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(227, 172);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Map Info";
-            // 
             // TableInfo
             // 
-            this.TableInfo.Controls.Add(this.TabInfoGrid);
-            this.TableInfo.Location = new System.Drawing.Point(397, 252);
+            this.TableInfo.Controls.Add(this.tabControl1);
+            this.TableInfo.Location = new System.Drawing.Point(342, 207);
             this.TableInfo.Name = "TableInfo";
-            this.TableInfo.Size = new System.Drawing.Size(220, 257);
+            this.TableInfo.Size = new System.Drawing.Size(275, 302);
             this.TableInfo.TabIndex = 14;
             this.TableInfo.TabStop = false;
-            this.TableInfo.Text = "Table Info";
+            this.TableInfo.Text = "Information";
             // 
             // TabInfoGrid
             // 
+            this.TabInfoGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabInfoGrid.HelpVisible = false;
-            this.TabInfoGrid.Location = new System.Drawing.Point(6, 19);
+            this.TabInfoGrid.Location = new System.Drawing.Point(3, 3);
             this.TabInfoGrid.Name = "TabInfoGrid";
-            this.TabInfoGrid.Size = new System.Drawing.Size(208, 231);
+            this.TabInfoGrid.Size = new System.Drawing.Size(249, 157);
             this.TabInfoGrid.TabIndex = 0;
             this.TabInfoGrid.ToolbarVisible = false;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(6, 19);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(263, 277);
+            this.tabControl1.TabIndex = 1;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.MapInformation);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(255, 251);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Map Info";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.TabInfoGrid);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(255, 163);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Table Info";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // MapForm
             // 
@@ -297,7 +325,6 @@ namespace Wrapper.Example.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1142, 537);
             this.Controls.Add(this.TableInfo);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.AddNewButton);
             this.Controls.Add(this.mapPanel);
             this.Controls.Add(this.RunQueryButton);
@@ -324,8 +351,10 @@ namespace Wrapper.Example.Forms
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapPanel)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.TableInfo.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,9 +383,11 @@ namespace Wrapper.Example.Forms
         private System.Windows.Forms.PropertyGrid MapInformation;
         private System.Windows.Forms.PictureBox mapPanel;
         private System.Windows.Forms.Button AddNewButton;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox TableInfo;
         private System.Windows.Forms.PropertyGrid TabInfoGrid;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
 	}
 }
 

@@ -30,6 +30,7 @@ namespace Wrapper.Example.Workspaces
             return new WorldWorkspace();
         }
 
+        private Table<World> worldtable; 
         /// <summary>
         /// Holds an instance of the world table in Mapinfo, that was open with the workspace.
         /// </summary>
@@ -37,7 +38,24 @@ namespace Wrapper.Example.Workspaces
         {
             get 
             {
-                return (Table<World>)Table.GetTable<World>("World");
+                if (worldtable == null)
+                    worldtable = (Table<World>)Table.GetTable<World>("World");
+                return worldtable;
+            }
+        }
+
+        private Table<WorldCapEntity> worldcap; 
+
+        /// <summary>
+        /// Holds an instance of the world table in Mapinfo.
+        /// </summary>
+        public Table<WorldCapEntity> WorldCap
+        {
+            get
+            {
+                if (worldcap == null)
+                    worldcap = (Table<WorldCapEntity>)Table.GetTable<WorldCapEntity>("WORLDCAP");
+                return worldcap;
             }
         }
 
