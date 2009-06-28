@@ -28,11 +28,9 @@ namespace Wrapper.Example.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.mapPanel = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openWorldTableLINQExampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,22 +44,21 @@ namespace Wrapper.Example.Forms
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.QueryTextbox = new System.Windows.Forms.TextBox();
+            this.RunQueryButton = new System.Windows.Forms.Button();
+            this.MapInformation = new System.Windows.Forms.PropertyGrid();
+            this.mapPanel = new System.Windows.Forms.PictureBox();
+            this.AddNewButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.TableInfo = new System.Windows.Forms.GroupBox();
+            this.TabInfoGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapPanel)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.TableInfo.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mapPanel
-            // 
-            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.mapPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.mapPanel.Location = new System.Drawing.Point(10, 88);
-            this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(501, 377);
-            this.mapPanel.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -70,7 +67,7 @@ namespace Wrapper.Example.Forms
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1036, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1142, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -78,30 +75,22 @@ namespace Wrapper.Example.Forms
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openWorldTableLINQExampleToolStripMenuItem,
-            this.openToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // openWorldTableLINQExampleToolStripMenuItem
             // 
             this.openWorldTableLINQExampleToolStripMenuItem.Name = "openWorldTableLINQExampleToolStripMenuItem";
-            this.openWorldTableLINQExampleToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.openWorldTableLINQExampleToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.openWorldTableLINQExampleToolStripMenuItem.Text = "Open World Table LINQ Example";
             this.openWorldTableLINQExampleToolStripMenuItem.Click += new System.EventHandler(this.openWorldTableLINQExampleToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.openToolStripMenuItem.Text = "&Open...";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -110,13 +99,13 @@ namespace Wrapper.Example.Forms
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -125,7 +114,7 @@ namespace Wrapper.Example.Forms
             this.comboBoxMapTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxMapTool.Enabled = false;
             this.comboBoxMapTool.FormattingEnabled = true;
-            this.comboBoxMapTool.Location = new System.Drawing.Point(106, 58);
+            this.comboBoxMapTool.Location = new System.Drawing.Point(111, 56);
             this.comboBoxMapTool.Name = "comboBoxMapTool";
             this.comboBoxMapTool.Size = new System.Drawing.Size(121, 21);
             this.comboBoxMapTool.TabIndex = 0;
@@ -134,7 +123,7 @@ namespace Wrapper.Example.Forms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 61);
+            this.label1.Location = new System.Drawing.Point(17, 59);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 1;
@@ -144,9 +133,9 @@ namespace Wrapper.Example.Forms
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 468);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 515);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1036, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1142, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -184,10 +173,11 @@ namespace Wrapper.Example.Forms
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Select all where Continent is equal to North America",
-            "Select all where Pop_1994 is greater then 4,000,000"});
-            this.comboBox1.Location = new System.Drawing.Point(514, 61);
+            "Select all where Pop_1994 is greater then 4,000,000",
+            "Select Name, Pop_1994, obj from world."});
+            this.comboBox1.Location = new System.Drawing.Point(623, 60);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(510, 21);
+            this.comboBox1.Size = new System.Drawing.Size(412, 21);
             this.comboBox1.TabIndex = 5;
             this.comboBox1.Text = "SELECT A QUERY TO RUN ON THE WORLD TABLE.";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
@@ -198,14 +188,14 @@ namespace Wrapper.Example.Forms
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(517, 88);
+            this.dataGridView1.Location = new System.Drawing.Point(623, 143);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(507, 377);
+            this.dataGridView1.Size = new System.Drawing.Size(504, 329);
             this.dataGridView1.TabIndex = 6;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(514, 28);
+            this.button1.Location = new System.Drawing.Point(623, 27);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(271, 23);
             this.button1.TabIndex = 7;
@@ -215,7 +205,7 @@ namespace Wrapper.Example.Forms
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(791, 27);
+            this.button2.Location = new System.Drawing.Point(900, 26);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(233, 23);
             this.button2.TabIndex = 8;
@@ -223,11 +213,95 @@ namespace Wrapper.Example.Forms
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // QueryTextbox
+            // 
+            this.QueryTextbox.Location = new System.Drawing.Point(626, 87);
+            this.QueryTextbox.Multiline = true;
+            this.QueryTextbox.Name = "QueryTextbox";
+            this.QueryTextbox.Size = new System.Drawing.Size(504, 49);
+            this.QueryTextbox.TabIndex = 9;
+            // 
+            // RunQueryButton
+            // 
+            this.RunQueryButton.Location = new System.Drawing.Point(1042, 60);
+            this.RunQueryButton.Name = "RunQueryButton";
+            this.RunQueryButton.Size = new System.Drawing.Size(88, 23);
+            this.RunQueryButton.TabIndex = 10;
+            this.RunQueryButton.Text = "Run Query";
+            this.RunQueryButton.UseVisualStyleBackColor = true;
+            this.RunQueryButton.Click += new System.EventHandler(this.RunQueryButton_Click);
+            // 
+            // MapInformation
+            // 
+            this.MapInformation.HelpVisible = false;
+            this.MapInformation.Location = new System.Drawing.Point(6, 19);
+            this.MapInformation.Name = "MapInformation";
+            this.MapInformation.Size = new System.Drawing.Size(214, 146);
+            this.MapInformation.TabIndex = 0;
+            this.MapInformation.ToolbarVisible = false;
+            // 
+            // mapPanel
+            // 
+            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.mapPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.mapPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mapPanel.Location = new System.Drawing.Point(20, 83);
+            this.mapPanel.Name = "mapPanel";
+            this.mapPanel.Size = new System.Drawing.Size(597, 426);
+            this.mapPanel.TabIndex = 11;
+            this.mapPanel.TabStop = false;
+            // 
+            // AddNewButton
+            // 
+            this.AddNewButton.Location = new System.Drawing.Point(623, 478);
+            this.AddNewButton.Name = "AddNewButton";
+            this.AddNewButton.Size = new System.Drawing.Size(162, 31);
+            this.AddNewButton.TabIndex = 12;
+            this.AddNewButton.Text = "Add new record to world table";
+            this.AddNewButton.UseVisualStyleBackColor = true;
+            this.AddNewButton.Click += new System.EventHandler(this.AddNewButton_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.MapInformation);
+            this.groupBox1.Location = new System.Drawing.Point(20, 337);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(227, 172);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Map Info";
+            // 
+            // TableInfo
+            // 
+            this.TableInfo.Controls.Add(this.TabInfoGrid);
+            this.TableInfo.Location = new System.Drawing.Point(397, 252);
+            this.TableInfo.Name = "TableInfo";
+            this.TableInfo.Size = new System.Drawing.Size(220, 257);
+            this.TableInfo.TabIndex = 14;
+            this.TableInfo.TabStop = false;
+            this.TableInfo.Text = "Table Info";
+            // 
+            // TabInfoGrid
+            // 
+            this.TabInfoGrid.HelpVisible = false;
+            this.TabInfoGrid.Location = new System.Drawing.Point(6, 19);
+            this.TabInfoGrid.Name = "TabInfoGrid";
+            this.TabInfoGrid.Size = new System.Drawing.Size(208, 231);
+            this.TabInfoGrid.TabIndex = 0;
+            this.TabInfoGrid.ToolbarVisible = false;
+            // 
             // MapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1036, 490);
+            this.ClientSize = new System.Drawing.Size(1142, 537);
+            this.Controls.Add(this.TableInfo);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.AddNewButton);
+            this.Controls.Add(this.mapPanel);
+            this.Controls.Add(this.RunQueryButton);
+            this.Controls.Add(this.QueryTextbox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
@@ -237,7 +311,6 @@ namespace Wrapper.Example.Forms
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.comboBoxMapTool);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.mapPanel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(450, 450);
@@ -250,6 +323,9 @@ namespace Wrapper.Example.Forms
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapPanel)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.TableInfo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,10 +333,8 @@ namespace Wrapper.Example.Forms
 
 		#endregion
 
-		private System.Windows.Forms.Panel mapPanel;
-		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -275,6 +349,14 @@ namespace Wrapper.Example.Forms
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox QueryTextbox;
+        private System.Windows.Forms.Button RunQueryButton;
+        private System.Windows.Forms.PropertyGrid MapInformation;
+        private System.Windows.Forms.PictureBox mapPanel;
+        private System.Windows.Forms.Button AddNewButton;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox TableInfo;
+        private System.Windows.Forms.PropertyGrid TabInfoGrid;
 	}
 }
 

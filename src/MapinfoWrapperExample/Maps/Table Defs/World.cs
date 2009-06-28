@@ -1,418 +1,54 @@
-﻿using System;
-using Wrapper.Extensions;
-using Wrapper.TableOperations.Row;
+﻿using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
 namespace Wrapper.Example.Tables
 {
     /// <summary>
-    /// This is the entity object for the table worlds.TAB, this entity contains the
-    /// mapping and conversions to and from Mapinfo's string to return right type.
+    /// This is the entity object for the table worlds.TAB, this entity contains properties that 
+    /// match all the columns in the worlds table and allows for strong typed access to the column data
+    /// in Mapinfo.  An entity represents one row in a given table.
     /// 
-    /// <para>This class inherits from MappableRow which allows access to the obj column in the table, it also implements
-    /// <see cref="T:IWorld"/> so that a change in the interface will force the change here also.</para>
+    /// <para>There is no binding an entity and it's table. For instance you could have World.Tab and Worlds2.Tab
+    /// as long as the column names match you can use it as the tables entity type.</para>
     /// 
-    /// <para>Properties in this class use the underlying base.GetValue method which takes a lambda expression which is used
-    /// to force strong typing to avoid spelling mistakes in column names.</para>
-    /// 
-    /// <para>NOTE! Only a handfull of properties will be implemented just for examples sake.  You can get access to the columns still
-    /// by doing something like World.GetValue(row => row.{ColumnName})</para>
+    /// <para>This class inherits from <see cref="T:MapinfoWrapper.TableOperations.RowOperations.Entities.MappableEntity"/>
+    /// which allows access to the obj column and rowid column in the table.</para>
     /// </summary>
-    /// <remarks>NOTE! In future releases of the OLE wrapper, I will be inculding a tool that will generate this kind table entity from a
-    /// supplied .TAB file automaticlly, it will also create the interface for the table that is used as a template.</remarks>
+    /// <remarks>NOTE! I am in the process of writing a tool that will generate these types of entities
+    /// from a Mapinfo Tab file.</remarks>
     [UsesWrapper]
-    public class World : MappableRow<IWorld>, IWorld
+    public class World : MappableEntity, IWorld
     {
-
-        #region IWorld Members
-
-        public string Country
-        {
-            get
-            {
-                return (string)base.GetValue(row => row.Country);
-            }
-            set
-            {
-                base.SetValue(row => row.Country, value.InQuotes());
-            }
-        }
-
-        public string Capital
-        {
-            get
-            {
-                return (string)base.GetValue(row => row.Capital);
-            }
-            set
-            {
-                base.SetValue(row => row.Capital, value.InQuotes());
-            }
-        }
-
-
-        public int Numeric_code
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Numeric_code));
-            }
-            set
-            {
-                base.SetValue(row => row.Numeric_code, value);
-            }
-        }
-
-        #region Only getters have been implemented Passed this point
-
-        public string Continent
-        {
-            get
-            {
-                return (string)base.GetValue(row => row.Continent);
-            }
-            set
-            {
-                base.SetValue(row => row.Continent,value.InQuotes());
-            }
-        }
-
-        public string FIPS
-        {
-            get
-            {
-                return (string)base.GetValue(row => row.FIPS);
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string ISO_2
-        {
-            get
-            {
-                return (string)base.GetValue(row => row.ISO_2);
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string ISO_3
-        {
-            get
-            {
-                return (string)base.GetValue(row => row.ISO_3);
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_1994
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_1994));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public decimal Pop_Grw_Rt
-        {
-            get
-            {
-                return Convert.ToDecimal(base.GetValue(row => row.Pop_Grw_Rt));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Male
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Male));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Fem
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Fem));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_0_14
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_0_14));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_15_64
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_15_64));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_65Plus
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_65Plus));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Male_0_14
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Male_0_14));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Male_15_64
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Male_15_64));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Male_65Plus
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Male_65Plus));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Fem_0_14
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Fem_0_14));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Fem_15_64
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Fem_15_64));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Fem_65Plus
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Fem_65Plus));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Urban
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Urban));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Rural
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Rural));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Urb_Male
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Urb_Male));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Urb_Fem
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Urb_Fem));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Rur_Male
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Rur_Male));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Pop_Rur_Fem
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.Pop_Rur_Fem));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public decimal Arable_Pct
-        {
-            get
-            {
-                return Convert.ToDecimal(base.GetValue(row => row.Arable_Pct));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public decimal Literacy
-        {
-            get
-            {
-                return Convert.ToDecimal(base.GetValue(row => row.Literacy));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public decimal Inflat_Rate
-        {
-            get
-            {
-                return Convert.ToDecimal(base.GetValue(row => row.Inflat_Rate));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public decimal Unempl_Rate
-        {
-            get
-            {
-                return Convert.ToDecimal(base.GetValue(row => row.Unempl_Rate));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public decimal Indust_Growth
-        {
-            get
-            {
-                return Convert.ToDecimal(base.GetValue(row => row.Indust_Growth));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int ColorCode
-        {
-            get
-            {
-                return Convert.ToInt32(base.GetValue(row => row.ColorCode));
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        } 
-        #endregion
-
-        #endregion
+        public string Country { get; set; }
+        public string Capital { get; set; }
+        public string Continent { get; set; }
+        public int Numeric_code { get; set; }
+        public string FIPS { get; set; }
+        public string ISO_2 { get; set; }
+        public string ISO_3 { get; set; }
+        public int Pop_1994 { get; set; }
+        public decimal Pop_Grw_Rt { get; set; }
+        public int Pop_Male { get; set; }
+        public int Pop_Fem { get; set; }
+        public int Pop_0_14 { get; set; }
+        public int Pop_15_64 { get; set; }
+        public int Pop_65Plus { get; set; }
+        public int Male_0_14 { get; set; }
+        public int Male_15_64 { get; set; }
+        public int Male_65Plus { get; set; }
+        public int Fem_0_14 { get; set; }
+        public int Fem_15_64 { get; set; }
+        public int Fem_65Plus { get; set; }
+        public int Pop_Urban { get; set; }
+        public int Pop_Rural { get; set; }
+        public int Pop_Urb_Male { get; set; }
+        public int Pop_Urb_Fem { get; set; }
+        public int Pop_Rur_Male { get; set; }
+        public int Pop_Rur_Fem { get; set; }
+        public decimal Arable_Pct { get; set; }
+        public decimal Literacy { get; set; }
+        public decimal Inflat_Rate { get; set; }
+        public decimal Unempl_Rate { get; set; }
+        public decimal Indust_Growth { get; set; }
+        public int ColorCode { get; set; }
     }
 }

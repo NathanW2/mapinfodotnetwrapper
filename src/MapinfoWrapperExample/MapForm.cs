@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Wrapper.Embedding;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Embedding;
+using MapinfoWrapper.Exceptions;
+using MapinfoWrapper.Mapinfo;
+using MapinfoWrapper.MapOperations;
+using MapinfoWrapper.DataAccess;
 using Wrapper.Example.Callback;
 using Wrapper.Example.Tables;
 using Wrapper.Example.Workspaces;
-using Wrapper.Extensions;
-using Wrapper.MapinfoFactory;
-using Wrapper.MapOperations;
-using Wrapper.TableOperations;
 
 namespace Wrapper.Example.Forms
 {
-
     /// <summary>
     /// A demonstration of how to do Integrated Mapping (the reparenting of a
     /// MapInfo Professional map window into other applications) using .Net.
@@ -43,7 +43,7 @@ namespace Wrapper.Example.Forms
 		private Dictionary<string, Action> _toolIdMap;
 
         //An instance of Mapinfo's COM object.
-        private COMMapinfo MapInfoApp { get; set; }
+        private IMapinfoWrapper MapInfoApp { get; set; }
 
         // Constructor
         public MapForm()
@@ -82,23 +82,23 @@ namespace Wrapper.Example.Forms
 		{
 
             // Create a new list of tables to hold the tables that need to be mapped.
-            List<Table> tablelist = new List<Table>();
+            List<ITable> tablelist = new List<ITable>();
 
 			// Loop through each table and open it.
 			foreach (string tablepath in tablePaths)
 			{
                 // Open the table
-				Table table = Table.OpenTable(this.MapInfoApp,tablepath);
+				Table table = (Table)Table.OpenTable(tablepath);
 
                 // Add the table to the list.
                 tablelist.Add(table);
 			}
 
             // Set the next document parent to the map panel on the form.
-            this.mapPanel.SetAsNextDocumentParent(this.MapInfoApp, NextDocumentEnum.WIN_STYLE_CHILD);
+            this.mapPanel.SetAsNextDocumentParent(NextDocumentEnum.WIN_STYLE_CHILD);
 
             // Map all the tables in the list.
-            map = MapWindow.MapTables(this.MapInfoApp,tablelist);
+            map = MapWindow.MapTables(tablelist);
             
 			// Now that there is a map, enable the Zoom In and Zoom Out buttons
 			this.buttonZoomIn.Enabled = true;
@@ -106,10 +106,9 @@ namespace Wrapper.Example.Forms
 		}
 
 
-		private void CloseWindow(MapWindow map)
+		private void CloseWindow(MapWindow mapToClose)
 		{
-            //TODO: This function hasn't been wrapped up yet.
-            this.MapInfoApp.RunCommand("Close window {0}".FormatWith(map.WindowId));
+		    mapToClose.CloseWindow();
 		}
 
 
@@ -148,10 +147,10 @@ namespace Wrapper.Example.Forms
             // Create the MapInfo Professional object, this will create an instance of
             // Mapinfo and return a the instance as wrapped in a IMapinfoWrapper which provides basic
             // Mapinfo OLE commnds like Do and Eval.
-            this.MapInfoApp = Wrapper.MapinfoFactory.COMMapinfo.CreateInstance();
+            this.MapInfoApp = COMMapinfo.CreateInstance();
 
             // Set the parent window for Mapinfo Professional dialogs to this form.
-            this.SetAsMapinfoApplicationWindow(this.MapInfoApp);
+            this.SetAsMapinfoApplicationWindow();
 
             // Create a new callback object.
             CustomCallback callback = new CustomCallback();
@@ -161,7 +160,9 @@ namespace Wrapper.Example.Forms
             callback.OnMenuItemClick += new Action<string>(callback_OnMenuItemClick);
 
             // Register the callback with Mapinfo.
-            this.MapInfoApp.Callback = callback;
+            // At the moment we have to cast the IMapinfoWrapper object to COMMapinfo to set the
+            // callback object.  This will change in the future.
+            ((COMMapinfo)this.MapInfoApp).Callback = callback;
 		}
 
         void callback_OnMenuItemClick(string obj)
@@ -190,13 +191,13 @@ namespace Wrapper.Example.Forms
 			_toolIdMap = new Dictionary<string, Action>();
 
             // Add "Select" tool to combobox and dictionary
-            this.AddToComboboxAndDictinonary(Properties.Resources.MapTool_Select, 1701);
+            this.AddToComboboxAndDictinonary("Select", 1701);
             // Add "Pan" tool to combobox and dictionary
-            this.AddToComboboxAndDictinonary(Properties.Resources.MapTool_Pan, 1702);
+            this.AddToComboboxAndDictinonary("Pan", 1702);
             // Add "Zoom In" tool to combobox and dictionary
-            this.AddToComboboxAndDictinonary(Properties.Resources.MapTool_ZoomIn, 1705);
+            this.AddToComboboxAndDictinonary("Zoom In", 1705);
             // Add "Zoom Out" tool to combobox and dictionary
-            this.AddToComboboxAndDictinonary(Properties.Resources.MapTool_ZoomOut, 1706);
+            this.AddToComboboxAndDictinonary("Zoom Out", 1706);
 
 			// Set the combobox item to Select
 			comboBoxMapTool.SelectedIndex = 0;
@@ -226,7 +227,7 @@ namespace Wrapper.Example.Forms
 				// Close window and tables, if they exist
 				if (map != null)
 				{
-					CloseWindow(map);
+				    map.CloseWindow();
 					CloseAllTables();
                     map = null;
 				}
@@ -313,9 +314,11 @@ namespace Wrapper.Example.Forms
                 this.CloseWindow(map);
             }
 
-            this.mapPanel.SetAsNextDocumentParent(this.MapInfoApp, NextDocumentEnum.WIN_STYLE_CHILD);
+            this.mapPanel.SetAsNextDocumentParent(NextDocumentEnum.WIN_STYLE_CHILD);
 
-            map = MapWindow.MapTable(this.MapInfoApp, table);
+            map = MapWindow.MapTable(table);
+
+            MapInformation.SelectedObject = map;
 
             this.comboBoxMapTool.Enabled = true;
             this.comboBox1.Enabled = true;
@@ -329,8 +332,11 @@ namespace Wrapper.Example.Forms
         [UsesWrapper]
         public void OpenWorldTable()
         {
+
             // Open the world table in Mapinfo and use the World entity as the tempate to get strong typed access.
-            worldTable = Table.OpenTable<World>(this.MapInfoApp, Application.StartupPath + @"\Maps\WORLD.TAB");
+            worldTable = (Table<World>)Table.OpenTable<World>(Application.StartupPath + @"\Maps\WORLD.TAB");
+            
+            this.TabInfoGrid.SelectedObject = worldTable;
             
             this.Maptable(worldTable);
         }
@@ -338,10 +344,21 @@ namespace Wrapper.Example.Forms
         [UsesWrapper]
         private void OpenWorldWorkSpace()
         {
-            this.mapPanel.SetAsNextDocumentParent(this.MapInfoApp, NextDocumentEnum.WIN_STYLE_CHILD);
+            if (map != null)
+            {
+                map.CloseWindow();
+                this.CloseAllTables();
+            }     
+
+            this.mapPanel.SetAsNextDocumentParent(NextDocumentEnum.WIN_STYLE_CHILD);
 
             // Open the workspace that contains the world table.
-            worldworkspace = WorldWorkspace.Open(this.MapInfoApp);
+            worldworkspace = WorldWorkspace.Open();
+
+            this.TabInfoGrid.SelectedObject = worldworkspace.WorldTable;
+
+            // Get the front map window.
+            map = MapWindow.GetFrontWindow();
 
             this.comboBoxMapTool.Enabled = true;
             this.comboBox1.Enabled = true;
@@ -358,6 +375,8 @@ namespace Wrapper.Example.Forms
         [UsesWrapper]
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            IQueryable<World> query = null;
+
             Table<World> table;
 
             if (worldTable == null)
@@ -365,42 +384,43 @@ namespace Wrapper.Example.Forms
             else
                 table = worldTable;
 
+
             switch (comboBox1.Text)
             {
                 case "Select all where Continent is equal to North America":
-                    dataGridView1.DataSource = this.GetContinentsForNorthAmerica(table);
+                    query = this.GetContinentsForNorthAmerica(table);
                     break;
                 case "Select all where Pop_1994 is greater then 4,000,000":
-                    dataGridView1.DataSource = this.GetGreaterThen4Million(table);
-                    break;
-                default:
+                    query = this.GetGreaterThenFilter(table, 4000000);
                     break;
             }
+
+            QueryTextbox.Clear();
+            if (query != null) QueryTextbox.Text = query.ToQueryString();
         }
 
         #region LINQ-TO-MAPINFO example
 
         [UsesWrapper]
-        IEnumerable<World> GetGreaterThen4Million(Table<World> table)
+        IQueryable<World> GetGreaterThenFilter(Table<World> table, int popFilter)
         {
             // Use a linq query that selects all the records from the table where 
-            // the pop for 1994 is greater then 4 million.
+            // the pop for 1994 is greater then the popFilter million.
             // 
             // This will build a SQL string then run it in Mapinfo.
             // NOTE! LINQ-To-Mapinfo is only in a very early stage, so a lot of operations are not supported yet.
             var query = from row in table
-                        where row.Pop_1994 > 4000000
+                        where row.Pop_1994 > popFilter
                         select row;
 
-            // Return the result as a list so that the query only gets run once.
-            return query.ToList();
+            return query;
         }
 
         [UsesWrapper]
-        IEnumerable<World> GetContinentsForNorthAmerica(Table<World> table)
+        IQueryable<World> GetContinentsForNorthAmerica(Table<World> table)
         {
             // Use a linq query that selects all the records from the table where 
-            // the continent is equal to name.
+            // the continent is equal to North America.
             // 
             // This will build a SQL string then run it in Mapinfo.
             // NOTE! LINQ-To-Mapinfo is only in a very early stage, so a lot of operations are not supported yet.
@@ -408,8 +428,7 @@ namespace Wrapper.Example.Forms
                         where row.Continent == "North America"
                         select row;
 
-            // Return the result as a list so that the query only gets run once.
-            return query.ToList();
+            return query;
         }
 
         #endregion
@@ -421,6 +440,99 @@ namespace Wrapper.Example.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             this.OpenWorldWorkSpace();
+        }
+
+        private void RunQueryButton_Click(object sender, EventArgs e)
+        {
+            Table<World> table;
+
+            if (worldTable == null)
+                table = worldworkspace.WorldTable;
+            else
+                table = worldTable;
+
+            switch (comboBox1.Text)
+            {
+                case "Select all where Continent is equal to North America":
+                    IQueryable<World> query = this.GetContinentsForNorthAmerica(table);
+                    
+                    // The query won't get run until we try and move through the records, as we want
+                    // the data right now we cast the query to a list so that it fires the query in Mapinfo
+                    // and returns the results.
+                    //
+                    // NOTE! It would not be advisable to do this on a large dataset as it has to loop
+                    // every row in the table, but because the Data grid view has to take a list we have
+                    // no other option ATM.
+                    List<World> results = query.ToList();
+                    dataGridView1.DataSource = results;
+                    break;
+                case "Select all where Pop_1994 is greater then 4,000,000":
+                    dataGridView1.DataSource = this.GetGreaterThenFilter(table, 4000000).ToList();
+                    break;
+                case "Select Name, Pop_1994, obj from world.":
+                    dataGridView1.DataSource = this.GetNamePopAndObject(table);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private object GetNamePopAndObject(Table<World> table)
+        {
+            // This query will select the Country, Pop_1994 and obj column in
+            // Mapinfo, it will also take the data from the column and map it to
+            // a property in a new type.  
+            //
+            // In the case of row.obj.ObjectType, it will call the
+            // object type property on the underlying object and store the result in ObjectType property
+            // in the new Type.
+            var query = from row in table
+                        select new
+                                   {
+                                       Name = row.Country, 
+                                       Pop = row.Pop_1994, 
+                                       ObjectType = row.obj.ObjectType
+                                   };
+            
+            // Cast the result query to a list, so that we can have the data now.
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Creates a new World entity, opens an edit form and lets the user enter data.
+        /// If ok is selected then the new data is inserted into the Mapinfo table.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddNewButton_Click(object sender, EventArgs e)
+        {
+            // Create a new World entity, when you create a new entity it will
+            // have a rowid of 0 which means the entity is not inserted into a table.
+            World newData = new World();
+            
+            //Show the edit form and pass in the new world object.
+            NewDataForm form = new NewDataForm();
+            NewDataForm.AddResult result = form.Show(newData);
+
+            if (result != null)
+            {
+                try
+                {
+                    // Insert the new record into the world table.
+                    worldTable.InsertRow(result.EditedData);
+                }
+                catch (MapinfoException mapinfoex)
+                {
+                    if (mapinfoex.MapinfoErrorCode == 1448)
+                    {
+                        ShowMessage(
+                            @"Sorry something else is already editing this table.
+                                      Check to see if crashed Mapinfo ar running in the background.");
+                        return;
+                    }
+                    throw;
+                }
+            }
         }
 	}
 }

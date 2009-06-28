@@ -1,15 +1,8 @@
 ﻿namespace Wrapper.Example.Tables
 {
     /// <summary>
-    /// This is a table definition for the table World.TAB, this will allow
-    /// our program to get strong typed access to the columns in the table.
-    /// 
-    /// This interface is provided so that we can rename a column here and it will be caught by the complier
-    /// if the we try and access a column that has changed name.
-    /// 
-    /// NOTE! The column names here must be the same as they are in the .TAB file.
+    /// Interface for the world table.
     /// </summary>
-    [UsesWrapper]
     public interface IWorld
     {
         string Country { get; set; }

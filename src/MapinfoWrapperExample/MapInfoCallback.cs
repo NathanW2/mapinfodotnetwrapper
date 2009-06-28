@@ -1,10 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
+using MapinfoWrapper;
 
 namespace Wrapper.Example.Callback
 {
     /// <summary>
-    /// This class inherits from the <see cref="T:MapinfoCallback"/> class in the wrapper,
+    /// This class inherits from the <see cref="T:MapinfoWrapper.MapinfoCallback"/> class in the wrapper,
     /// which provides the base events that Mapinfo uses with callbacks.
     /// 
     /// <para>This class will implement a custom event that we will call from a
@@ -12,18 +13,18 @@ namespace Wrapper.Example.Callback
     /// </summary>
     [UsesWrapper]
     [ComVisible(true)]
-    public class CustomCallback : Wrapper.MapinfoCallback
+    public class CustomCallback : MapinfoCallback
     {
         public event Action<string> OnMenuItemClick;
 
         public void MenuItemHandler(string command)
         {
-            // Store the event locally to save a race condition when using threading.
-            Action<string> menu = OnMenuItemClick;
-            if (menu != null)
+            // Store the event locally to save against a race condition.
+            Action<string> menuEvent = OnMenuItemClick;
+            if (menuEvent != null)
             {
                 // Raise the event.
-                menu(command);
+                menuEvent(command);
             }
         }
     }

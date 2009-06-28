@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using MapinfoWrapper;
+using MapinfoWrapper.DataAccess;
 using Wrapper.Example.Tables;
-using Wrapper.TableOperations;
 
 namespace Wrapper.Example.Workspaces
 {
@@ -16,32 +17,27 @@ namespace Wrapper.Example.Workspaces
     [UsesWrapper]
     public class WorldWorkspace : Workspace
     {
-        public WorldWorkspace(IMapinfoWrapper wrapper)
-        {
-            this.MapinfoInstance = wrapper;
-        }
+        private WorldWorkspace()
+        { }
 
         /// <summary>
         /// Open the world work space in Mapinfo.
         /// </summary>
-        /// <param name="wrapper">The instance of Mapinfo to open the workspace in.</param>
         /// <returns>An instance of the world workspace which gives you strong typed access to the tables within the workspace.</returns>
-        public static WorldWorkspace Open(IMapinfoWrapper wrapper)
+        public static WorldWorkspace Open()
         {
-            Workspace workspace = Workspace.OpenWorkspace(wrapper,Application.StartupPath + @"\Maps\WORLD.WOR");
-            return new WorldWorkspace(wrapper);
+            Workspace workspace = Workspace.OpenWorkspace(Application.StartupPath + @"\Maps\WORLD.WOR");
+            return new WorldWorkspace();
         }
 
-        public IMapinfoWrapper MapinfoInstance { get; private set; }
-
         /// <summary>
-        /// Holds an instance of the <see cref="T:Table&ltWorld&gt"/> table.
+        /// Holds an instance of the world table in Mapinfo, that was open with the workspace.
         /// </summary>
         public Table<World> WorldTable 
         {
             get 
             {
-                return new Table<World>(this.MapinfoInstance, "World");
+                return (Table<World>)Table.GetTable<World>("World");
             }
         }
 

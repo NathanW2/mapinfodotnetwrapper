@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Intergated mapping example using Mapinfo OLE Wrapper + LINQ-To-Mapinfo")]
-[assembly: AssemblyDescription(@"A example which is built on Mapinfo's intergated mapping example, this example uses the Mapinfo .NET OLE Wrapper (more information at http://mapinfodotnetwrapper.codeplex.com/) to interact with Mapinfo rather then sending strings back and forth.  
+[assembly: AssemblyDescription(@"A example which is built on Mapinfo's intergated mapping example, this example uses the Mapinfo .NET OLE Wrapper (more information at http://code.google.com/p/mapinfodotnetwrapper/) to interact with Mapinfo rather then sending strings back and forth.  
 
 This example also demos LINQ-To-Mapinfo which gives you strong typed queries against Mapinfo tables (NOTE! LINQ-To-Mapinfo is still in very early stages).")]
 [assembly: AssemblyConfiguration("")]
