@@ -76,6 +76,12 @@
     <Compile Include="Maps\Table Defs\IWorld.cs" />
     <Compile Include="Maps\Table Defs\World.cs" />
     <Compile Include="Maps\Table Defs\WorldWorkspace.cs" />
+    <Compile Include="NewDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewDataForm.Designer.cs">
+      <DependentUpon>NewDataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
@@ -85,16 +91,13 @@
       <SubType>Designer</SubType>
       <DependentUpon>MapForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewDataForm.resx">
+      <DependentUpon>NewDataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Maps\gazmaj.DAT">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -173,10 +176,16 @@
     <None Include="Maps\WORLDCAP.TAB">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\DataSources\Wrapper.Example.Tables.World.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -212,7 +221,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MapinfoWrapper\MapinfoWrapper.csproj">
+    <ProjectReference Include="..\MapinfoWrapper.Core\src\MapinfoWrapper.csproj">
       <Project>{FDA41A1F-5922-493C-AD86-DDF8D447023E}</Project>
       <Name>MapinfoWrapper</Name>
     </ProjectReference>
