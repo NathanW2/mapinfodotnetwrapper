@@ -33,10 +33,9 @@ This page contains some sample code examples which show the difference between u
 
 {{{
      //Create an instance of Mapinfo's COM object.
-     MapinfoFactory factory = new MapinfoFactory();
-     COMMapinfo wrapper = factory.CreateCOMInstance();
+     COMMapinfo wrapper = COMMapinfo.CreateInstance();
      //Open a table in Mapinfo using wrapped OpenTable command
-     Table table = Table.OpenTable(wrapper, @"C:\Temp\Lines");
+     Table table = Table.OpenTable(@"C:\Temp\Lines");
      //Loop through each row in the open table and print the value of the road column to the console.
      foreach (BaseEntity item in table.Rows)
      {
@@ -68,7 +67,7 @@ _Using the Entity_
 {{{
    //Open a table in Mapinfo using wrapped OpenTable command, and using our LineEntity as 
    //the generic type.
-   Table<LineEntity> table = Table.OpenTable<LineEntity>(wrapper, @"C:\Temp\Lines");
+   Table<LineEntity> table = Table.OpenTable<LineEntity>(@"C:\Temp\Lines");
    //We can now loop through all the rows in the table, but we now have a strong typed
    //RoadEntity rather then a just a BaseEntity object.
    foreach (LineEntity item in table.Rows)
