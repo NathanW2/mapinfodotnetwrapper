@@ -6,15 +6,13 @@ _Create a new Mapinfo instace_
 
 _Opening a table_
 {{{
- //First create a new table factory, which lets us create and open tables.
- TableFactory tabfactory = new TableFactory();
- //Then we can call the open table command on the factory.
- Table table = tabfactory.OpenTable(@"c:\Temp\TestTable.Tab");
+ //We can call the open table command on the table type.
+ Table table = Table.OpenTable(@"c:\Temp\TestTable.Tab");
 }}}
 _or_
 {{{
  //Or we can supply a entity template for the table using generics.
- Table<TestEntity> table = tabfactory.OpenTable<TestEntity>(@"C:\Temp\TestTable.Tab");
+ Table<TestEntity> table = Table.OpenTable<TestEntity>(@"C:\Temp\TestTable.Tab");
         
  //where TestEntity is:
  public class TestEntity : BaseEntity
