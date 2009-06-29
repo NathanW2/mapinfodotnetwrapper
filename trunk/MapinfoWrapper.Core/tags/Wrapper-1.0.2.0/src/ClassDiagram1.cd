@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MapinfoWrapper.Core.Extensions.LINQExtensions" Collapsed="true">
+    <Position X="18" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Core\Extensions\LINQExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Core.IoC.DependencyResolver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAEAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IoC\DependencyResolver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.CommandBuilders.CommandStringBuilder">
+    <Position X="7.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAEAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\CommandBuilders\CommandStringBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.CommandBuilders.OpenTableCommandBuilder">
+    <Position X="2.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAEABAABQAIAAAIAAAAAAAAACQAAAgACAEAA=</HashCode>
+      <FileName>Wrapper\CommandBuilders\OpenTableCommandBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Embedding.MapinfoWindowHandle" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAAAA=</HashCode>
+      <FileName>Wrapper\Embedding\MapinfoWindowHandle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.Embedding.SystemInfo" Collapsed="true">
+    <Position X="16.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAEAAAAAAAAAAAAAAAAAACAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Embedding\SystemInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Exceptions.MapinfoException" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Exceptions\MapinfoException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Geometries.Geometry">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Wrapper\Geometries\Geometry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.Geometries.GeometryFactory">
+    <Position X="9" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAIAAAAAAAAAAAQBIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Geometries\GeometryFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.Geometries.MapbasicObject">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAIYACAAAAAA=</HashCode>
+      <FileName>Wrapper\Geometries\MapbasicObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.Geometries.Lines.Line">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Geometries\Lines\Line.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.Geometries.Points.Point">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Geometries\Points\Point.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Mapinfo.MapbasicInvokedMapinfo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAgAAAAAAAIAAACIAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Mapinfo\MapbasicInvokedMapinfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.Mapinfo.MapinfoFactory">
+    <Position X="14.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Wrapper\Mapinfo\MapinfoFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Mapinfo.MapinfoLogger" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAABAAAACAAAAAAAAAAAgAAAAAAAAgAASAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Mapinfo\MapinfoLogger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.Mapinfo.COMMapinfo" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBABAAAAAAAAAAAAAAAAgAAAAAAAAAIACIAAAAAQAA=</HashCode>
+      <FileName>Wrapper\Mapinfo\OleMapinfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.LayerOperations.Layer">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAACAAAAEAAAIAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Wrapper\LayerOperations\Layer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.MapinfoCallback">
+    <Position X="12.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAMAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Wrapper\MapinfoCallback.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.Workspace">
+    <Position X="9" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Wrapper\Workspace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.MapOperations.MapWindow">
+    <Position X="10.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAggAAAAAAAAAAAAAQQAAAQAAIAAACAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\MapOperations\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.Table">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Table-Nongeneric.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.Table&lt;TTableDef&gt;">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCCARAACAAAEAFBAiEAAAA4AAIgEIgAQAAAQAACAAAI=</HashCode>
+      <FileName>Wrapper\Table Operations\Table.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.MapinfoQueryProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAACBAAAAIAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\MapinfoQueryProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.Query&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAABAAAAAAEABAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\Query.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.ProjectionReader&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAABAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\Enumerators\ProjectionReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.ColumnProjection">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.ColumnProjector" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAACAAAIAAAAABAAAAAAAAAAAAgACAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\ColumnProjector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.Evaluator" Collapsed="true">
+    <Position X="19.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\Evaluator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.ExpressionVisitor" Collapsed="true">
+    <Position X="1.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEAABACAAAYwBAQAAAAAISDAAAAEAgACAFAAAAgEQAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\ExpressionVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.TranslateResult" Collapsed="true">
+    <Position X="18" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\QueryTranslator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.QueryTranslator" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAAAAAAAhAAACAAAAAQAAAAAAAAABABAEAAgASAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\QueryTranslator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.LINQ.SQLBuilders.SqlStringGenerator">
+    <Position X="12.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\LINQ\SQL Builders\SqlStringGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.RowOperations.DataReader" BaseTypeListCollapsed="true">
+    <Position X="9" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAACBBAAEAAAAAAAAAIAABAARgAAIABAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\DataReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.RowOperations.Entities.BaseEntity">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\Entities\BaseEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.RowOperations.Entities.MappableEntity">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\Entities\MappableEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.RowOperations.Enumerators.RowEnumerator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAABAAAAACAAAAAgAAAAAAAIAAAAAAACAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\Enumerators\RowEnumerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MapinfoWrapper.TableOperations.RowOperations.Enumerators.RowList&lt;TTabeDef&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAIAAFAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\Enumerators\RowList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Struct Name="MapinfoWrapper.Geometries.Coordinate">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAYiA=</HashCode>
+      <FileName>Wrapper\Geometries\Coordinate.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="MapinfoWrapper.Core.IoC.IDependencyResolver" Collapsed="true">
+    <Position X="16.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IoC\IDependencyResolver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.CommandBuilders.ICommandStringBuilder" Collapsed="true">
+    <Position X="18" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\CommandBuilders\ICommandStringBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Geometries.IGeometry">
+    <Position X="18.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Wrapper\Geometries\IGeometry.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Geometries.IMapbasicObject">
+    <Position X="16.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Geometries\IMapbasicObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Geometries.Lines.ILine" Collapsed="true">
+    <Position X="18" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Geometries\Lines\ILine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Mapinfo.IMapinfoWrapper" Collapsed="true">
+    <Position X="19.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\IMapinfoWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Mapinfo.Internals.DMapInfo" Collapsed="true">
+    <Position X="16.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIBBAgMAAgAAAQAQACAAAAAAMACAEAAAAAAA=</HashCode>
+      <FileName>Wrapper\Mapinfo\Internals\DMapinfoCOMInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Mapinfo.Internals.IMapInfo" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIBBAgMAAgAAAQAQACAAAAAAMACAEAAAAAAA=</HashCode>
+      <FileName>Wrapper\Mapinfo\Internals\IMapinfo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.Mapinfo.Internals.IMapInfo2" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIBBIgMAAgIAAQAQACAAAAAAMAGAEAAAAAAA=</HashCode>
+      <FileName>Wrapper\Mapinfo\Internals\IMapinfo2.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.TableOperations.ITable">
+    <Position X="5.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAwAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.TableOperations.ITable&lt;TTableDef&gt;">
+    <Position X="5.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAEAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\ITablecs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MapinfoWrapper.TableOperations.RowOperations.IDataReader" Collapsed="true">
+    <Position X="14.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACBBAAEAAAAAAAAAAAAAAARgAAIABAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\IDataReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MapinfoWrapper.Embedding.NextDocumentEnum" Collapsed="true">
+    <Position X="14.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAICAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Embedding\NextDocumentEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MapinfoWrapper.Embedding.SystemInfoEnum" Collapsed="true">
+    <Position X="18" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggBAAAAAQCAAAAgIADIAAAAEAAAAAAIACABAAAAEQgI=</HashCode>
+      <FileName>Wrapper\Embedding\SystemInfoEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MapinfoWrapper.Geometries.ObjectInfoEnum" Collapsed="true">
+    <Position X="16.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEAAFEAAAAiFCIgAACAAAAAIgBAACASAYAAAAAAAgAA=</HashCode>
+      <FileName>Wrapper\Geometries\ObjectInfoEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MapinfoWrapper.Geometries.ObjectTypeEnum" Collapsed="true">
+    <Position X="16.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAQAQBABAAAAAQgAAAAAAAAAAABAACAACAAAAgAAA=</HashCode>
+      <FileName>Wrapper\Geometries\ObjectTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MapinfoWrapper.TableOperations.GridHandleEnum" Collapsed="true">
+    <Position X="12.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAgAAQ=</HashCode>
+      <FileName>Wrapper\Table Operations\GridHandleEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MapinfoWrapper.TableOperations.TableInfoEnum" Collapsed="true">
+    <Position X="14.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQgBAIlBBAgQIBAAgIAYAQGAAhjZGAAAAAAaAQAAAgA=</HashCode>
+      <FileName>Wrapper\Table Operations\TableInfoEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MapinfoWrapper.TableOperations.RowOperations.ColumnTypes" Collapsed="true">
+    <Position X="12.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAABAQAAAgAIAAAQAAAAwIAAEAAAAAAAA=</HashCode>
+      <FileName>Wrapper\Table Operations\Row\ColumnTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

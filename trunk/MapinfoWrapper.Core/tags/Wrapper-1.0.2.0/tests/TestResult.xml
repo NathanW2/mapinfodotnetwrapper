@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\MapinfoWrapperTest.nunit" total="1" failures="1" not-run="0" date="2009-01-29" time="10:14:02">
+  <environment nunit-version="2.4.8.0" clr-version="2.0.50727.3053" os-version="Microsoft Windows NT 5.1.2600 Service Pack 2" platform="Win32NT" cwd="C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest" machine-name="SD0076" user="Woodrown" user-domain="SDRC" />
+  <culture-info current-culture="en-AU" current-uiculture="en-US" />
+  <test-suite name="C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\MapinfoWrapperTest.nunit" success="False" time="0.608" asserts="0">
+    <results>
+      <test-suite name="C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\bin\Debug\MapinfoWrapperTest.dll" success="False" time="0.608" asserts="0">
+        <results>
+          <test-suite name="MapinfoWrapperTest" success="False" time="0.608" asserts="0">
+            <results>
+              <test-suite name="WrapperTest" success="False" time="0.608" asserts="0">
+                <results>
+                  <test-suite name="Table_Operations" success="False" time="0.592" asserts="0">
+                    <results>
+                      <test-suite name="TableInfoTests" success="False" time="0.576" asserts="0">
+                        <results>
+                          <test-case name="MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.InstanceRunTableInfoCommandReturnsTableNameUsingNumber" executed="True" success="False" time="0.576" asserts="1">
+                            <failure>
+                              <message><![CDATA[  Expected: "Water_Mains"
+  But was:  null
+]]></message>
+                              <stack-trace><![CDATA[at MapinfoWrapperTest.WrapperTest.Table_Operations.TableInfoTests.InstanceRunTableInfoCommandReturnsTableNameUsingNumber() in C:\Documents and Settings\woodrown\Desktop\mapinfodotnetwrapper\src\MapinfoWrapperTest\WrapperTest\Table Operations\TableInfoTests.cs:line 132
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
