@@ -12,7 +12,7 @@ namespace MapinfoWrapper.Geometries
 	/// <summary>
 	/// A geometry factory that can be used to create new geometry objects.
 	/// </summary>
-    public class GeometryFactory : IGeometryFactory
+    internal class GeometryFactory : IGeometryFactory
     {
         private readonly IMapinfoWrapper wrapper;
         private readonly IVariableFactory variablefactory;
