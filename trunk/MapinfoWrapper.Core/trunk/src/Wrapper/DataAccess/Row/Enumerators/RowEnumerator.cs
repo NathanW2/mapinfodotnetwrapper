@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.DataAccess.RowOperations;
 using System.Reflection;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
 namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
 {
@@ -14,12 +9,10 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
     {
         private IDataReader datareader;
         private T current;
-        private PropertyInfo[] properties;
 
         public RowEnumerator(IDataReader recordSelector)
         {
             this.datareader = recordSelector;
-            this.properties = typeof(T).GetProperties();
         }
 
         #region IEnumerator<MapinfoRow> Members
@@ -61,13 +54,8 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
                 return false;
 
             T instance = new T();
-            for (int i = 0, n = this.properties.Length; i < n; i++)
-            {
-                    PropertyInfo fi = this.properties[i];
-                    fi.SetValue(instance, this.datareader.Get(fi.Name),null);
-            }
 
-            this.current = instance;
+            this.current = this.datareader.PopulateEntity(instance);
             return true;
         }
 

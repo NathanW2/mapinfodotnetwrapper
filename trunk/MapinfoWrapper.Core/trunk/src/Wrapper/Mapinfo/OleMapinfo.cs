@@ -13,29 +13,21 @@ namespace MapinfoWrapper.Mapinfo
     /// <summary>
     /// Object used to hold or create an instace of Mapinfo's COM object.
     /// </summary>
-    public class COMMapinfo : IMapinfoWrapper
+    public class COMMapinfo : MapinfoSession
     {
         private DMapInfo mapinfoinstance;
 
         /// <summary>
         /// <b>NOTE!</b> This is only provided to allow for testing and should not be used outside of a test, if you need to
-        /// create a new instance of Mapinfo please use <see cref="T:Wrapper.Mapinfo.Factory.MapinfoFactory"/>
+        /// create a new instance of Mapinfo please use <see cref="T:Wrapper.Mapinfo.Factory.MapinfoSessionManager"/>
         /// 
         /// <para>Initializes a new instance of the <see cref="T:COMMapinfo"/> class, which holds 
         /// an instance of a currently running instance of Mapinfo's COM object.</para>
         /// <para>If you use this method you must wire up the needed dependencies, see example section:</para>
-        /// <para><b>IT IS HIGHLY RECOMMANDED TO USE THE <see cref="T:Wrapper.Mapinfo.Factory.MapinfoFactory"/> TO CREATE
+        /// <para><b>IT IS HIGHLY RECOMMANDED TO USE THE <see cref="T:Wrapper.Mapinfo.Factory.MapinfoSessionManager"/> TO CREATE
         /// AN INSTANCE OF MAPINFO.</b></para>
         /// </summary>
         /// <param name="mapinfoInstance">A currently running instance of Mapinfo's COM object.</param>
-        /// <example>
-        /// <code>
-        /// COMMapinfo olemapinfo = new COMMapinfo(exsitingMapinfoInstance);
-        /// DependencyResolver resolver = new DependencyResolver();
-        /// resolver.Register(typeof(IMapinfoWrapper), olemapinfo);
-        /// IoC.Initialize(resolver);
-        /// </code>
-        /// </example>
         internal COMMapinfo(DMapInfo mapinfoInstance)
         {
             this.mapinfoinstance = mapinfoInstance;
@@ -47,8 +39,8 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>An instance of Mapinfo's COM object wrapped in <see cref="T:COMMapinfo"/></returns>
         public static COMMapinfo CreateInstance()
         {
-            MapinfoFactory mapinfoFactory = new MapinfoFactory();
-            return mapinfoFactory.CreateCOMInstance();
+            MapinfoSessionManager mapinfoSessionManager = new MapinfoSessionManager();
+            return mapinfoSessionManager.CreateCOMInstance();
         }
         
         #region IMapinfoWrapper Members
@@ -57,10 +49,9 @@ namespace MapinfoWrapper.Mapinfo
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        public void RunCommand(string commandString)
+        public override void RunCommand(string commandString)
         {
-        	Guard.AgainstNullOrEmpty(commandString,"commandString");
-        	
+            Guard.AgainstNullOrEmpty(commandString, "commandString");
             try
             {
                 this.mapinfoinstance.Do(commandString);
@@ -81,7 +72,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        public string Evaluate(string commandString)
+        public override string Evaluate(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString,"commandString");
 
@@ -106,10 +97,11 @@ namespace MapinfoWrapper.Mapinfo
         /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapinfoWrapper"/> interface.
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
-        public object GetUnderlyingMapinfoInstance()
+        public override object GetUnderlyingMapinfoInstance()
         {
             return this.mapinfoinstance;
         }
+
         #endregion
 
         private MapinfoCallback callback;

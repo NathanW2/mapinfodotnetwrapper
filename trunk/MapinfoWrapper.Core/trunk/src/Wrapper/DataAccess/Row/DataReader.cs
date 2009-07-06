@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Reflection;
 using MapinfoWrapper.Core;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Geometries;
 using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Wrapper.Geometries;
 
 namespace MapinfoWrapper.DataAccess.RowOperations
 {
-    internal class DataReader : IDataReader
+    public class DataReader : IDataReader
     {
-        private readonly IMapinfoWrapper wrapper;
+        private readonly MapinfoSession wrapper;
         private readonly string tableName;
         private readonly IGeometryFactory geometryfactory;
 
-        public DataReader(IMapinfoWrapper wrapper,string tableName, IGeometryFactory geometryFactory)
+        public DataReader(MapinfoSession wrapper,string tableName, IGeometryFactory geometryFactory)
         {
             this.wrapper = wrapper;
             this.tableName = tableName;
@@ -22,7 +23,7 @@ namespace MapinfoWrapper.DataAccess.RowOperations
 
         public string GetName(int index)
         {
-            return this.wrapper.Evaluate("ColumnInfo({0},COL{1},1".FormatWith(this.tableName, index.ToString().InQuotes()));
+            return this.wrapper.Evaluate("ColumnInfo({0},COL{1},1)".FormatWith(this.tableName, index.ToString().InQuotes()));
         }
 
         public void Fetch(int recordIndex)
@@ -74,7 +75,10 @@ namespace MapinfoWrapper.DataAccess.RowOperations
             if (string.Equals(columnName, "obj", StringComparison.InvariantCultureIgnoreCase))
             {
                 int index = Convert.ToInt32(this.Get("rowid"));
-                TableObjVariable objvariable = new TableObjVariable(this, index);
+                TableObjVariable objvariable = new TableObjVariable("{0}.obj".FormatWith(this.tableName),
+                                                                    Variable.VariableType.Object, true, this.wrapper,
+                                                                    index, this);
+
                 return geometryfactory.GetGeometryFromVariable(objvariable);
             }
 
@@ -118,10 +122,32 @@ namespace MapinfoWrapper.DataAccess.RowOperations
             return null;
         }
 
-
         public string GetTableAndRowString(string columnName)
         {
             return "{0}.{1}".FormatWith(this.tableName, columnName);
         }
+
+        public TEntity PopulateEntity<TEntity>(TEntity obj)
+        {
+            PropertyInfo[] properties = typeof(TEntity).GetProperties();
+
+            for (int i = 0, n = properties.Length; i < n; i++)
+            {
+                PropertyInfo fi = properties[i];
+                fi.SetValue(obj, this.Get(fi.Name), null);
+            }
+
+            return obj;
+        }
+
+        #region IDataReader Members
+
+        public bool Read()
+        {
+            this.FetchNext();
+            return this.EndOfTable();
+        }
+
+        #endregion
     }
 }

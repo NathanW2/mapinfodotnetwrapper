@@ -5,7 +5,7 @@
 //using Moq;
 //using NUnit.Framework;
 //using Wrapper;
-//using Wrapper.MapinfoFactory;
+//using Wrapper.MapinfoSessionManager;
 //using Wrapper.Exceptions;
 //
 //namespace MapinfoWrapperTest.WrapperTest.MapinfoFactoryTest

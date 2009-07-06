@@ -20,8 +20,8 @@
 //            IMapinfoWrapper wrapper = new Mock<IMapinfoWrapper>().Object;
 //            IMapbasicVariable variable = new Mock<IMapbasicVariable>().Object;
 //            Coordinate point = new Coordinate(0.0000, 0.000);
-//            object pointobject = Point.CreatePoint(wrapper,point,variable);
-//            Assert.IsType(typeof(Point), pointobject);
+//            object pointobject = MIPoint.CreatePoint(wrapper,point,variable);
+//            Assert.IsType(typeof(MIPoint), pointobject);
 //        }
 //    }
 //}

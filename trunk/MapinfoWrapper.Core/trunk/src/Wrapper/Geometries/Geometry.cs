@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.Core.IoC;
-using MapinfoWrapper.MapbasicOperations;
+﻿using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Mapinfo;
 
@@ -11,18 +6,17 @@ namespace MapinfoWrapper.Geometries
 {
     public class Geometry : MapbasicObject, IGeometry
 	{
-		public Geometry(IVariable variable)
-            : base(variable)
-		{ }
-
+        internal Geometry(MapinfoSession MISession, IVariable variable)
+            : base(MISession, variable)
+        { }
 
         public Coordinate Centroid {
 			get {
 			    string expression = base.Variable.GetExpression();
-                string x = base.mapinfoinstance.Evaluate("CentroidX({0})".FormatWith(expression));
-                string y = base.mapinfoinstance.Evaluate("CentroidY({0})".FormatWith(expression));
-				Decimal X = Decimal.Parse(x);
-				Decimal Y = Decimal.Parse(y);
+                string x = base.misession.Evaluate("CentroidX({0})".FormatWith(expression));
+                string y = base.misession.Evaluate("CentroidY({0})".FormatWith(expression));
+                double X = double.Parse(x);
+                double Y = double.Parse(y);
 				return new Coordinate(X, Y);
 			}
 		}
@@ -33,7 +27,7 @@ namespace MapinfoWrapper.Geometries
 		    string object2expression = mapinfoObject.Variable.GetExpression();
 
             string command = "{0} Contains {1}".FormatWith(expression, object2expression);
-			string returned = base.mapinfoinstance.Evaluate(command);
+            string returned = base.misession.Evaluate(command);
 			return (returned == "T");
 		}
 

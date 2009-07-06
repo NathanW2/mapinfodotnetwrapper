@@ -8,14 +8,11 @@ namespace MapinfoWrapper.Core.Internals
 {
     internal class VariableFactory : IVariableFactory
     {
-        private readonly IMapinfoWrapper wrapper;
+        private readonly MapinfoSession wrapper;
 
-        public VariableFactory() : this(null)
-        { }
-
-        public VariableFactory(IMapinfoWrapper mapinfoInstance) 
+        public VariableFactory(MapinfoSession mapinfoInstance) 
         {
-            this.wrapper = mapinfoInstance ?? ServiceLocator.GetInstance<IMapinfoWrapper>();
+            this.wrapper = mapinfoInstance;
         }
 
         public IVariable CreateNewWithGUID(Variable.VariableType type)
@@ -34,7 +31,7 @@ namespace MapinfoWrapper.Core.Internals
             string typename = Enum.GetName(typeof(Variable.VariableType), type);
             this.wrapper.RunCommand("Dim {0} as {1}".FormatWith(variablename, typename));
             
-            Variable variable = new Variable(variablename,type,false);
+            Variable variable = new Variable(variablename,type,false,this.wrapper);
 
             return variable;
         }

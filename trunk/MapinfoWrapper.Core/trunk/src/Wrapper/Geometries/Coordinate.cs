@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
     public struct Coordinate
     {
-        public Coordinate(decimal x, decimal y)
+        public Coordinate(double x, double y)
             : this()
         {
             this.X = x;
             this.Y = y;
         }
 
-        public decimal X { get; private set; }
-        public decimal Y { get; private set; }
+        public double X { get; private set; }
+        public double Y { get; private set; }
 
         public override bool Equals(object obj)
         {

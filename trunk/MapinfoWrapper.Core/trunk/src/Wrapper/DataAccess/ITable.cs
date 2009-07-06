@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-namespace MapinfoWrapper.DataAccess
+﻿namespace MapinfoWrapper.DataAccess
 {
-    public interface ITable : IQueryable
+    public interface ITable
     {
         string Name { get; }
         int Number { get; }
