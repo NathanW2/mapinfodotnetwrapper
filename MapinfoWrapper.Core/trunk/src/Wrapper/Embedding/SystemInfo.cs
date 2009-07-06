@@ -11,19 +11,16 @@ namespace MapinfoWrapper.Embedding
     /// </summary>
     public class SystemInfo
     {
-        private readonly IMapinfoWrapper wrapper;
-
-        public SystemInfo() : this(null)
-        { }
+        private readonly MapinfoSession wrapper;
 
         /// <summary>
         /// Creates a new SystemInfo object used to retive information
         /// about the current instace of mapinfo.
         /// </summary>
         /// <param name="mapinfoWrapper">A wrapper object containing the running instace of mapinfo.</param>
-        internal SystemInfo(IMapinfoWrapper mapinfoWrapper)
+        internal SystemInfo(MapinfoSession mapinfoWrapper)
         {
-            this.wrapper = mapinfoWrapper ?? ServiceLocator.GetInstance<IMapinfoWrapper>();
+            this.wrapper = mapinfoWrapper;
         }
 
         /// <summary>

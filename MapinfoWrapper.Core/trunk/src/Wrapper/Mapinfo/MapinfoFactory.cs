@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo.Internals;
+using Microsoft.Win32;
 
 namespace MapinfoWrapper.Mapinfo
 {
-    public class MapinfoFactory
+    public class MapinfoSessionManager
     {
         protected virtual DMapInfo CreateMapinfoInstance()
         {
@@ -18,11 +18,25 @@ namespace MapinfoWrapper.Mapinfo
         public COMMapinfo CreateCOMInstance()
         {
             DMapInfo instance = CreateMapinfoInstance();
-            COMMapinfo olemapinfo = new COMMapinfo(instance);
+            return new COMMapinfo(instance); ; 
+        }
 
-            Bootstrapper.WireUp(olemapinfo);
+        public IEnumerable<int> GetInstalledMapinfoVersions()
+        {
+            string registryKey = @"SOFTWARE\MapInfo\MapInfo\Professional";
 
-            return olemapinfo; 
+            Microsoft.Win32.RegistryKey prokey = Registry.LocalMachine.OpenSubKey(registryKey);
+
+            if (prokey == null)
+                return null;
+
+            var versions = from a in prokey.GetSubKeyNames()
+                           let r = prokey.OpenSubKey(a)
+                           let name = r.Name
+                           let slashindex = name.LastIndexOf(@"\")
+                           select Convert.ToInt32(name.Substring(slashindex + 1, name.Length - slashindex - 1));
+            
+            return versions.ToList();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace MapinfoWrapper.Mapinfo
     /// be Mapinfo version independent.</para>
     /// <para>If you are using a version of Mapinfo less then 9.5 you will need to use the <see cref="T:COMMapinfo"/> class/.</para>
     /// </summary>
-    internal class MapbasicInvokedMapinfo : IMapinfoWrapper
+    internal class MapbasicInvokedMapinfo : MapinfoSession
     {
         private IMapInfo2 mapinfoinstance;
 
@@ -42,7 +42,7 @@ namespace MapinfoWrapper.Mapinfo
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        public void RunCommand(string commandString)
+        public override void RunCommand(string commandString)
         {
             if (String.IsNullOrEmpty(commandString))
                 throw new ArgumentNullException("commandString", "Command string can not be null");
@@ -57,7 +57,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        public string Evaluate(string commandString)
+        public override string Evaluate(string commandString)
         {
             if (String.IsNullOrEmpty(commandString))
                 throw new ArgumentNullException("commandString", "Command string can not be null");
@@ -72,7 +72,7 @@ namespace MapinfoWrapper.Mapinfo
         /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapinfoWrapper"/> interface.
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
-        public object GetUnderlyingMapinfoInstance()
+        public override object GetUnderlyingMapinfoInstance()
         {
             return mapinfoinstance;
         }

@@ -5,37 +5,41 @@ using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
 using MapinfoWrapper.DataAccess.RowOperations;
 using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-using MapinfoWrapper.DataAccess.RowOperations;
 using System.Linq.Expressions;
 using System.Diagnostics;
-using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
 using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.DataAccess.LINQ
 {
     internal class MapinfoQueryProvider : IQueryProvider
     {
-        private IMapinfoWrapper wrapper;
+        private readonly MapinfoSession misession;
+        private readonly IObjectBuilder builder;
 
-        public MapinfoQueryProvider(IMapinfoWrapper wrapper)
+        public MapinfoQueryProvider(MapinfoSession MISession)
         {
-            this.wrapper = wrapper;
+            this.misession = MISession;
+            this.builder = new ObjectBuilder(MISession);
+        }
+
+        public MapinfoQueryProvider(MapinfoSession MISession, IObjectBuilder objectBuilder)
+        {
+            this.misession = MISession;
+            this.builder = objectBuilder;
         }
 
         public object Execute(Expression expression)
         {
             TranslateResult result = this.Translate(expression);
-            this.wrapper.RunCommand(result.CommandText);
+            this.misession.RunCommand(result.CommandText);
 
             Type elementType = TypeSystem.GetElementType(expression.Type);
             if (result.Projector != null)
             {
-                IDataReader selector = ServiceLocator.GetInstance<IFactoryBuilder>()
-                                                     .BuildDataReader(result.TableName);
-                Delegate projector = result.Projector.Compile( );
+                IDataReader reader = this.builder.BuildDataReader(result.TableName);
+                Delegate projector = result.Projector.Compile();
                 return Activator.CreateInstance(typeof(ProjectionReader<>).MakeGenericType(elementType),
-                                                new object[] { selector, projector });
+                                                new object[] { reader, projector });
             }
             else
             {

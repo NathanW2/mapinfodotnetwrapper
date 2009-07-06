@@ -1,26 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
 {
     public class RowList<TTabeDef> : IEnumerable<TTabeDef>
         where TTabeDef : BaseEntity, new()
     {
-        private string tablename;
+        private readonly string tablename;
+        private readonly IDataReader reader;
 
-        public RowList(string tableName)
+        public RowList(string tableName, IDataReader reader)
         {
             this.tablename = tableName;
+            this.reader = reader;
         }
 
         public IEnumerator<TTabeDef> GetEnumerator()
         {
-            IDataReader reader = ServiceLocator.GetInstance<IFactoryBuilder>().BuildDataReader(tablename);
-            RowEnumerator<TTabeDef> rowenumerator = new RowEnumerator<TTabeDef>(reader);
+            RowEnumerator<TTabeDef> rowenumerator = new RowEnumerator<TTabeDef>(this.reader);
             rowenumerator.Reset();
             return rowenumerator;
         }
@@ -29,6 +27,5 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
         {
             return GetEnumerator();
         }
-
     }
 }

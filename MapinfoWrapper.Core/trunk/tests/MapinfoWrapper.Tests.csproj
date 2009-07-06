@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreTests\InternalsTests\TableCommandRunnerTests.cs" />
     <Compile Include="CoreTests\InternalsTests\VariableFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WrapperTest\Embedding\ControlExtensionTests.cs" />
@@ -81,14 +80,12 @@
     <Compile Include="WrapperTest\MapOperations\MapTests.cs" />
     <Compile Include="WrapperTest\ObjectOperations\GeometryTests.cs" />
     <Compile Include="WrapperTest\ObjectOperations\Points\PointTests.cs" />
-    <Compile Include="WrapperTest\Table Operations\GenericTableTests.cs" />
-    <Compile Include="WrapperTest\Table Operations\OpenTableCommandBuilderTests.cs" />
-    <Compile Include="WrapperTest\Table Operations\Row\DataReaderTests.cs" />
-    <Compile Include="WrapperTest\Table Operations\Row\RowCollectionTests.cs" />
-    <Compile Include="WrapperTest\Table Operations\Row\RowEnumeratorTest.cs" />
-    <Compile Include="WrapperTest\Table Operations\SqlUpdateGeneratorTests .cs" />
-    <Compile Include="WrapperTest\Table Operations\TableFactoryTests.cs" />
-    <Compile Include="WrapperTest\Table Operations\TableInfoTests.cs" />
+    <Compile Include="WrapperTest\DataAccess\GenericTableTests.cs" />
+    <Compile Include="WrapperTest\DataAccess\OpenTableCommandBuilderTests.cs" />
+    <Compile Include="WrapperTest\DataAccess\Row\DataReaderTests.cs" />
+    <Compile Include="WrapperTest\DataAccess\Row\RowCollectionTests.cs" />
+    <Compile Include="WrapperTest\DataAccess\Row\RowEnumeratorTest.cs" />
+    <Compile Include="WrapperTest\DataAccess\SqlUpdateGeneratorTests .cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\MapinfoWrapper.csproj">

@@ -14,30 +14,30 @@ namespace MapinfoWrapperTest.CoreTests.InternalsTests
     [TestFixture]
     public class VariableFactoryTests
     {
-        private Mock<IMapinfoWrapper> mockmapinfo;
+        //private Mock<IMapinfoWrapper> mockmapinfo;
 
-        [SetUp]
-        public void Setup()
-        {
-            IMapinfoWrapper wrapper = new Mock<IMapinfoWrapper>().Object;
-            DependencyResolver resolver = new DependencyResolver();
-            resolver.Register(typeof(IMapinfoWrapper),wrapper);
-            IoC.Initialize(resolver);
-        }
+        //[SetUp]
+        //public void Setup()
+        //{
+        //    IMapinfoWrapper wrapper = new Mock<IMapinfoWrapper>().Object;
+        //    DependencyResolver resolver = new DependencyResolver();
+        //    resolver.Register(typeof(IMapinfoWrapper),wrapper);
+        //    IoC.Initialize(resolver);
+        //}
 
-        [Test]
-        public void WireUp()
-        {
-            VariableFactory factory = new VariableFactory();
-        }
+        //[Test]
+        //public void WireUp()
+        //{
+        //    VariableFactory factory = new VariableFactory();
+        //}
 
-        [Test]
-        public void FacotryShouldNotAssignVariable()
-        {
-            VariableFactory factory = new VariableFactory();
-            IVariable variable = factory.CreateNewWithGUID(Variable.VariableType.Object);
+        //[Test]
+        //public void FacotryShouldNotAssignVariable()
+        //{
+        //    VariableFactory factory = new VariableFactory();
+        //    IVariable variable = factory.CreateNewWithGUID(Variable.VariableType.Object);
 
-            Assert.False(variable.IsAssigned);
-        }
+        //    Assert.False(variable.IsAssigned);
+        //}
     }
 }

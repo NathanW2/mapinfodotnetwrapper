@@ -1,6 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo;
 
 
@@ -11,16 +11,14 @@ namespace MapinfoWrapper.Embedding
     /// </summary>
     public static class ControlExtensions
     {
-        private static readonly IMapinfoWrapper wrapper = ServiceLocator.GetInstance<IMapinfoWrapper>();
-       
         /// <summary>
         /// Sets the control as the parent for any dialog boxs that are created in the specifed Mapinfo instance.
         /// If you need to re-parent a document window use <see cref="SetAsNextDocumentParent"/> instead.
         /// </summary>
         /// <param name="value">The control to which will be the parent.</param>
-        public static void SetAsMapinfoApplicationWindow(this Control value)
+        public static void SetAsMapinfoApplicationWindow(this Control value,MapinfoSession MISession)
         {
-            wrapper.RunCommand("Set Application Window {0}".FormatWith(value.Handle.ToString()));
+            MISession.RunCommand("Set Application Window {0}".FormatWith(value.Handle.ToString()));
         }
 
         /// <summary>
@@ -28,9 +26,9 @@ namespace MapinfoWrapper.Embedding
         /// </summary>
         /// <param name="value">The control to which the next document will be the parent.</param>
         /// <param name="windowStyle">The style of window when opened.</param>
-        public static void SetAsNextDocumentParent(this Control value,NextDocumentEnum windowStyle)
+        public static void SetAsNextDocumentParent(this Control value,MapinfoSession MISession, NextDocumentEnum windowStyle)
         {
-            wrapper.RunCommand("Set Next Document Parent {0} Style {1}".FormatWith(value.Handle.ToString(),
+            MISession.RunCommand("Set Next Document Parent {0} Style {1}".FormatWith(value.Handle.ToString(),
                                                                                    (int)windowStyle));
         }
     }

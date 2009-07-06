@@ -33,7 +33,7 @@
 //
 //            ITable<DummyTableDef> table = mocktable.Object;
 //
-//            Assert.AreEqual(typeof(Map), Map.MapTable(mockmapinfo.Object,table).GetType());
+//            Assert.AreEqual(typeof(Map), Map.MapFromTable(mockmapinfo.Object,table).GetType());
 //        }
 //
 //        [Test]
@@ -46,7 +46,7 @@
 //            mocktable.Setup(t => t.IsMappable).Returns(true);
 //
 //            ITable<DummyTableDef> table = mocktable.Object;
-//            Map map = Map.MapTable(mockmapinfo.Object,table);
+//            Map map = Map.MapFromTable(mockmapinfo.Object,table);
 //
 //            mockmapinfo.VerifyAll();
 //        }
@@ -61,7 +61,7 @@
 //            mocktable.Setup(t => t.IsMappable).Returns(true);
 //
 //            ITable<DummyTableDef> table = mocktable.Object;
-//            Map map = Map.MapTable(mockmapinfo.Object, table);
+//            Map map = Map.MapFromTable(mockmapinfo.Object, table);
 //
 //            mockmapinfo.VerifyAll();
 //        }
@@ -87,7 +87,7 @@
 //            }
 //
 //
-//            Map map = Map.MapTables(mockmapinfo.Object, tablelist);
+//            Map map = Map.MapFromTables(mockmapinfo.Object, tablelist);
 //
 //            mockmapinfo.Verify();
 //        }
@@ -119,7 +119,7 @@
 //            mocktable.Setup(t => t.IsMappable).Returns(false);
 //
 //            ITable<DummyTableDef> table = mocktable.Object;
-//            Map map = Map.MapTable(mockmapinfo.Object, table);
+//            Map map = Map.MapFromTable(mockmapinfo.Object, table);
 //        }
 //    }
 //}
