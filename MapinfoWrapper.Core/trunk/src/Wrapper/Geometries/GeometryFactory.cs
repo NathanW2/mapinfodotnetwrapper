@@ -1,6 +1,7 @@
 ﻿using MapinfoWrapper.Core;
 using MapinfoWrapper.Core.Internals;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.DataAccess;
 using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Geometries.Lines;
 using MapinfoWrapper.Geometries.Points;
@@ -22,7 +23,7 @@ namespace MapinfoWrapper.Geometries
             this.variablefactory = new VariableFactory(MISession);
 	    }
 
-        public GeometryFactory(MapinfoSession MISession, IVariableFactory variableFactory)
+        internal GeometryFactory(MapinfoSession MISession, IVariableFactory variableFactory)
         {
             this.misession = MISession;
             this.variablefactory = variableFactory;
@@ -30,14 +31,14 @@ namespace MapinfoWrapper.Geometries
 
         /// <summary>
         /// Creates a new line object in Mapinfo. 
-        /// Returns a <see cref="T:MapinfoWrapper.Geometries.Lines.MILine"/> which can be inserted into a
-        /// <see cref="T:MapinfoWrapper.DataAccess.Table"/>
+        /// Returns a <see cref="MILine"/> which can be inserted into a
+        /// <see cref="MapinfoWrapper.DataAccess.Table"/>
         /// <para>This function will create a new object variable in Mapinfo with a modified GUID as its name.</para>
         /// </summary>
-        /// <param name="start">The <see cref="T:MapinfoWrapper.Geometries.Coordinate"/> for the start of the line.</param>
-        /// <param name="end">The <see cref="T:MapinfoWrapper.Geometries.Coordinate"/> for the end of the line.</param></param>
-        /// <returns>A new <see cref="T:MapinfoWrapper.Geometries.Lines.IMILine"/>.</returns>
-    	public IMILine CreateLine(Coordinate start, Coordinate end)
+        /// <param name="start">The <see cref="Coordinate"/> for the start of the line.</param>
+        /// <param name="end">The <see cref="Coordinate"/> for the end of the line.</param></param>
+        /// <returns>A new <see cref="MILine"/> object.</returns>
+    	public MILine CreateLine(Coordinate start, Coordinate end)
     	{
             IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
             this.misession.RunCommand("Create MILine Into Variable {0} ({1},{2})({3},{4})".FormatWith(variable.GetExpression(), start.X, start.Y, end.X, end.Y));
@@ -46,13 +47,13 @@ namespace MapinfoWrapper.Geometries
     	
     	/// <summary>
         /// Creates a new point object in Mapinfo. 
-        /// Returns a <see cref="T:MapinfoWrapper.Geometries.Points.MIPoint"/> which can be inserted into a
-        /// <see cref="T:MapinfoWrapper.DataAccess.Table"/>
+        /// Returns a <see cref="MIPoint"/> which can be inserted into a
+        /// <see cref="Table"/>
         /// <para>This function will create a new object variable in Mapinfo with a modified GUID as its name.</para>
         /// </summary>
-        /// <param name="location">A <see cref="T:MapinfoWrapper.Geometries.Coordinate"/> that contains coordinates at
+        /// <param name="location">A <see cref="Coordinate"/> that contains coordinates at
         /// which to create the point.</param>
-        /// <returns>A new point object.</returns>
+        /// <returns>A new <see cref="MIPoint"/> object.</returns>
         public MIPoint CreatePoint(Coordinate location)
         {
     	    IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
@@ -61,10 +62,11 @@ namespace MapinfoWrapper.Geometries
         }
 
         /// <summary>
-        /// Returns the a <see cref="T:MapinfoWrapper.Geometries.Geometry"/> for the 
-        /// supplied <see cref="T:MapinfoWrapper.MapbasicOperations.IVariable"/>.
+        /// Returns the a <see cref="Geometry"/> for the supplied <see cref="IVariable"/>.  This function
+        /// is really only for internal use.  See <see cref="Variable"/> for notes about Mapbasic variables
+        /// in the MapinfoWrapper API.
         /// </summary>
-        /// <param name="variable"></param>
+        /// <param name="variable">An object variable</param>
         /// <returns></returns>
         public Geometry GetGeometryFromVariable(IVariable variable)
         {

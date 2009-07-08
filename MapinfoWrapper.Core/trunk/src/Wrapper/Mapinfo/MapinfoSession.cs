@@ -1,6 +1,7 @@
 ﻿using System;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.DataAccess;
+using MapinfoWrapper.Embedding;
 using MapinfoWrapper.Geometries;
 using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Mapinfo;
@@ -8,6 +9,16 @@ using MapinfoWrapper.MapOperations;
 
 namespace MapinfoWrapper.Mapinfo
 {
+    /// <summary>
+    /// An absract base class that is used to make calls to Mapinfo.
+    /// 
+    /// <para>This object can not be created directly, to create a new instance of Mapinfo
+    /// you must call <see cref="COMMapinfo.CreateInstance()"/> which will create a new instance of Mapinfo
+    /// and returns a <see cref="MapinfoSession"/> object that contains the instance of Mapinfo.</para>
+    /// 
+    /// <para>This is the lowest object in the MapinfoWrapper API,
+    /// all objects in the MapinfoWrapper API take and make calls through this object.</para> 
+    /// </summary>
     public abstract class MapinfoSession : IMapinfoWrapper
     {
         /// <summary>
@@ -72,11 +83,35 @@ namespace MapinfoWrapper.Mapinfo
         /// <summary>
         /// Gets the front window from Mapinfo.
         /// </summary>
-        /// <returns>An instance of <see cref="T:MapWindow"/> containing the front window.</returns>
+        /// <returns>An instance of <see cref="MapWindow"/> containing the front window.</returns>
         public MapWindow GetFrontWindow()
         {
             int windowid = Convert.ToInt32(this.Evaluate("FrontWindow()"));
             return new MapWindow(this,windowid);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="SystemInfo"/> object allowing access to system 
+        /// info about the current running instance of Mapinfo.
+        /// </summary>
+        public SystemInfo SystemInfo
+        {
+            get
+            {
+                return new SystemInfo(this);
+            }
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="TableManager"/> which allows
+        /// access to open tables in the current session, opening tables and closeing tables.
+        /// </summary>
+        public TableManager TableManager
+        {
+            get
+            {
+                return new TableManager(this);
+            }
         }
     }
 }

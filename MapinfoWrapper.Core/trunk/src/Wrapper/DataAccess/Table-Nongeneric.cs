@@ -28,10 +28,10 @@ namespace MapinfoWrapper.DataAccess
         }
 
         /// <summary>
-        /// Returns a <see cref="T:TEntity"/> at the supplied index in the table.
+        /// Returns a <see cref="BaseEntity"/> at the supplied index in the table.
         /// </summary>
-        /// <param name="index">The index at which to get the <see cref="T:TEntity"/></param>
-        /// <returns>An instace of <see cref="T:TEntity"/> for the supplied index.</returns>
+        /// <param name="index">The index at which to get the <see cref="BaseEntity"/></param>
+        /// <returns>An instace of <see cref="BaseEntity"/> for the supplied index.</returns>
         public BaseEntity this[int index]
         {
             get
@@ -44,7 +44,7 @@ namespace MapinfoWrapper.DataAccess
         }
 
         /// <summary>
-        /// Rows a collection of rows from the table, using <see cref="T:BaseEntity"/> as
+        /// Rows a collection of rows from the table, using <see cref="BaseEntity"/> as
         /// the row collection type.
         /// </summary>
         public IEnumerable<BaseEntity> Rows

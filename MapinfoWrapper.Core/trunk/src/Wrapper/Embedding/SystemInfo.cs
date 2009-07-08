@@ -18,7 +18,7 @@ namespace MapinfoWrapper.Embedding
         /// about the current instace of mapinfo.
         /// </summary>
         /// <param name="mapinfoWrapper">A wrapper object containing the running instace of mapinfo.</param>
-        internal SystemInfo(MapinfoSession mapinfoWrapper)
+        public SystemInfo(MapinfoSession mapinfoWrapper)
         {
             this.wrapper = mapinfoWrapper;
         }

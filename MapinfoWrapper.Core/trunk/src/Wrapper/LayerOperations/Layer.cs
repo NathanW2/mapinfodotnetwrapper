@@ -4,8 +4,10 @@ using MapinfoWrapper.Mapinfo;
 namespace MapinfoWrapper.LayerOperations
 {
     /// <summary>
-    /// A wrapper object around a Mapinfo layer, contains methods used to get information about the specifed
-    /// layer.
+    /// A Layer object that gives you access to methods and properties for a single Mapinfo layer.
+    /// 
+    /// <para>This object isn't fully implemented yet and is only a stub for future improvments.</para>
+    /// <para><b>This object may change name in future releases.</b></para>
     /// </summary>
     public class Layer
     {

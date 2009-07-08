@@ -32,8 +32,8 @@ namespace MapinfoWrapper.DataAccess
         /// Opens a new table in Mapinfo and returns the opened table.
         /// </summary>
         /// <param name="tablePath">The path to the Mapinfo tab file to open.</param>
-        /// <returns>An instance of <see cref="T:MapinfoWrapper.DataAccess.ITable"/></returns>
-        public ITable OpenTable(string tablePath)
+        /// <returns>An instance of <see cref="MapinfoWrapper.DataAccess.ITable"/></returns>
+        public Table OpenTable(string tablePath)
         {
             string name = this.OpenTableAndGetName(tablePath);
             return this.GetTable(name);
@@ -46,8 +46,8 @@ namespace MapinfoWrapper.DataAccess
         /// <typeparam name="TEntity">The entity type to use a the entity for the table,
         /// this will allow strong typed access to the columns in the table and LINQ support.</typeparam>
         /// <param name="tablePath"></param>
-        /// <returns>An instance of <see cref="T:MapinfoWrapper.TableOperations.ITable&lt;TEntity&gt;"/></returns>
-        public ITable<TEntity> OpenTable<TEntity>(string tablePath)
+        /// <returns>An instance of <see cref="MapinfoWrapper.TableOperations.ITable&lt;TEntity&gt;"/></returns>
+        public Table<TEntity> OpenTable<TEntity>(string tablePath)
             where TEntity : BaseEntity, new()
         {
         	string name = this.OpenTableAndGetName(tablePath);
@@ -60,24 +60,24 @@ namespace MapinfoWrapper.DataAccess
         /// <typeparam name="TEntity">The entity object to use as the tables entity type.</typeparam>
         /// <param name="tableName">The name of the table to get from Mapinfo.</param>
         /// <returns></returns>
-        public ITable<TEntity> GetTable<TEntity>(string tableName) 
+        public Table<TEntity> GetTable<TEntity>(string tableName) 
             where TEntity : BaseEntity, new()
         {
             Guard.AgainstNullOrEmpty(tableName, "tableName");
             // TODO Add logic here to handle if table isn't open.
-            return this.builder.BuildTable<TEntity>(tableName);
+            return (Table<TEntity>)this.builder.BuildTable<TEntity>(tableName);
         }
 
-        public ITable GetTable(string tableName)
+        public Table GetTable(string tableName)
         {
-            return (Table) this.GetTable<BaseEntity>(tableName);
+            return this.GetTable<BaseEntity>(tableName);
         }
 
         /// <summary>
         /// Close a collection of tables in Mapinfo.
         /// </summary>
-        /// <param name="tables">A <see cref="T:IEnumerable&lt;ITable&gt;"/> containing the tables that need to be closed.</param>
-        public static void CloseTables(IEnumerable<ITable> tables)
+        /// <param name="tables">A <see cref="IEnumerable&lt;ITable&gt;"/> containing the tables that need to be closed.</param>
+        public static void CloseTables(IEnumerable<Table> tables)
         {
             foreach (ITable table in tables)
             {

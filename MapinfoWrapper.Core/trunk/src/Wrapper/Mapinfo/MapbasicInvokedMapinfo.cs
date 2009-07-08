@@ -13,7 +13,7 @@ namespace MapinfoWrapper.Mapinfo
     /// when calling a .Net assembly from Mapbasic(MBX).
     /// <para>NOTE! This object uses reflection to invoke the Do and Eval commands of the Mapinfo instance, to allow this assembly to
     /// be Mapinfo version independent.</para>
-    /// <para>If you are using a version of Mapinfo less then 9.5 you will need to use the <see cref="T:COMMapinfo"/> class/.</para>
+    /// <para>If you are using a version of Mapinfo less then 9.5 you will need to use the <see cref="COMMapinfo"/> class/.</para>
     /// </summary>
     internal class MapbasicInvokedMapinfo : MapinfoSession
     {

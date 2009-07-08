@@ -22,7 +22,7 @@ namespace MapinfoWrapper.MapOperations
         /// </summary>
         /// <param name="tablelist">A collection of tables which will be used in the new map window.</param>
         /// <returns>A map containing a referance to the newly opened map window.</returns>
-        public MapWindow MapFromTables(IEnumerable<ITable> tablelist)
+        public MapWindow MapFromTables(IEnumerable<Table> tablelist)
         {
             var mappable = tablelist.ToList().FindAll(table => table.IsMappable);
 
@@ -44,9 +44,9 @@ namespace MapinfoWrapper.MapOperations
         /// </summary>
         /// <param name="table">The table which will be opened in a new map window.</param>
         /// <returns>A map containing a referance to the newly opened map window. </returns>
-        public MapWindow MapFromTable(ITable table)
+        public MapWindow MapFromTable(Table table)
         {
-            List<ITable> tablelist = new List<ITable>();
+            List<Table> tablelist = new List<Table>();
             tablelist.Add(table);
             return this.MapFromTables(tablelist);
         }

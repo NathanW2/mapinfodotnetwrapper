@@ -14,7 +14,14 @@ namespace MapinfoWrapper.DataAccess.RowOperations
         private readonly string tableName;
         private readonly IGeometryFactory geometryfactory;
 
-        public DataReader(MapinfoSession wrapper,string tableName, IGeometryFactory geometryFactory)
+        public DataReader(MapinfoSession MISession, string tableName)
+        {
+            this.wrapper = MISession;
+            this.tableName = tableName;
+            this.geometryfactory = new GeometryFactory(MISession);
+        }
+
+        internal DataReader(MapinfoSession wrapper,string tableName, IGeometryFactory geometryFactory)
         {
             this.wrapper = wrapper;
             this.tableName = tableName;

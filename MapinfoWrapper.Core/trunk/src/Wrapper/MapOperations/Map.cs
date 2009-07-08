@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using MapinfoWrapper.DataAccess;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Mapinfo;
 
