@@ -11,7 +11,7 @@ namespace MapinfoWrapper.Core.IoC
 {
     // HACK This feels like a bit of a code smell need to
     // look into better ways to build objects rather then a large 
-    public class ObjectBuilder : IObjectBuilder
+    internal class ObjectBuilder : IObjectBuilder
     {
         private readonly MapinfoSession wrapper;
 

@@ -1,5 +1,9 @@
 ﻿namespace MapinfoWrapper.Geometries
 {
+
+    /// <summary>
+    /// A structure for holding X and Y pair.
+    /// </summary>
     public struct Coordinate
     {
         public Coordinate(double x, double y)

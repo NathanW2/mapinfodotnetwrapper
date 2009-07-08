@@ -4,9 +4,9 @@ using MapinfoWrapper.MapbasicOperations;
 
 namespace MapinfoWrapper.Geometries
 {
-    public interface IGeometryFactory
+    internal interface IGeometryFactory
     {
-        IMILine CreateLine(Coordinate start, Coordinate end);
+        MILine CreateLine(Coordinate start, Coordinate end);
         MIPoint CreatePoint(Coordinate location);
         Geometry GetGeometryFromVariable(IVariable variable);
     }

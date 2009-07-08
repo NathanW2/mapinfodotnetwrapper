@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using MapinfoWrapper.Exceptions;
 using MapinfoWrapper.Core;
 using MapinfoWrapper.Mapinfo.Internals;
@@ -11,7 +6,9 @@ using MapinfoWrapper.Mapinfo.Internals;
 namespace MapinfoWrapper.Mapinfo
 {
     /// <summary>
-    /// Object used to hold or create an instace of Mapinfo's COM object.
+    /// Contains a running instance of Mapinfo COM object.  This is the lowest object
+    /// in the MapinfoWrapper API, all objects in the MapinfoWrapper API take and 
+    /// make calls through this object. 
     /// </summary>
     public class COMMapinfo : MapinfoSession
     {
@@ -19,12 +16,12 @@ namespace MapinfoWrapper.Mapinfo
 
         /// <summary>
         /// <b>NOTE!</b> This is only provided to allow for testing and should not be used outside of a test, if you need to
-        /// create a new instance of Mapinfo please use <see cref="T:Wrapper.Mapinfo.Factory.MapinfoSessionManager"/>
+        /// create a new instance of Mapinfo please use <see cref="MapinfoSessionManager"/>
         /// 
-        /// <para>Initializes a new instance of the <see cref="T:COMMapinfo"/> class, which holds 
+        /// <para>Initializes a new instance of the <see cref="COMMapinfo"/> class, which holds 
         /// an instance of a currently running instance of Mapinfo's COM object.</para>
         /// <para>If you use this method you must wire up the needed dependencies, see example section:</para>
-        /// <para><b>IT IS HIGHLY RECOMMANDED TO USE THE <see cref="T:Wrapper.Mapinfo.Factory.MapinfoSessionManager"/> TO CREATE
+        /// <para><b>IT IS HIGHLY RECOMMANDED TO USE THE <see cref="MapinfoSessionManager"/> TO CREATE
         /// AN INSTANCE OF MAPINFO.</b></para>
         /// </summary>
         /// <param name="mapinfoInstance">A currently running instance of Mapinfo's COM object.</param>
@@ -36,7 +33,7 @@ namespace MapinfoWrapper.Mapinfo
         /// <summary>
         /// Creates an instance of Mapinfo's COM object.
         /// </summary>
-        /// <returns>An instance of Mapinfo's COM object wrapped in <see cref="T:COMMapinfo"/></returns>
+        /// <returns>An instance of Mapinfo's COM object wrapped in <see cref="COMMapinfo"/></returns>
         public static COMMapinfo CreateInstance()
         {
             MapinfoSessionManager mapinfoSessionManager = new MapinfoSessionManager();

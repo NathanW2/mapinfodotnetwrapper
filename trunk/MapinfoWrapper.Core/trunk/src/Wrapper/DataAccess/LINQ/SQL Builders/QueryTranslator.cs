@@ -16,7 +16,8 @@ namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
         internal string TableName;
         internal LambdaExpression Projector;
     }
-
+    
+    // HACK This class works but it's very easy to work on. Really needs to be refactored.
     internal class QueryTranslator : ExpressionVisitor
     {
         StringBuilder sb;

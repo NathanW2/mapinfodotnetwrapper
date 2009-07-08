@@ -5,7 +5,7 @@ namespace MapinfoWrapper.Mapinfo
     /// <summary>
     /// Allows Mapinfo commands that are being run against Mapinfo to be logged.
     /// 
-    /// <para>As this call just fowards commands to the underlying <see cref="T:IMapinfoWrapper"/> calls should be
+    /// <para>As this call just fowards commands to the underlying <see cref="IMapinfoWrapper"/> calls should be
     /// made against this object.</para>
     /// 
     /// <para>This class fowards the calls to the underlying Mapinfo wrapper object, before and after the logging actions have
@@ -29,7 +29,7 @@ namespace MapinfoWrapper.Mapinfo
         private Action<String> returnevalaction;
 
         /// <summary>
-        /// Creates a new instace of the <see cref="T:MapinfoLogger"/> object.
+        /// Creates a new instace of the <see cref="MapinfoLogger"/> object.
         /// </summary>
         /// <param name="mapinfoInstance">The instance of Mapinfo to log against.</param>
         /// <param name="doCommandLogAction">The action that will be invoked before the RunCommand is run.</param>

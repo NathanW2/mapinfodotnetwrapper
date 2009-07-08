@@ -7,7 +7,6 @@ using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
 using MapinfoWrapper.DataAccess.RowOperations;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
 using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-using MapinfoWrapper.Core.Internals;
 using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.DataAccess

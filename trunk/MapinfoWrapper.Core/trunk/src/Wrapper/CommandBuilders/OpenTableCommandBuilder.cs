@@ -23,7 +23,7 @@ namespace MapinfoWrapper.CommandBuilders
         /// Gets the open table template which is used to build the open table command string.
         /// </summary>
         /// <remarks>At the moment right after construction this string will contain the full template including the tokens,
-        /// if any attributes have been set in the instance of <see cref="T:OpenTableCommandBuilder"/> it will contain the template
+        /// if any attributes have been set in the instance of <see cref="OpenTableCommandBuilder"/> it will contain the template
         /// string,the values of any replaced tokens, also any remaining tokens.
         /// </remarks>
         /// <example>

@@ -3,6 +3,10 @@ using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.Geometries.Points
 {
+    /// <summary>
+    /// Represents a point object in Mapinfo.  Provides real time access to properties
+    /// and method for working with a Mapinfo point object.
+    /// </summary>
     public class MIPoint : Geometry
     {
         internal MIPoint(MapinfoSession MISession, IVariable variable)

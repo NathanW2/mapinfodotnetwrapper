@@ -1,6 +1,6 @@
 ﻿namespace MapinfoWrapper.DataAccess
 {
-    public interface ITable
+    internal interface ITable
     {
         string Name { get; }
         int Number { get; }

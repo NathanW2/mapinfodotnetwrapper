@@ -1,14 +1,13 @@
 ﻿using System;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Exceptions;
 using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.Geometries
 {
     /// <summary>
-    /// Provides a wrapper around a mapbasic object type, allows access to basic information about the object.
+    /// Provides a wrapper around a mapbasic object type,
+    /// allows access to basic information about the object.
     /// </summary>
     public class MapbasicObject : IMapbasicObject
     {

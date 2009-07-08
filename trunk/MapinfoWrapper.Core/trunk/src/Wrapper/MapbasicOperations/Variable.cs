@@ -4,6 +4,12 @@ using MapinfoWrapper.Core.Extensions;
 
 namespace MapinfoWrapper.MapbasicOperations
 {
+    /// <summary>
+    /// Represents a Mapbasic variable. 
+    /// <para><b>You will not be able to create one these as the constructor is internal.
+    /// Any methods that need a Mapbasic variable will create one using an internal Variable Factory.
+    /// This is so that you will not have to worry about managment of variable in Mapinfo yourself.</b></para>
+    /// </summary>
     public class Variable : IVariable
     {
         private readonly MapinfoSession wrapper;
