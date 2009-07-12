@@ -41,21 +41,6 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>The underlying type of Mapinfo.</returns>
         public abstract object GetUnderlyingMapinfoInstance();
 
-        internal virtual object RunTableInfo(string tableName, TableInfo attribute)
-        {
-            int enumvalue = (int)attribute;
-            string command = "TableInfo({0},{1})".FormatWith(tableName, enumvalue);
-            string value = this.Evaluate(command);
-            switch (attribute)
-            {
-                case TableInfo.Tabfile:
-                case TableInfo.Name:
-                    return value;
-                default:
-                    return value;
-            }
-        }
-
         /// <summary>
         /// Run the ObjectInfo mapbasic command in Mapinfo, and returns a string containing the result.
         /// </summary>

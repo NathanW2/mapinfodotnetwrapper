@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
 using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper.Geometries;
@@ -40,13 +41,15 @@ namespace MapinfoWrapper.Core.IoC
         {
             return new MapinfoQueryProvider(this.wrapper);
         }
-
+        
+        [Obsolete]
         public ITable<TEntity> BuildTable<TEntity>(string name)
             where TEntity : BaseEntity, new()
         {
-            IQueryProvider provider = this.BuildQueryProvider();
-            IDataReader reader = this.BuildDataReader(name);
-            return new Table<TEntity>(this.wrapper, provider, reader, name);
+            throw new NotImplementedException("This feature needs to be removed");
+            //IQueryProvider provider = this.BuildQueryProvider();
+            //IDataReader reader = this.BuildDataReader(name);
+            //return new Table<TEntity>(this.wrapper, provider, reader, name);
         }
 
         public ITable BuildTable(string name)

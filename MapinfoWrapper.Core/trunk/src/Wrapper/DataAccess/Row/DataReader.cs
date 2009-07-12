@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using MapinfoWrapper.Core;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.DataAccess.RowOperations.Entities;
 using MapinfoWrapper.Geometries;
 using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper.MapbasicOperations;
 
 namespace MapinfoWrapper.DataAccess.RowOperations
 {
+
+    /// <summary>
+    /// Reads data from the suppiled Mapinfo table.
+    /// </summary>
+    // HACK! This table is doing a bit to much and needs to be refactored.
     public class DataReader : IDataReader
     {
         private readonly MapinfoSession wrapper;
@@ -136,7 +143,10 @@ namespace MapinfoWrapper.DataAccess.RowOperations
 
         public TEntity PopulateEntity<TEntity>(TEntity obj)
         {
-            PropertyInfo[] properties = typeof(TEntity).GetProperties();
+            PropertyInfo[] properties = (from prop in typeof (TEntity).GetProperties()
+                                         where !prop.GetCustomAttributes(false).Any(
+                                                    att => att.GetType() == typeof (MapinfoIgnore))
+                                         select prop).ToArray();
 
             for (int i = 0, n = properties.Length; i < n; i++)
             {

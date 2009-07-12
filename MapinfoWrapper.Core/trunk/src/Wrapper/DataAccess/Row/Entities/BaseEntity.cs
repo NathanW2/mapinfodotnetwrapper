@@ -2,11 +2,21 @@
 
 namespace MapinfoWrapper.DataAccess.RowOperations.Entities
 {
+    /// <summary>
+    /// Represents a basic row in a Mapinfo table.
+    /// </summary>
     public class BaseEntity
     {
-        protected internal IDataReader reader;
+        /// <summary>
+        /// Returns the row id for the current record in the attached table.
+        /// </summary>
         public int RowId { get; internal set; }
 
+        /// <summary>
+        /// Returns the value for the current record using the supplied column.
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
         public object Get(string columnName)
         {
             if (RowId == 0 || this.reader == null)
@@ -14,5 +24,48 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Entities
             
             return this.reader.Get(columnName);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Table"/> that this record is contained in.  Returns null if the
+        /// record is not inserted into a table
+        /// </summary>
+        [MapinfoIgnore]
+        public Table AttachedTo { get; internal set; }
+
+        /// <summary>
+        /// Returns the <see cref="IDataReader"/> for the current record.  This is here to support
+        /// non-strong typed records.
+        /// </summary>
+        protected internal IDataReader reader;
+
+        /// <summary>
+        /// Returns a <see cref="EntityState"/> representing the current state of the entity.
+        /// </summary>
+        [MapinfoIgnore]
+        public EntityState State 
+        {
+            get
+            {
+                if (RowId == 0 || this.reader == null || AttachedTo == null)
+                {
+                    return EntityState.NotInserted;
+                }
+                return EntityState.Attached;
+            }
+        }
+
+        public enum EntityState
+        {
+            Attached = 0,
+            NotInserted = 1
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property , Inherited = false, AllowMultiple = true)]
+    internal sealed class MapinfoIgnore : Attribute
+    {
+
+        public MapinfoIgnore()
+        {}
     }
 }

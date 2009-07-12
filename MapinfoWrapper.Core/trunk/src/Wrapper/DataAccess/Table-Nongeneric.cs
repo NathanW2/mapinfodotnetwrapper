@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Threading;
 using MapinfoWrapper.Core;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Core.InfoWrappers;
 using MapinfoWrapper.DataAccess.RowOperations;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
 using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
 using MapinfoWrapper.Mapinfo;
+using IDataReader=MapinfoWrapper.DataAccess.RowOperations.IDataReader;
 
 namespace MapinfoWrapper.DataAccess
 {
@@ -14,21 +18,28 @@ namespace MapinfoWrapper.DataAccess
     /// table definition is not known. This will still give you strong access
     /// to the RowId column.
     /// </summary>
+    // HACK! This class feels like it's doing to much, needs a bit of a refactor.
     public class Table : ITable
     {
         protected readonly MapinfoSession miSession;
         protected readonly string internalname;
         protected readonly IDataReader reader;
+        protected internal readonly TableInfoWrapper tableinfo;
 
         internal Table(MapinfoSession MISession, IDataReader reader, string tableName)
         {
+            Guard.AgainstNull(MISession,"MISession");
+            Guard.AgainstNull(reader, "reader");
+            
             miSession = MISession;
             this.internalname = tableName;
             this.reader = reader;
+
+            this.tableinfo = new TableInfoWrapper(MISession);
         }
 
         /// <summary>
-        /// Returns a <see cref="BaseEntity"/> at the supplied index in the table.
+        /// Returns a <see cref="BaseEntity"/> for the supplied index in the table.
         /// </summary>
         /// <param name="index">The index at which to get the <see cref="BaseEntity"/></param>
         /// <returns>An instace of <see cref="BaseEntity"/> for the supplied index.</returns>
@@ -36,10 +47,8 @@ namespace MapinfoWrapper.DataAccess
         {
             get
             {
-                BaseEntity row = new BaseEntity();
-                row.RowId = index;
-                row.reader = this.reader;
-                return row;
+                EntityBuilder builder = new EntityBuilder(this.miSession, this);
+                return builder.GenerateEntityForIndex<BaseEntity>(index);
             }
         }
 
@@ -73,7 +82,9 @@ namespace MapinfoWrapper.DataAccess
         public void DeleteRow(BaseEntity entity)
         {
             Guard.AgainstNull(entity, "entity");
-            Guard.AgainstNotInserted(entity, "entity");
+
+            if (entity.State == BaseEntity.EntityState.NotInserted)
+                throw new ArgumentOutOfRangeException("Entity is not currently attached to this table");
 
             this.DeleteRowAt(entity.RowId);
         }
@@ -101,7 +112,6 @@ namespace MapinfoWrapper.DataAccess
             }
         }
 
-
         /// <summary>
         /// Returns the path of the tab file for the underlying table,
         /// if the table is a query table it will retrun null.
@@ -110,8 +120,8 @@ namespace MapinfoWrapper.DataAccess
         {
             get
             {
-                string returnValue = (String)this.miSession.RunTableInfo(this.Name,
-                                                                         TableInfo.Tabfile);
+                string returnValue = (String) this.tableinfo.GetTableInfo(this.name,
+                                                                          TableInfo.Tabfile);
                 if (string.IsNullOrEmpty(returnValue))
                 {
                     return null;
@@ -134,7 +144,7 @@ namespace MapinfoWrapper.DataAccess
             {
                 if (number == null)
                 {
-                    object value = this.miSession.RunTableInfo(this.Name, TableInfo.Number);
+                    object value = this.tableinfo.GetTableInfo(this.Name, TableInfo.Number);
                     number = Convert.ToInt32(value);
                 }
                 return number.Value;
@@ -142,6 +152,7 @@ namespace MapinfoWrapper.DataAccess
         }
 
         public bool? mappable;
+
         /// <summary>
         /// Returns if the table is mappable or not.
         /// </summary>
@@ -151,7 +162,7 @@ namespace MapinfoWrapper.DataAccess
             {
                 if (mappable == null)
                 {
-                    string value = (string)this.miSession.RunTableInfo(this.Name, TableInfo.Mappable);
+                    string value = (string)this.tableinfo.GetTableInfo(this.Name, TableInfo.Mappable);
                     mappable = value == "T";
                 }
                 return mappable.Value;
@@ -168,7 +179,7 @@ namespace MapinfoWrapper.DataAccess
         {
             if (cols == null)
             {
-                string value = (string)this.miSession.RunTableInfo(this.Name, TableInfo.Ncols);
+                string value = (string)this.tableinfo.GetTableInfo(this.Name, TableInfo.Ncols);
                 cols = Convert.ToInt32(value);    
             }
             return cols.Value;
@@ -212,6 +223,44 @@ namespace MapinfoWrapper.DataAccess
         public void Close()
         {
             this.miSession.RunCommand("Close Table {0}".FormatWith(this.Name));
+        }
+
+        /// <summary>
+        /// Builds up entities for table, setting all the needed properties.
+        /// </summary>
+        // HACK! This class is doing similer things to DataReader and might need to be refactored.
+        internal class EntityBuilder
+        {
+            private readonly MapinfoSession miSession;
+            private readonly Table table;
+            private readonly DataReader datareader;
+
+            public EntityBuilder(MapinfoSession MISession, Table table)
+            {
+                miSession = MISession;
+                this.table = table;
+                this.datareader = new DataReader(MISession, table.Name);
+            }
+
+            public int CurrentRecord { get; set; }  
+
+            public TEntity GenerateEntityForIndex<TEntity>(int index)
+                where TEntity : BaseEntity, new()
+            {
+                string name = this.table.Name;
+                if (index != this.CurrentRecord)
+                    this.datareader.Fetch(index);
+
+                TEntity entity = new TEntity();
+                entity.AttachedTo = this.table;
+                entity.reader = this.datareader;
+                return this.datareader.PopulateEntity(entity);
+            }
+
+            public TEntity GenerateEntityForNextRecord<TEntity>()
+            {
+                throw new NoNullAllowedException();
+            }
         }
     }
 }

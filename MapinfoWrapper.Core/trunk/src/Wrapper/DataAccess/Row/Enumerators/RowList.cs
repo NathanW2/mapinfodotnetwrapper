@@ -13,6 +13,7 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
         public RowList(string tableName, IDataReader reader)
         {
             this.tablename = tableName;
+            this.reader = reader;
         }
 
         public IEnumerator<TTabeDef> GetEnumerator()
