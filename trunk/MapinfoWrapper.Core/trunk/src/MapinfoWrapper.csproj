@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Guard.cs" />
+    <Compile Include="Core\InfoWrappers\TableInfoWrapper.cs" />
     <Compile Include="Core\Internals\IVariableFactory.cs" />
     <Compile Include="Core\Internals\VariableFactory.cs" />
     <Compile Include="Core\IoC\ObjectBuilder.cs" />

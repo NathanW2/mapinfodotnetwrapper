@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using MapinfoWrapper.Core;
 using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Core.InfoWrappers;
 using MapinfoWrapper.Core.IoC;
+using MapinfoWrapper.DataAccess.RowOperations;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
 using MapinfoWrapper.Mapinfo;
 
@@ -14,18 +16,12 @@ namespace MapinfoWrapper.DataAccess
     public class TableManager : ITableManager
     {
         private readonly MapinfoSession miSession;
-        internal readonly IObjectBuilder builder;
+        private readonly TableInfoWrapper tableinfo;
 
         public TableManager(MapinfoSession MISession)
         {
             this.miSession = MISession;
-            this.builder = new ObjectBuilder(MISession);
-        }
-
-        internal TableManager(MapinfoSession MISession,IObjectBuilder builder)
-        {
-            this.miSession = MISession;
-            this.builder = builder;
+            this.tableinfo = new TableInfoWrapper(MISession);
         }
 
         /// <summary>
@@ -46,7 +42,7 @@ namespace MapinfoWrapper.DataAccess
         /// <typeparam name="TEntity">The entity type to use a the entity for the table,
         /// this will allow strong typed access to the columns in the table and LINQ support.</typeparam>
         /// <param name="tablePath"></param>
-        /// <returns>An instance of <see cref="MapinfoWrapper.TableOperations.ITable&lt;TEntity&gt;"/></returns>
+        /// <returns>An instance of <see cref="MapinfoWrapper.DataAccess.ITable&lt;TEntity&gt;"/></returns>
         public Table<TEntity> OpenTable<TEntity>(string tablePath)
             where TEntity : BaseEntity, new()
         {
@@ -65,11 +61,15 @@ namespace MapinfoWrapper.DataAccess
         {
             Guard.AgainstNullOrEmpty(tableName, "tableName");
             // TODO Add logic here to handle if table isn't open.
-            return (Table<TEntity>)this.builder.BuildTable<TEntity>(tableName);
+
+            IDataReader reader = new DataReader(miSession, tableName);
+            return new Table<TEntity>(miSession, reader, tableName);
         }
 
         public Table GetTable(string tableName)
         {
+            Guard.AgainstNullOrEmpty(tableName,"tableName");
+
             return this.GetTable<BaseEntity>(tableName);
         }
 
@@ -79,6 +79,8 @@ namespace MapinfoWrapper.DataAccess
         /// <param name="tables">A <see cref="IEnumerable&lt;ITable&gt;"/> containing the tables that need to be closed.</param>
         public static void CloseTables(IEnumerable<Table> tables)
         {
+            Guard.AgainstNull(tables, "tables");
+
             foreach (ITable table in tables)
             {
                 table.Close();
@@ -88,7 +90,7 @@ namespace MapinfoWrapper.DataAccess
         private string OpenTableAndGetName(string tablePath)
         {
             this.miSession.RunCommand("Open Table {0}".FormatWith(tablePath.InQuotes()));
-            string name = (String)this.miSession.RunTableInfo(0.ToString(), TableInfo.Name);        	
+            string name = (String)this.tableinfo.GetTableInfo(0.ToString(), TableInfo.Name);        	
         	return name;
         }
     }

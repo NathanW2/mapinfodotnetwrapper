@@ -7,6 +7,6 @@ namespace MapinfoWrapper.DataAccess
         where TTableDef : new()
     {
         IEnumerable<TTableDef> Rows { get; }
-        TTableDef InsertRow(TTableDef row);
+        void InsertRow(TTableDef row);
     }
 }
