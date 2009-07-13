@@ -41,7 +41,7 @@ namespace MapinfoWrapper.Geometries
     	public MILine CreateLine(Coordinate start, Coordinate end)
     	{
             IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
-            this.misession.RunCommand("Create MILine Into Variable {0} ({1},{2})({3},{4})".FormatWith(variable.GetExpression(), start.X, start.Y, end.X, end.Y));
+            this.misession.RunCommand("CreateInto MILine Into Variable {0} ({1},{2})({3},{4})".FormatWith(variable.GetExpression(), start.X, start.Y, end.X, end.Y));
             return new MILine(this.misession, variable);
     	}
     	
@@ -57,7 +57,7 @@ namespace MapinfoWrapper.Geometries
         public MIPoint CreatePoint(Coordinate location)
         {
     	    IVariable variable = variablefactory.CreateNewWithGUID(Variable.VariableType.Object);
-            this.misession.RunCommand("Create MIPoint Into Variable {0} ({1},{2}) ".FormatWith(variable.GetExpression(), location.X, location.Y));
+            this.misession.RunCommand("CreateInto MIPoint Into Variable {0} ({1},{2}) ".FormatWith(variable.GetExpression(), location.X, location.Y));
     	    return new MIPoint(this.misession, variable);
         }
 

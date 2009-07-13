@@ -62,6 +62,9 @@
     <Compile Include="Core\IoC\IObjectBuilder.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
     <Compile Include="Wrapper\DataAccess\ITableManager.cs" />
+    <Compile Include="Wrapper\Embedding\ButtonPad.cs" />
+    <Compile Include="Wrapper\Embedding\MIButton.cs" />
+    <Compile Include="Wrapper\Embedding\PushButton.cs" />
     <Compile Include="Wrapper\Geometries\IGeometryFactory.cs" />
     <Compile Include="Wrapper\Geometries\MIPolyline.cs" />
     <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />

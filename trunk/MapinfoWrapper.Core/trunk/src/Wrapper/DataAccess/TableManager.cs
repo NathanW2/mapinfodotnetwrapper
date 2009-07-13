@@ -11,7 +11,7 @@ using MapinfoWrapper.Mapinfo;
 namespace MapinfoWrapper.DataAccess
 {
     /// <summary>
-    /// A factory that is used to Create or Open tables in Mapinfo.
+    /// A factory that is used to CreateInto or Open tables in Mapinfo.
     /// </summary>
     public class TableManager : ITableManager
     {
