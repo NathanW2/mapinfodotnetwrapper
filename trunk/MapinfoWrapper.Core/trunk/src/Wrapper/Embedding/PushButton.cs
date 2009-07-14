@@ -3,10 +3,16 @@ namespace MapinfoWrapper.Embedding
     using Core.Extensions;
 
     /// <summary>
-    /// Represents a Mapinfo push button.  Can be added to <see cref="ButtonPad"/> buttons collection.
+    /// Represents a Mapinfo push button.  Can be added to <see cref="ButtonPad"/> buttons collection, which can then be creating in 
+    /// Mapinfo.
     /// </summary>
     public class PushButton : MIButton
     {
+        public PushButton(int ID)
+        {
+            this.ID = ID;
+        }
+
         /// <summary>
         /// Returns the formated Mapbasic string for the current button.
         /// </summary>
