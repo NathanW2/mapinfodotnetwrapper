@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using MapinfoWrapper.Core;
 using MapinfoWrapper.DataAccess.LINQ;
 using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-using MapinfoWrapper.DataAccess.RowOperations;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
 using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
 using MapinfoWrapper.Mapinfo;
@@ -20,8 +19,8 @@ namespace MapinfoWrapper.DataAccess
 	public class Table<TEntity> : Table, ITable<TEntity>
         where TEntity : BaseEntity ,new()
 	{
-	    internal Table(MapinfoSession MISession, IDataReader reader, string tableName)
-            : base(MISession, reader, tableName)
+	    internal Table(MapinfoSession MISession, string tableName)
+            : base(MISession, tableName)
 	    { }
 
 	    /// <summary>

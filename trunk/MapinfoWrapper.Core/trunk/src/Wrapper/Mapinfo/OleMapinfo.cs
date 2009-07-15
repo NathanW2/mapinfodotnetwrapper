@@ -10,7 +10,7 @@ namespace MapinfoWrapper.Mapinfo
     /// in the MapinfoWrapper API, all objects in the MapinfoWrapper API take and 
     /// make calls through this object. 
     /// </summary>
-    public class COMMapinfo : MapinfoSession
+    internal class COMMapinfo : IMapinfoWrapper
     {
         private DMapInfo mapinfoinstance;
 
@@ -29,24 +29,14 @@ namespace MapinfoWrapper.Mapinfo
         {
             this.mapinfoinstance = mapinfoInstance;
         }
-
-        /// <summary>
-        /// Creates an instance of Mapinfo's COM object.
-        /// </summary>
-        /// <returns>An instance of Mapinfo's COM object wrapped in <see cref="COMMapinfo"/></returns>
-        public static COMMapinfo CreateInstance()
-        {
-            MapinfoSessionManager mapinfoSessionManager = new MapinfoSessionManager();
-            return mapinfoSessionManager.CreateCOMInstance();
-        }
-        
+      
         #region IMapinfoWrapper Members
 
         /// <summary>
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        public override void RunCommand(string commandString)
+        public void RunCommand(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString, "commandString");
             try
@@ -69,7 +59,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        public override string Evaluate(string commandString)
+        public string Evaluate(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString,"commandString");
 
@@ -94,7 +84,7 @@ namespace MapinfoWrapper.Mapinfo
         /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapinfoWrapper"/> interface.
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
-        public override object GetUnderlyingMapinfoInstance()
+        public object GetUnderlyingMapinfoInstance()
         {
             return this.mapinfoinstance;
         }

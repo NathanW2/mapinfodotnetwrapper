@@ -13,28 +13,28 @@ using IDataReader=MapinfoWrapper.DataAccess.RowOperations.IDataReader;
 
 namespace MapinfoWrapper.DataAccess
 {
+    using Wrapper.Exceptions;
+
     /// <summary>
     /// A Mapinfo Table container which can be used when the
     /// table definition is not known. This will still give you strong access
     /// to the RowId column.
     /// </summary>
     // HACK! This class feels like it's doing to much, needs a bit of a refactor.
-    public class Table : ITable
+    public class Table : ITable, IEquatable<Table>
     {
         protected readonly MapinfoSession miSession;
-        protected readonly string internalname;
+        private readonly string name;
         protected readonly IDataReader reader;
-        protected internal readonly TableInfoWrapper tableinfo;
+        private readonly TableInfoWrapper tableinfo;
 
-        internal Table(MapinfoSession MISession, IDataReader reader, string tableName)
+        internal Table(MapinfoSession MISession, string tableName)
         {
             Guard.AgainstNull(MISession,"MISession");
-            Guard.AgainstNull(reader, "reader");
-            
-            miSession = MISession;
-            this.internalname = tableName;
-            this.reader = reader;
-
+           
+            this.miSession = MISession;
+            this.name = tableName;
+            this.reader = new DataReader(this.miSession, tableName);
             this.tableinfo = new TableInfoWrapper(MISession);
         }
 
@@ -83,8 +83,8 @@ namespace MapinfoWrapper.DataAccess
         {
             Guard.AgainstNull(entity, "entity");
 
-            if (entity.State == BaseEntity.EntityState.NotInserted)
-                throw new ArgumentOutOfRangeException("Entity is not currently attached to this table");
+            if (entity.AttachedTo != this) 
+                throw new TableException("Entity is not currently attached to this table");
 
             this.DeleteRowAt(entity.RowId);
         }
@@ -94,8 +94,6 @@ namespace MapinfoWrapper.DataAccess
             throw new NotImplementedException();
         }
 
-        private string name;
-
         /// <summary>
         /// Returns the name of the current table.
         /// </summary>
@@ -103,11 +101,6 @@ namespace MapinfoWrapper.DataAccess
         {
             get
             {
-                if (this.name == null)
-                {
-                    //name = this.tablecommandrunner.GetName(this.internalname);
-                    this.name = this.internalname;
-                }
                 return name;
             }
         }
@@ -151,7 +144,7 @@ namespace MapinfoWrapper.DataAccess
             }
         }
 
-        public bool? mappable;
+        private bool? mappable;
 
         /// <summary>
         /// Returns if the table is mappable or not.
@@ -226,6 +219,21 @@ namespace MapinfoWrapper.DataAccess
         }
 
         /// <summary>
+        /// Returns a new <see cref="Table{TEntity}"/> using the <typeparamref name="TEntity"/> as the
+        /// tables row entity.
+        /// 
+        /// <para>This function is usful if you have retrived an table from a <see cref="MapinfoSession"/>'s  <see cref="TableCollection"/> 
+        /// which are stored as <see cref="Table"/> but you know the entity type for it.</para>
+        /// </summary>
+        /// <typeparam name="TEntity">The type to use as the entity type for the table.</typeparam>
+        /// <returns>A new <see cref="Table{TEntity}"/> for the same table as this <see cref="Table"/>.</returns>
+        public Table<TEntity> CastToGenericTable<TEntity>()
+            where TEntity : BaseEntity, new()
+        {
+            return new Table<TEntity>(miSession, this.Name);
+        }
+
+        /// <summary>
         /// Builds up entities for table, setting all the needed properties.
         /// </summary>
         // HACK! This class is doing similer things to DataReader and might need to be refactored.
@@ -262,5 +270,53 @@ namespace MapinfoWrapper.DataAccess
                 throw new NoNullAllowedException();
             }
         }
-    }
+
+        /// <summary>
+        /// Serves as a hash function for a particular type. 
+        /// </summary>
+        /// <returns>
+        /// A hash code for the current <see cref="T:System.Object"/>.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = (hash * 23) + this.Name.GetHashCode();
+            hash = (hash * 23) + this.miSession.GetHashCode();
+            return hash;
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+        /// </returns>
+        /// <param name="other">An object to compare with this object.
+        ///                 </param>
+        public bool Equals(Table other)
+        {
+            if (other == null) 
+                return false;
+
+            return (this.miSession == other.miSession && this.name == other.Name);
+        }
+
+        public override bool Equals(object obj)
+        {
+            Table table = obj as Table;
+
+            return this.Equals(table);
+        }        public static bool operator ==(Table t1, Table t2)        {
+            if ((object)t1 == null || ((object)t2 == null))
+                return false;
+            else return
+                t1.Equals(t2);
+
+        }
+
+        public static bool operator !=(Table t1, Table t2)
+        {
+            return !(t1 == t2);
+        }    }   
 }

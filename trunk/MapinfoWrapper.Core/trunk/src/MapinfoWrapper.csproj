@@ -55,16 +55,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Guard.cs" />
-    <Compile Include="Core\InfoWrappers\TableInfoWrapper.cs" />
+    <Compile Include="Core\Wrappers\TableInfoWrapper.cs" />
     <Compile Include="Core\Internals\IVariableFactory.cs" />
     <Compile Include="Core\Internals\VariableFactory.cs" />
     <Compile Include="Core\IoC\ObjectBuilder.cs" />
     <Compile Include="Core\IoC\IObjectBuilder.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
+    <Compile Include="Core\Check.cs" />
     <Compile Include="Wrapper\DataAccess\ITableManager.cs" />
+    <Compile Include="Core\Wrappers\MapbasicWrapper.cs" />
+    <Compile Include="Wrapper\Exceptions\MapbasicException.cs" />
     <Compile Include="Wrapper\Embedding\ButtonPad.cs" />
     <Compile Include="Wrapper\Embedding\MIButton.cs" />
     <Compile Include="Wrapper\Embedding\PushButton.cs" />
+    <Compile Include="Wrapper\Exceptions\TableException.cs" />
     <Compile Include="Wrapper\Geometries\IGeometryFactory.cs" />
     <Compile Include="Wrapper\Geometries\MIPolyline.cs" />
     <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />
@@ -72,8 +76,6 @@
     <Compile Include="Wrapper\MapbasicOperations\Variable.cs" />
     <Compile Include="Wrapper\MapinfoCallback.cs" />
     <Compile Include="Wrapper\Mapinfo\MapinfoSession.cs" />
-    <Compile Include="Wrapper\Mapinfo\MapinfoFactory.cs" />
-    <Compile Include="Wrapper\Mapinfo\MapinfoLogger.cs" />
     <Compile Include="Wrapper\Geometries\Coordinate.cs" />
     <Compile Include="Wrapper\Geometries\Geometry.cs" />
     <Compile Include="Wrapper\Geometries\GeometryFactory.cs" />
@@ -105,7 +107,7 @@
     <Compile Include="Wrapper\Embedding\SystemInfoEnum.cs" />
     <Compile Include="Wrapper\Exceptions\MapinfoException.cs" />
     <Compile Include="Core\Extensions\StringExtensions.cs" />
-    <Compile Include="Wrapper\IMapinfoWrapper.cs" />
+    <Compile Include="Wrapper\Mapinfo\IMapinfoWrapper.cs" />
     <Compile Include="Wrapper\LayerOperations\Layer.cs" />
     <Compile Include="Wrapper\Mapinfo\Internals\DMapinfoCOMInterface.cs" />
     <Compile Include="Wrapper\Mapinfo\Internals\IMapinfo.cs" />
@@ -125,14 +127,12 @@
     <Compile Include="Wrapper\DataAccess\Row\Enumerators\RowList.cs" />
     <Compile Include="Wrapper\DataAccess\Table-Nongeneric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wrapper\DataAccess\TableManager.cs" />
+    <Compile Include="Wrapper\DataAccess\TableCollection.cs" />
     <Compile Include="Wrapper\DataAccess\TableInfoEnum.cs" />
     <Compile Include="Wrapper\MapOperations\Mapper.cs" />
     <Compile Include="Wrapper\Workspace.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="Wrapper\MapinfoWrapper.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

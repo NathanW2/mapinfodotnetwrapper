@@ -9,7 +9,7 @@ namespace MapinfoWrapper.Mapinfo
     /// Contains only the basic functions
     /// needed to communicate with Mapinfo.
     /// </summary>
-    public interface IMapinfoWrapper
+    internal interface IMapinfoWrapper
     {
         /// <summary>
         /// Runs a specified Mapinfo command string in Mapinfo.
@@ -30,5 +30,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
         object GetUnderlyingMapinfoInstance();
+
+        MapinfoCallback Callback { get; set; }
     }
 }
