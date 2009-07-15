@@ -15,7 +15,7 @@ namespace MapinfoWrapper.DataAccess.RowOperations
     /// Reads data from the suppiled Mapinfo table.
     /// </summary>
     // HACK! This table is doing a bit to much and needs to be refactored.
-    public class DataReader : IDataReader
+    internal class DataReader : IDataReader
     {
         private readonly MapinfoSession wrapper;
         private readonly string tableName;

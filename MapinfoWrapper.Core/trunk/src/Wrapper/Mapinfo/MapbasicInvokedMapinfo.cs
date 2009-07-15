@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Reflection;
-using MapinfoWrapper.Mapinfo.Internals;
 
 namespace MapinfoWrapper.Mapinfo
 {
@@ -15,25 +10,26 @@ namespace MapinfoWrapper.Mapinfo
     /// be Mapinfo version independent.</para>
     /// <para>If you are using a version of Mapinfo less then 9.5 you will need to use the <see cref="COMMapinfo"/> class/.</para>
     /// </summary>
-    internal class MapbasicInvokedMapinfo : MapinfoSession
+    internal class MapbasicInvokedMapinfo : IMapinfoWrapper
     {
-        private IMapInfo2 mapinfoinstance;
+        private object mapinfoinstance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapbasicInvokedMapinfo"/> class.
         /// </summary>
         /// <param name="mapinfoInstance">The current running instance</param>
-        internal MapbasicInvokedMapinfo(IMapInfo2 mapinfoInstance)
+        internal MapbasicInvokedMapinfo(object mapinfoInstance)
         {
            this.mapinfoinstance = mapinfoInstance;
         }
 
         public static MapbasicInvokedMapinfo GetMapinfoFromInstance(Object mapinfoInstance)
         {
-            Type mapinfotype = mapinfoInstance.GetType();
-            FieldInfo imapinfofield = mapinfotype.GetField("_mapinfo", BindingFlags.Instance | BindingFlags.NonPublic);
-            Object imapinfoinstance = imapinfofield.GetValue(mapinfoInstance);
-            return new MapbasicInvokedMapinfo((IMapInfo2)imapinfoinstance);
+            //Type mapinfotype = mapinfoInstance.GetType();
+            //FieldInfo imapinfofield = mapinfotype.GetField("_mapinfo", BindingFlags.Instance | BindingFlags.NonPublic);
+            //Object imapinfoinstance = imapinfofield.GetValue(mapinfoInstance);
+
+            return new MapbasicInvokedMapinfo(mapinfoInstance);
         }
 
         #region IMapinfoWrapper Members
@@ -42,7 +38,7 @@ namespace MapinfoWrapper.Mapinfo
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        public override void RunCommand(string commandString)
+        public void RunCommand(string commandString)
         {
             if (String.IsNullOrEmpty(commandString))
                 throw new ArgumentNullException("commandString", "Command string can not be null");
@@ -57,7 +53,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        public override string Evaluate(string commandString)
+        public string Evaluate(string commandString)
         {
             if (String.IsNullOrEmpty(commandString))
                 throw new ArgumentNullException("commandString", "Command string can not be null");
@@ -72,9 +68,21 @@ namespace MapinfoWrapper.Mapinfo
         /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapinfoWrapper"/> interface.
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
-        public override object GetUnderlyingMapinfoInstance()
+        public object GetUnderlyingMapinfoInstance()
         {
             return mapinfoinstance;
+        }
+
+        public MapinfoCallback Callback
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion

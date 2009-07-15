@@ -14,18 +14,10 @@ namespace MapinfoWrapper.DataAccess.LINQ
     internal class MapinfoQueryProvider : IQueryProvider
     {
         private readonly MapinfoSession misession;
-        private readonly IObjectBuilder builder;
 
         public MapinfoQueryProvider(MapinfoSession MISession)
         {
             this.misession = MISession;
-            this.builder = new ObjectBuilder(MISession);
-        }
-
-        public MapinfoQueryProvider(MapinfoSession MISession, IObjectBuilder objectBuilder)
-        {
-            this.misession = MISession;
-            this.builder = objectBuilder;
         }
 
         public object Execute(Expression expression)
@@ -36,7 +28,7 @@ namespace MapinfoWrapper.DataAccess.LINQ
             Type elementType = TypeSystem.GetElementType(expression.Type);
             if (result.Projector != null)
             {
-                IDataReader reader = this.builder.BuildDataReader(result.TableName);
+                IDataReader reader = new DataReader(misession,result.TableName);
                 Delegate projector = result.Projector.Compile();
                 return Activator.CreateInstance(typeof(ProjectionReader<>).MakeGenericType(elementType),
                                                 new object[] { reader, projector });
