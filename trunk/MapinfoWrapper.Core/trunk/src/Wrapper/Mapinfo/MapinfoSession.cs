@@ -9,24 +9,45 @@ using MapinfoWrapper.MapOperations;
 namespace MapinfoWrapper.Mapinfo
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using Internals;
     using Microsoft.Win32;
+
+    
 
     public class MapinfoSession : IMapinfoWrapper
     {
         private readonly IMapinfoWrapper mapinfo;
 
-        private MapinfoSession(IMapinfoWrapper mapinfoAPI)
+        private SystemInfo systeminfo;
+
+        private TableCollection tables;
+
+        private ICollection<ButtonPad> buttonpads;
+
+        internal MapinfoSession(IMapinfoWrapper mapinfoAPI)
         {
             this.mapinfo = mapinfoAPI;
         }
+
+        public delegate void MapinfoSessionHandler(MapinfoSession session);
+        /// <summary>
+        /// A static event that gets fired when a Mapinfo session is created using the wrapper.
+        /// </summary>
+        public static event MapinfoSessionHandler SessionCreated;
 
         private static DMapInfo CreateMapinfoInstance()
         {
             Type mapinfotype = Type.GetTypeFromProgID("Mapinfo.Application");
             DMapInfo instance = (DMapInfo)Activator.CreateInstance(mapinfotype);
             return instance;
+        }
+
+        internal static MapinfoSession GetCurrentRunningInstance()
+        {
+            // TODO: Implement getting running instance of Mapinfo.
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -38,15 +59,13 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
         public static MapinfoSession CreateCOMInstance()
         {
+            
             DMapInfo instance = CreateMapinfoInstance();
             COMMapinfo mapinfo = new COMMapinfo(instance);
-            return new MapinfoSession(mapinfo);
-        }
-
-        internal static MapinfoSession GetCurrentRunningInstance()
-        {
-            // TODO: Implement getting running instance of Mapinfo.
-            throw new NotImplementedException();
+            MapinfoSession session = new MapinfoSession(mapinfo);
+            if (SessionCreated != null)
+                SessionCreated(session);
+            return session;
         }
 
         /// <summary>
@@ -55,7 +74,7 @@ namespace MapinfoWrapper.Mapinfo
         /// <param name="variable">The variable used by the ObjectInfo call.</param>
         /// <param name="attribute">The attribute specifying which information to return.</param>
         /// <returns>A string containing the retured result from calling the ObjectInfo command in Mapinfo.</returns>
-        // This doesn't belong here.
+        // TODO This doesn't belong here.
         internal object ObjectInfo(IVariable variable, ObjectInfoEnum attribute)
         {
             string expression = variable.GetExpression();
@@ -85,7 +104,6 @@ namespace MapinfoWrapper.Mapinfo
             return new MapWindow(this,windowid);
         }
 
-        private SystemInfo systeminfo;
         /// <summary>
         /// Returns a <see cref="SystemInfo"/> object allowing access to system 
         /// info about the current running instance of Mapinfo.
@@ -102,7 +120,6 @@ namespace MapinfoWrapper.Mapinfo
             }
         }
 
-        private TableCollection tables;
         /// <summary>
         /// Returns a new <see cref="TableCollection"/> 
         /// giving access to the current open tables in Mapinfo.
@@ -117,6 +134,24 @@ namespace MapinfoWrapper.Mapinfo
                     this.tables.RefreshList();
                 }
                 return this.tables;
+            }
+        }
+
+        /// <summary>
+        /// Returns a collection of custom buttons in Mapinfo. 
+        /// <para>This collection will only return the custom button pads add using the Wrapper. If you need to get a standard button pad or
+        /// a custom one  </para>
+        /// </summary>
+        public ICollection<ButtonPad> ButtonPads
+        {
+            get
+            {
+                throw new NotImplementedException();
+                //if (this.buttonpads == null)
+                //{
+                //    this.buttonpads = new ButtonPadCollection(this);
+                //}
+                //return this.buttonpads;
             }
         }
         

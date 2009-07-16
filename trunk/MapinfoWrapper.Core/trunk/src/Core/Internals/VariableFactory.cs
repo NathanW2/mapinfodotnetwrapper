@@ -1,6 +1,5 @@
 ﻿using System;
 using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.MapbasicOperations;
 using MapinfoWrapper.Mapinfo;
 

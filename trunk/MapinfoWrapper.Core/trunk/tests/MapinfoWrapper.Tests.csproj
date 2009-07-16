@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="CoreTests\InternalsTests\VariableFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WrapperTest\DataAccess\TableEqualityTests.cs" />
     <Compile Include="WrapperTest\Embedding\ButtonPadTests.cs" />
     <Compile Include="WrapperTest\Embedding\ControlExtensionTests.cs" />
     <Compile Include="WrapperTest\Embedding\MapinfoWindowHandleTests.cs" />

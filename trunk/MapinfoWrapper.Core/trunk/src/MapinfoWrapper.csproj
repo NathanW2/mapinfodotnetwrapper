@@ -58,8 +58,6 @@
     <Compile Include="Core\Wrappers\TableInfoWrapper.cs" />
     <Compile Include="Core\Internals\IVariableFactory.cs" />
     <Compile Include="Core\Internals\VariableFactory.cs" />
-    <Compile Include="Core\IoC\ObjectBuilder.cs" />
-    <Compile Include="Core\IoC\IObjectBuilder.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
     <Compile Include="Core\Check.cs" />
     <Compile Include="Wrapper\DataAccess\ITableManager.cs" />
