@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MapinfoWrapper.Core.IoC;
+
 using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
 using MapinfoWrapper.DataAccess.RowOperations;
 using MapinfoWrapper.DataAccess.RowOperations.Enumerators;

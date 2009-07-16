@@ -20,8 +20,8 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Entities
         public object Get(string columnName)
         {
             if (RowId == 0 || this.reader == null)
-                throw new ArgumentException("The current row has not been inserted to a table so rows can not be read.");
-            
+                throw new NotSupportedException("The current row has not been inserted to a table so rows can not be read.");
+
             return this.reader.Get(columnName);
         }
 
@@ -61,10 +61,12 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Entities
         }
     }
 
+    /// <summary>
+    /// An attribute used to mark a property to be ignored when being loaded with data.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property , Inherited = false, AllowMultiple = true)]
     internal sealed class MapinfoIgnore : Attribute
     {
-
         public MapinfoIgnore()
         {}
     }

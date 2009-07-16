@@ -1,5 +1,4 @@
-﻿using MapinfoWrapper.Core.IoC;
-using MapinfoWrapper.Mapinfo;
+﻿using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.LayerOperations
 {
