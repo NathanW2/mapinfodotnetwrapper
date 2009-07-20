@@ -230,6 +230,9 @@ namespace MapinfoWrapper.DataAccess
         public Table<TEntity> CastToGenericTable<TEntity>()
             where TEntity : BaseEntity, new()
         {
+            // We can return a new generic version of the table here,
+            // because we have overriden Equals and GetHashCode, making the
+            // new table and this one equal.
             return new Table<TEntity>(miSession, this.Name);
         }
 
@@ -237,6 +240,7 @@ namespace MapinfoWrapper.DataAccess
         /// Builds up entities for table, setting all the needed properties.
         /// </summary>
         // HACK! This class is doing similer things to DataReader and might need to be refactored.
+        // HACK! This class doesn't belong here.
         internal class EntityBuilder
         {
             private readonly MapinfoSession miSession;
