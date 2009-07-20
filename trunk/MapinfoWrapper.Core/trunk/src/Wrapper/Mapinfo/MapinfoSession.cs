@@ -14,8 +14,6 @@ namespace MapinfoWrapper.Mapinfo
     using Internals;
     using Microsoft.Win32;
 
-    
-
     public class MapinfoSession : IMapinfoWrapper
     {
         private readonly IMapinfoWrapper mapinfo;
@@ -24,9 +22,9 @@ namespace MapinfoWrapper.Mapinfo
 
         private TableCollection tables;
 
-        private ICollection<ButtonPad> buttonpads;
+        private ButtonPadCollection buttonpads;
 
-        internal MapinfoSession(IMapinfoWrapper mapinfoAPI)
+        public MapinfoSession(IMapinfoWrapper mapinfoAPI)
         {
             this.mapinfo = mapinfoAPI;
         }
@@ -142,16 +140,15 @@ namespace MapinfoWrapper.Mapinfo
         /// <para>This collection will only return the custom button pads add using the Wrapper. If you need to get a standard button pad or
         /// a custom one  </para>
         /// </summary>
-        public ICollection<ButtonPad> ButtonPads
+        public ButtonPadCollection ButtonPads
         {
             get
             {
-                throw new NotImplementedException();
-                //if (this.buttonpads == null)
-                //{
-                //    this.buttonpads = new ButtonPadCollection(this);
-                //}
-                //return this.buttonpads;
+                if (this.buttonpads == null)
+                {
+                    this.buttonpads = new ButtonPadCollection(this);
+                }
+                return this.buttonpads;
             }
         }
         

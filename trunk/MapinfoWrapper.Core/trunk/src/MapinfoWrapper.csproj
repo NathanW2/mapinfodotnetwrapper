@@ -73,6 +73,7 @@
     <Compile Include="Wrapper\MapbasicOperations\TableObjVariable.cs" />
     <Compile Include="Wrapper\MapbasicOperations\Variable.cs" />
     <Compile Include="Wrapper\MapinfoCallback.cs" />
+    <Compile Include="Wrapper\Mapinfo\ButtonPadCollection.cs" />
     <Compile Include="Wrapper\Mapinfo\MapinfoSession.cs" />
     <Compile Include="Wrapper\Geometries\Coordinate.cs" />
     <Compile Include="Wrapper\Geometries\Geometry.cs" />

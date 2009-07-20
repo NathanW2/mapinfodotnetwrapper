@@ -9,7 +9,7 @@ namespace MapinfoWrapper.Mapinfo
     /// Contains only the basic functions
     /// needed to communicate with Mapinfo.
     /// </summary>
-    internal interface IMapinfoWrapper
+    public interface IMapinfoWrapper
     {
         /// <summary>
         /// Runs a specified Mapinfo command string in Mapinfo.

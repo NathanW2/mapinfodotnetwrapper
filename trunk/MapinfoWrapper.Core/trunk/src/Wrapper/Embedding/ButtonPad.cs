@@ -31,6 +31,7 @@ namespace MapinfoWrapper.Embedding
         public ButtonPad(string title)
         {
             Guard.AgainstNullOrEmpty(title, "name");
+
             this.Title = title;
             this.buttons = new List<MIButton>();
         }
@@ -127,8 +128,6 @@ namespace MapinfoWrapper.Embedding
             else
                 return " Floating";
         }
-
-        #region Implementation of ICollection<MIButton>
 
         /// <summary>
         /// Adds an button to the button pad.
@@ -254,10 +253,6 @@ namespace MapinfoWrapper.Embedding
             }
         }
 
-        #endregion
-
-        #region Implementation of IEnumerable
-
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
@@ -282,19 +277,18 @@ namespace MapinfoWrapper.Embedding
             return this.GetEnumerator();
         }
 
-        #endregion
+        public MapinfoSession MISession
+        {
+            get { return misession; }
+            internal set { misession = value; }
+        }
 
         /// <summary>
-        /// Creates the button pad in Mapinfo.  Returns the newly created button pad in Mapinfo.
-        /// <para>If the <see cref="ButtonPad"/> is already created in Mapinfo the current instance is returned.</para>
+        /// Returns the command string that represents Create ButtonPad mapbasic command.
         /// </summary>
-        /// <returns>The button pad created in Mapinfo as a <see cref="ButtonPad"/></returns>
-        public ButtonPad CreateInto(MapinfoSession MISession)
+        /// <returns>A Mapbasic command string for the Create ButtonPad command.</returns>
+        public string ToCreateCommand()
         {
-            // TODO Handle creating button bad in different instance of Mapinfo.
-            // TODO Object comparing on MapinfoSession need to be implemented to support above todo.
-            if (this.misession != null) return this;
-
             string commandstring = @"Create ButtonPad {0} as 
                                             {2}    
                                             {1}
@@ -304,14 +298,7 @@ namespace MapinfoWrapper.Embedding
                                                             this.GetButtonsFormated(),
                                                             this.GetVisibleFormated(),
                                                             this.GetStyleFormatted());
-            MISession.RunCommand(commandstring);
-            this.misession = MISession;
-            // Set the Mapinfo session for each button in the pad to the pads instance.
-            foreach (var btn in this)
-            {
-                btn.MISession = this.misession;
-            }
-            return this;
+            return commandstring;
         }
-    }
+  }
 }
