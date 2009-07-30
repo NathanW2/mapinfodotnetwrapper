@@ -129,6 +129,10 @@ namespace MapinfoWrapper.DataAccess
         {
             get
             {
+                // HACK! This really needs to check for active selection before just returning.
+                if (tableName.ToUpper() == "SELECTION") 
+                    return new Table(miSession, "Selection");
+
                 return this.innertablelist.Where(tab => tab.Name == tableName)
                                           .FirstOrDefault();
             }

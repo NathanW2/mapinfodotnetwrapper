@@ -311,7 +311,10 @@ namespace MapinfoWrapper.DataAccess
             Table table = obj as Table;
 
             return this.Equals(table);
-        }        public static bool operator ==(Table t1, Table t2)        {
+        }
+
+        public static bool operator ==(Table t1, Table t2)
+        {
             if ((object)t1 == null || ((object)t2 == null))
                 return false;
             else return
@@ -322,5 +325,6 @@ namespace MapinfoWrapper.DataAccess
         public static bool operator !=(Table t1, Table t2)
         {
             return !(t1 == t2);
-        }    }   
+        }
+    }   
 }
