@@ -1,20 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.Geometries;
-using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.MapbasicOperations;
-
-namespace MapinfoWrapper.DataAccess.RowOperations
+﻿namespace MapinfoWrapper.DataAccess.RowOperations
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.Geometries;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Mapinfo;
 
     /// <summary>
     /// Reads data from the suppiled Mapinfo table.
     /// </summary>
-    // HACK! This table is doing a bit to much and needs to be refactored.
+    // HACK! This object feels like it is doing a bit to much and needs to be refactored.
     internal class DataReader : IDataReader
     {
         private readonly MapinfoSession wrapper;
@@ -110,7 +109,16 @@ namespace MapinfoWrapper.DataAccess.RowOperations
                 case ColumnTypes.SMALLINT:
                     return Convert.ToInt16(value);
                 case ColumnTypes.DATE:
-                    break;
+                    DateTime date2;
+                    bool parsed2 = DateTime.TryParseExact(value,
+                                                        "yyyyMMdd",
+                                                        null,
+                                                        System.Globalization.DateTimeStyles.None,
+                                                        out date2);
+                    if (parsed2)
+                        return date2;
+                    else
+                        return null;
                 case ColumnTypes.LOGICAL:
                     return (value == "T");
                 case ColumnTypes.GRAPHIC:

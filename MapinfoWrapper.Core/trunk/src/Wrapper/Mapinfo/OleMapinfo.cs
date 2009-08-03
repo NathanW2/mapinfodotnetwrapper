@@ -1,10 +1,10 @@
-﻿using System.Runtime.InteropServices;
-using MapinfoWrapper.Exceptions;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Mapinfo.Internals;
-
-namespace MapinfoWrapper.Mapinfo
+﻿namespace MapinfoWrapper.Mapinfo
 {
+    using System.Runtime.InteropServices;
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.Exceptions;
+    using MapinfoWrapper.Mapinfo.Internals;
+
     /// <summary>
     /// Contains a running instance of Mapinfo COM object.  This is the lowest object
     /// in the MapinfoWrapper API, all objects in the MapinfoWrapper API take and 
@@ -39,6 +39,7 @@ namespace MapinfoWrapper.Mapinfo
         public void RunCommand(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString, "commandString");
+
             try
             {
                 this.mapinfoinstance.Do(commandString);

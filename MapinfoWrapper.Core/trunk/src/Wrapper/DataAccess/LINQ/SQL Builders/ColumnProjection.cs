@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Linq.Expressions;
-
-namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
+﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
 {
+    using System.Linq.Expressions;
+
     internal class ColumnProjection
     {
         internal string Columns;

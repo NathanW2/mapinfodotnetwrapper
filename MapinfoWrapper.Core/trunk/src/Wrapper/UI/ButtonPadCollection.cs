@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using MapinfoWrapper.Embedding;
-
-namespace MapinfoWrapper.Mapinfo
+namespace MapinfoWrapper.UI
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using MapinfoWrapper.Mapinfo;
+
     public class ButtonPadCollection : IEnumerable<ButtonPad>
     {
         private MapinfoSession misession;

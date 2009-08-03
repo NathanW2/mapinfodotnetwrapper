@@ -1,8 +1,8 @@
-﻿using System;
-using System.Reflection;
-
-namespace MapinfoWrapper.Mapinfo
+﻿namespace MapinfoWrapper.Mapinfo
 {
+    using System;
+    using System.Reflection;
+
     /// <summary>
     /// Holds an instance of Mapinfo which has been created in the miadm.dll 
     /// when calling a .Net assembly from Mapbasic(MBX).

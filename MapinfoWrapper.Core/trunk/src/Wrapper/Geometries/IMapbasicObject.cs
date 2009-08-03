@@ -1,8 +1,7 @@
-﻿using System;
-using MapinfoWrapper.MapbasicOperations;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
+    using MapinfoWrapper.MapbasicOperations;
+
     public interface IMapbasicObject
     {
         ObjectTypeEnum ObjectType { get; }

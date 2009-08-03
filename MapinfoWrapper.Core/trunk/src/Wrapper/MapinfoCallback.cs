@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
-using MapinfoWrapper.DataAccess;
-
-namespace MapinfoWrapper
+﻿namespace MapinfoWrapper
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     /// <summary>
     /// A base callback class which can be used with Mapinfo,
     /// provides StatusText changed event and WindowContentsChanged event.

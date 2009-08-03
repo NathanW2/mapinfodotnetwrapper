@@ -1,14 +1,14 @@
-﻿using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Internals;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Geometries.Lines;
-using MapinfoWrapper.Geometries.Points;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Core.Internals;
+    using MapinfoWrapper.DataAccess;
+    using MapinfoWrapper.Geometries.Lines;
+    using MapinfoWrapper.Geometries.Points;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Mapinfo;
+
 	/// <summary>
 	/// A geometry factory that can be used to create new geometry objects.
 	/// </summary>

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
-
-namespace MapinfoWrapper.Mapinfo.Internals
+﻿namespace MapinfoWrapper.Mapinfo.Internals
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     [InterfaceType(1)]
     [Guid("1D42EC62-7B28-11CE-B83D-00AA002C4F58")]
     public interface IMapInfo

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using MapinfoWrapper.Geometries;
-using MapinfoWrapper.Core.Extensions;
-
-namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
+﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using System.Text;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Geometries;
+
     internal class SqlStringGenerator
     {
         public string GenerateInsertString<T>(T entity, string tableName)

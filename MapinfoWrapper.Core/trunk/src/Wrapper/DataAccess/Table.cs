@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.DataAccess.LINQ;
-using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.DataAccess
+﻿namespace MapinfoWrapper.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.DataAccess.LINQ;
+    using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
+    using MapinfoWrapper.Mapinfo;
+
 	/// <summary>
 	/// A Mapinfo table object, allows access to properties for the table
 	/// opened in Mapinfo. 
@@ -51,22 +52,17 @@ namespace MapinfoWrapper.DataAccess
 	    }
 
 		/// <summary>
-		/// Inserts a new row into the table.
+		/// Adds the supplied <typeparamref name="TEntity"/> to the 
+		/// internal list to be inserted.
 		/// </summary>
 		/// <param name="newRow"></param>
 		public void InsertRow(TEntity newRow)
 		{
             Guard.AgainstNull(newRow, "newRow");
 
-            // NOTE! This might be able to be moved down into subclass.
-            SqlStringGenerator sqlstringgen = new SqlStringGenerator();
-            string insertstring = sqlstringgen.GenerateInsertString(newRow, this.Name);
-            base.miSession.RunCommand(insertstring);
-		    
-            this.reader.FetchLast();
-            newRow.reader = this.reader;
-            newRow.AttachedTo = this;
-            newRow = this.reader.PopulateEntity(newRow);
+		    Debug.Assert(base.EntitesToBeInserted != null);
+
+		    base.EntitesToBeInserted.Add(newRow);
 		}
 
 		public IEnumerator<TEntity> GetEnumerator()
@@ -105,5 +101,30 @@ namespace MapinfoWrapper.DataAccess
                 return provider;
             }
 	    }
+
+        /// <summary>
+        /// Commits any pending inserts and deletes to the table in Mapinfo.  
+        /// This method does NOT save the underlying Mapinfo table.  
+        /// To save any changes that have been made from calling this method you will need
+        /// to call SaveChanges.
+        /// </summary>
+        public void CommitPendingChanges()
+        {
+            foreach (var entity in base.EntitesToBeInserted)
+            {
+                TEntity e = (TEntity) entity;
+                // NOTE! This might be able to be moved down into subclass.
+                SqlStringGenerator sqlstringgen = new SqlStringGenerator();
+                string insertstring = sqlstringgen.GenerateInsertString(e, this.Name);
+                
+                // Insert the entity into the table.
+                base.miSession.RunCommand(insertstring);
+
+                e.reader = this.reader;
+                e.AttachedTo = this;
+            }
+            // Remove all the entites from the pending insert list.
+            base.EntitesToBeInserted.Clear();
+        }
 	}
 }

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-using MapinfoWrapper.DataAccess.RowOperations;
-using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-using System.Linq.Expressions;
-using System.Diagnostics;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.DataAccess.LINQ
+﻿namespace MapinfoWrapper.DataAccess.LINQ
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
+    using MapinfoWrapper.DataAccess.RowOperations;
+    using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
+    using MapinfoWrapper.Mapinfo;
+
     internal class MapinfoQueryProvider : IQueryProvider
     {
         private readonly MapinfoSession misession;
@@ -26,9 +25,9 @@ namespace MapinfoWrapper.DataAccess.LINQ
             this.misession.RunCommand(result.CommandText);
 
             Type elementType = TypeSystem.GetElementType(expression.Type);
+            IDataReader reader = new DataReader(misession, result.TableName);
             if (result.Projector != null)
             {
-                IDataReader reader = new DataReader(misession,result.TableName);
                 Delegate projector = result.Projector.Compile();
                 return Activator.CreateInstance(typeof(ProjectionReader<>).MakeGenericType(elementType),
                                                 new object[] { reader, projector });
@@ -36,7 +35,7 @@ namespace MapinfoWrapper.DataAccess.LINQ
             else
             {
                 return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
-                                                new object[] { result.TableName });
+                                                new object[] { result.TableName, reader });
             }
         }
 

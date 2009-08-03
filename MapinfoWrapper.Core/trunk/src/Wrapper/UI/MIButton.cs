@@ -1,4 +1,4 @@
-namespace MapinfoWrapper.Embedding
+namespace MapinfoWrapper.UI
 {
     using System;
     using Mapinfo;

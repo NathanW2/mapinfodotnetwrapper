@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace MapinfoWrapper.DataAccess
+﻿namespace MapinfoWrapper.DataAccess
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     internal interface ITable<TTableDef> : ITable, IQueryable<TTableDef>
         where TTableDef : new()
     {

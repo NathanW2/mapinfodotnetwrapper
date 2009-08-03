@@ -1,7 +1,7 @@
-﻿using System.Text.RegularExpressions;
-
-namespace MapinfoWrapper.CommandBuilders
+﻿namespace MapinfoWrapper.CommandBuilders
 {
+    using System.Text.RegularExpressions;
+
     public abstract class CommandStringBuilder : ICommandStringBuilder
     {
         /// <summary>

@@ -1,9 +1,9 @@
-﻿using MapinfoWrapper.Geometries.Lines;
-using MapinfoWrapper.Geometries.Points;
-using MapinfoWrapper.MapbasicOperations;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
+    using MapinfoWrapper.Geometries.Lines;
+    using MapinfoWrapper.Geometries.Points;
+    using MapinfoWrapper.MapbasicOperations;
+
     internal interface IGeometryFactory
     {
         MILine CreateLine(Coordinate start, Coordinate end);

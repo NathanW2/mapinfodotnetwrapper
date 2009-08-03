@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
+    using System;
 
     /// <summary>
     /// A structure for holding X and Y pair.

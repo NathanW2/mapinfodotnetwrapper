@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using System.Reflection;
-
-namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
+﻿namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
 {
+    using System.Collections.Generic;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+
     public class RowEnumerator<T> : IEnumerator<T>
         where T : BaseEntity, new()
     {

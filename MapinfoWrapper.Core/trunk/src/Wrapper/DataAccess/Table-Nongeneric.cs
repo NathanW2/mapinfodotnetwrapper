@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Threading;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Core.InfoWrappers;
-using MapinfoWrapper.DataAccess.RowOperations;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-using MapinfoWrapper.Mapinfo;
-using IDataReader=MapinfoWrapper.DataAccess.RowOperations.IDataReader;
-
-namespace MapinfoWrapper.DataAccess
+﻿namespace MapinfoWrapper.DataAccess
 {
-    using Wrapper.Exceptions;
+    using System;
+    using System.Collections.Generic;
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Core.InfoWrappers;
+    using MapinfoWrapper.DataAccess.RowOperations;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
+    using MapinfoWrapper.Mapinfo;
+
+    public interface IExposesSession
+    {
+        MapinfoSession MapinfoSession { get; }
+    }
 
     /// <summary>
     /// A Mapinfo Table container which can be used when the
@@ -21,12 +21,14 @@ namespace MapinfoWrapper.DataAccess
     /// to the RowId column.
     /// </summary>
     // HACK! This class feels like it's doing to much, needs a bit of a refactor.
-    public class Table : ITable, IEquatable<Table>
+    public class Table : ITable, IEquatable<Table>, IExposesSession
     {
         protected readonly MapinfoSession miSession;
         private readonly string name;
         protected readonly IDataReader reader;
         private readonly TableInfoWrapper tableinfo;
+
+        protected List<BaseEntity> EntitesToBeInserted = new List<BaseEntity>();
 
         internal Table(MapinfoSession MISession, string tableName)
         {
@@ -83,8 +85,9 @@ namespace MapinfoWrapper.DataAccess
         {
             Guard.AgainstNull(entity, "entity");
 
-            if (entity.AttachedTo != this) 
-                throw new TableException("Entity is not currently attached to this table");
+            // TODO This will need to be added again once the bug of entities not being attached to table when queried is fixed.
+            //if (entity.AttachedTo != this) 
+            //    throw new TableException("Entity is not currently attached to this table");
 
             this.DeleteRowAt(entity.RowId);
         }
@@ -227,7 +230,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         /// <typeparam name="TEntity">The type to use as the entity type for the table.</typeparam>
         /// <returns>A new <see cref="Table{TEntity}"/> for the same table as this <see cref="Table"/>.</returns>
-        public Table<TEntity> CastToGenericTable<TEntity>()
+        public Table<TEntity> ToGenericTable<TEntity>()
             where TEntity : BaseEntity, new()
         {
             // We can return a new generic version of the table here,
@@ -267,11 +270,6 @@ namespace MapinfoWrapper.DataAccess
                 entity.AttachedTo = this.table;
                 entity.reader = this.datareader;
                 return this.datareader.PopulateEntity(entity);
-            }
-
-            public TEntity GenerateEntityForNextRecord<TEntity>()
-            {
-                throw new NoNullAllowedException();
             }
         }
 
@@ -325,6 +323,11 @@ namespace MapinfoWrapper.DataAccess
         public static bool operator !=(Table t1, Table t2)
         {
             return !(t1 == t2);
+        }
+
+        public MapinfoSession MapinfoSession
+        {
+            get { return this.miSession; }
         }
     }   
 }

@@ -1,10 +1,10 @@
-﻿using System;
-using MapinfoWrapper.Exceptions;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
+    using System;
+    using MapinfoWrapper.Exceptions;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Mapinfo;
+
     /// <summary>
     /// Provides a wrapper around a mapbasic object type,
     /// allows access to basic information about the object.

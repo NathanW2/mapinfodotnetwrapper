@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using MapinfoWrapper.DataAccess.RowOperations;
-using System.Collections;
-
-namespace MapinfoWrapper.DataAccess.LINQ
+﻿namespace MapinfoWrapper.DataAccess.LINQ
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using MapinfoWrapper.DataAccess.RowOperations;
+
     internal class ProjectionReader<T> : IEnumerable<T>
     {
         Enumerator enumerator;

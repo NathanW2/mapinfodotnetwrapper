@@ -1,4 +1,4 @@
-namespace MapinfoWrapper.DataAccess
+namespace MapinfoWrapper.Exceptions
 {
     using System;
     using System.Runtime.Serialization;
