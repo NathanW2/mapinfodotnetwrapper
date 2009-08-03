@@ -3,7 +3,7 @@
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Mapinfo;
 
-    public class MIPolyline : Geometry
+    public class MIPolyline : MIGeometry
     {
         internal MIPolyline(MapinfoSession MISession, IVariable variable)
             : base(MISession, variable)

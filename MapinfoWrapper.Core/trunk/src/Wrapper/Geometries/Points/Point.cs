@@ -1,13 +1,21 @@
 ﻿namespace MapinfoWrapper.Geometries.Points
 {
+    using System;
     using MapinfoWrapper.Geometries;
 
     /// <summary>
     /// Represents a point object.
     /// </summary>
-    public sealed class Point
+    [Serializable]
+    public sealed class Point : Geometry
     {
         private Coordinate location;
+
+        public Point()
+        {
+            this.Position = new Coordinate();
+        }
+
         public Point(double x, double y)
         {
             this.location = new Coordinate(x, y);
@@ -31,6 +39,7 @@
         public Coordinate Position
         {
             get { return this.location; }
+            set { this.location = value; }
         }
 
         private string style;
@@ -44,6 +53,11 @@
             {
                 this.style = value;
             }
+        }
+
+        public override Coordinate Centroid()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

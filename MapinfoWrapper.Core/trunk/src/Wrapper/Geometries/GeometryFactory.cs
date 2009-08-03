@@ -62,17 +62,17 @@
         }
 
         /// <summary>
-        /// Returns the a <see cref="Geometry"/> for the supplied <see cref="IVariable"/>.  This function
+        /// Returns the a <see cref="MIGeometry"/> for the supplied <see cref="IVariable"/>.  This function
         /// is really only for internal use.  See <see cref="Variable"/> for notes about Mapbasic variables
         /// in the MapinfoWrapper API.
         /// </summary>
         /// <param name="variable">An object variable</param>
         /// <returns></returns>
-        public Geometry GetGeometryFromVariable(IVariable variable)
+        public MIGeometry GetGeometryFromVariable(IVariable variable)
         {
             Guard.AgainstNull(variable, "variable");
 
-            Geometry geo = new Geometry(misession, variable);
+            MIGeometry geo = new MIGeometry(misession, variable);
             switch (geo.ObjectType)
             {
                 case ObjectTypeEnum.OBJ_TYPE_ARC:
