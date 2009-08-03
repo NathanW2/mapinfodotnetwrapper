@@ -1,7 +1,7 @@
-﻿using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.LayerOperations
+﻿namespace MapinfoWrapper.LayerOperations
 {
+    using MapinfoWrapper.Mapinfo;
+
     /// <summary>
     /// A Layer object that gives you access to methods and properties for a single Mapinfo layer.
     /// 

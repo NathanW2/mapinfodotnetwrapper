@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace MapinfoWrapper.DataAccess.RowOperations.Entities
+﻿namespace MapinfoWrapper.DataAccess.RowOperations.Entities
 {
+    using System;
+
     /// <summary>
     /// Represents a basic row in a Mapinfo table.
     /// </summary>
@@ -67,7 +67,6 @@ namespace MapinfoWrapper.DataAccess.RowOperations.Entities
     [AttributeUsage(AttributeTargets.Property , Inherited = false, AllowMultiple = true)]
     internal sealed class MapinfoIgnore : Attribute
     {
-        public MapinfoIgnore()
-        {}
+        public MapinfoIgnore() { }
     }
 }

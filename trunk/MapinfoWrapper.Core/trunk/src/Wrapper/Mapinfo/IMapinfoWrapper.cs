@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MapinfoWrapper.Mapinfo
+﻿namespace MapinfoWrapper.Mapinfo
 {
     /// <summary>
     /// Contains only the basic functions

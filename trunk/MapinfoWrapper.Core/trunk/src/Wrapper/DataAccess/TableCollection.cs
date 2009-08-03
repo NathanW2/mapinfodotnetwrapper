@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Core.InfoWrappers;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.Mapinfo;
-using System.Linq;
-
 namespace MapinfoWrapper.DataAccess
 {
+    using System;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Core.InfoWrappers;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.Mapinfo;
 
     /// <summary>
     /// A factory that is used to CreateInto or Open tables in Mapinfo.

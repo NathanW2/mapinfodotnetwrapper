@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
+﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+
     internal static class Evaluator
     {
         /// <summary>

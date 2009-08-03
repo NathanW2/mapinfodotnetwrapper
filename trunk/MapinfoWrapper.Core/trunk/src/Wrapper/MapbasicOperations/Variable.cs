@@ -1,8 +1,8 @@
-﻿using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.Core.Extensions;
-
-namespace MapinfoWrapper.MapbasicOperations
+﻿namespace MapinfoWrapper.MapbasicOperations
 {
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Mapinfo;
+
     /// <summary>
     /// Represents a Mapbasic variable. 
     /// <para><b>You will not be able to create one these as the constructor is internal.
@@ -11,17 +11,17 @@ namespace MapinfoWrapper.MapbasicOperations
     /// </summary>
     public class Variable : IVariable
     {
-        private readonly MapinfoSession wrapper;
+        private readonly MapinfoSession misession;
         private readonly string name;
         private readonly VariableType type;
         private readonly bool isAssigned;
 
-        internal Variable(string name, VariableType declareAs,bool isAssigned,MapinfoSession wrapper)
+        internal Variable(string name, VariableType declareAs,bool isAssigned,MapinfoSession MISession)
         {
             this.name = name;
             this.type = declareAs;
             this.isAssigned = isAssigned;
-            this.wrapper = wrapper;
+            this.misession = MISession;
         }
 
         public virtual string GetExpression()
@@ -36,7 +36,7 @@ namespace MapinfoWrapper.MapbasicOperations
 
         public IVariable Assign(string expression)
         {
-            this.wrapper.RunCommand("{0} = {1}".FormatWith(this.GetExpression(), expression));
+            this.misession.RunCommand("{0} = {1}".FormatWith(this.GetExpression(), expression));
             return this;
         }
 

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Linq.Expressions;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess.RowOperations;
-using MapinfoWrapper.Geometries;
-using MapinfoWrapper.DataAccess.RowOperations;
-
-namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
+﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Text;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.DataAccess.RowOperations;
+    using MapinfoWrapper.Geometries;
+
     internal class TranslateResult
     {
         internal string CommandText;
@@ -17,7 +15,7 @@ namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
         internal LambdaExpression Projector;
     }
     
-    // HACK This class works but it's very easy to work on. Really needs to be refactored.
+    // HACK This class works but is really ugly and hard to work on. Really needs to be refactored.
     internal class QueryTranslator : ExpressionVisitor
     {
         StringBuilder sb;
@@ -36,6 +34,12 @@ namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
             this.sb = new StringBuilder();
             this.selectbuilder = new StringBuilder();
             this.datareader = Expression.Parameter(typeof(IDataReader), "datareader");
+            // If the expression is just a constant and is a table. Then we select all from that table.
+            // HACK This really should be done better.
+            if (expression.NodeType == ExpressionType.Constant && ((ConstantExpression)expression).Value is ITable)
+            {
+                this.selectbuilder.Append("Select * From ");
+            }
             this.Visit(expression);
             this.tableName = this.tableName.Length == 0 ? "WrapperTempTable" : this.tableName;
             string query = this.selectbuilder.Append(this.sb).ToString() + " INTO {0}".FormatWith(this.tableName);

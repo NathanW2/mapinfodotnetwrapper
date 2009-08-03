@@ -4,23 +4,21 @@
 // </copyright>
 // <author>Nathan Woodrow</author>
 // ---------------------------------
-
-
-using System;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess;
-using MapinfoWrapper.Embedding;
-using MapinfoWrapper.Geometries;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.MapOperations;
-
 namespace MapinfoWrapper.Mapinfo
 {
+    using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Linq;
     using Internals;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.DataAccess;
+    using MapinfoWrapper.Embedding;
+    using MapinfoWrapper.Geometries;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.MapOperations;
+    using MapinfoWrapper.UI;
     using Microsoft.Win32;
+    using System.Diagnostics;
 
     public class MapinfoSession : IMapinfoWrapper
     {
@@ -122,6 +120,7 @@ namespace MapinfoWrapper.Mapinfo
         /// A static event that gets fired when a Mapinfo session is created using the wrapper.
         /// </summary>
         public static event MapinfoSessionHandler SessionCreated;
+        public event Action SessionEnded;
 
 		#endregion Delegates and Events 
 
@@ -130,7 +129,7 @@ namespace MapinfoWrapper.Mapinfo
 		// Public Methods (7) 
 
         /// <summary>
-        /// Creates a new instance of Mapinfo and returns a <see cref="COMMapinfo"/>
+        /// Creates a new instance of Mapinfo and returns a <see cref="MapinfoSession"/>
         /// which contains the instance. 
         /// <para>The returned objet can be passed into objects and
         /// methods that need it in the MapinfoWrapper API.</para>
@@ -154,7 +153,10 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>The result of the eval command in Mapinfo.</returns>
         public string Evaluate(string commandString)
         {
-            return this.mapinfo.Evaluate(commandString);
+            Debug.Print("Eval: " + commandString);
+            string value = this.mapinfo.Evaluate(commandString);
+            Debug.Print("    Result => " + value);
+            return value;
         }
 
         /// <summary>
@@ -219,6 +221,7 @@ namespace MapinfoWrapper.Mapinfo
         /// <param name="commandString">The command string to run in Mapinfo.</param>
         public void RunCommand(string commandString)
         {
+            Debug.Print("Do: " + commandString);
             this.mapinfo.RunCommand(commandString);
         }
 		// Private Methods (1) 
@@ -252,5 +255,15 @@ namespace MapinfoWrapper.Mapinfo
         }
 
 		#endregion Methods 
+        
+        /// <summary>
+        /// Ends the current session of Mapinfo.
+        /// </summary>
+        public void EndMapinfo()
+        {
+            this.RunCommand("End Mapinfo");
+            if (this.SessionEnded != null)
+                this.SessionEnded();
+        }
     }
 }

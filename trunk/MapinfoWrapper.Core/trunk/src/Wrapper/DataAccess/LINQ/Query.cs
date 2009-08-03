@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace MapinfoWrapper.DataAccess.LINQ
+﻿namespace MapinfoWrapper.DataAccess.LINQ
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+
     public sealed class Query<T> : IQueryable<T>
     {
         public Query(IQueryProvider provider,Expression expression)

@@ -1,17 +1,17 @@
-﻿using System;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.Core.Internals
+﻿namespace MapinfoWrapper.Core.Internals
 {
+    using System;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Mapinfo;
+
     internal class VariableFactory : IVariableFactory
     {
-        private readonly MapinfoSession wrapper;
+        private readonly MapinfoSession misession;
 
-        public VariableFactory(MapinfoSession mapinfoInstance) 
+        public VariableFactory(MapinfoSession MISession) 
         {
-            this.wrapper = mapinfoInstance;
+            this.misession = MISession;
         }
 
         public IVariable CreateNewWithGUID(Variable.VariableType type)
@@ -28,9 +28,9 @@ namespace MapinfoWrapper.Core.Internals
             string variablename = striped.Substring(index);
 
             string typename = Enum.GetName(typeof(Variable.VariableType), type);
-            this.wrapper.RunCommand("Dim {0} as {1}".FormatWith(variablename, typename));
+            this.misession.RunCommand("Dim {0} as {1}".FormatWith(variablename, typename));
             
-            Variable variable = new Variable(variablename,type,false,this.wrapper);
+            Variable variable = new Variable(variablename,type,false,this.misession);
 
             return variable;
         }

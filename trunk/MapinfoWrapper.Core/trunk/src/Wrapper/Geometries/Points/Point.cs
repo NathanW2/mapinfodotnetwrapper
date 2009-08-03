@@ -1,33 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Core.IoC;
-using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.Wrapper.Geometries;
-
-namespace MapinfoWrapper.Geometries.Points
+﻿namespace MapinfoWrapper.Geometries.Points
 {
-    public class Point : Geometry
-    {
-    	public Point(IVariable variable)
-    		: base(variable) { }
+    using MapinfoWrapper.Geometries;
 
-        /// <summary>
-        /// Creates a new point object in Mapinfo. 
-        /// Returns a <see cref="T:MapinfoWrapper.Geometries.Points.Point"/> which can be inserted into a
-        /// <see cref="T:MapinfoWrapper.DataAccess.Table"/>
-        /// <para>This function will create a new object variable in Mapinfo with a modified GUID as its name.</para>
-        /// </summary>
-        /// <param name="location">A <see cref="T:MapinfoWrapper.Geometries.Coordinate"/> that contains coordinates at
-        /// which to create the point.</param>
-        /// <returns>A new point object.</returns>
-        public static Point CreatePoint(Coordinate location)
+    /// <summary>
+    /// Represents a point object.
+    /// </summary>
+    public sealed class Point
+    {
+        private Coordinate location;
+        public Point(double x, double y)
         {
-            IGeometryFactory geofactory = ServiceLocator.GetInstance<IFactoryBuilder>().BuildGeomtryFactory();
-            return (Point)geofactory.CreatePoint(location);
+            this.location = new Coordinate(x, y);
+        }
+
+        public Point(Coordinate location)
+        {
+            this.location = location;
+        }
+
+        public double X
+        {
+            get { return this.location.X; }
+        }
+
+        public double Y
+        {
+            get { return this.location.Y; }
+        }
+
+        public Coordinate Position
+        {
+            get { return this.location; }
+        }
+
+        private string style;
+        public string Style
+        {
+            get 
+            {
+                return this.style;
+            }
+            set
+            {
+                this.style = value;
+            }
         }
     }
 }

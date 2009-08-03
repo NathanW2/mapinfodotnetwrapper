@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MapinfoWrapper.CommandBuilders
+﻿namespace MapinfoWrapper.CommandBuilders
 {
     /// <summary>
     /// An interface for objects needing to build a command string to send to mapinfo.

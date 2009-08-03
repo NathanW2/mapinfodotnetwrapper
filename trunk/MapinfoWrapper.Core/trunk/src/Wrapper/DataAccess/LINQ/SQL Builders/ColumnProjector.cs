@@ -1,11 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Linq.Expressions;
-using System.Reflection;
-using MapinfoWrapper.DataAccess.RowOperations;
-
-namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
+﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using System.Text;
+    using MapinfoWrapper.DataAccess.RowOperations;
 
     internal class ColumnProjector : ExpressionVisitor
     {

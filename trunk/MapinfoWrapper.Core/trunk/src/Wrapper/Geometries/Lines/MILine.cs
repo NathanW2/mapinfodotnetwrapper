@@ -1,10 +1,10 @@
-﻿using System;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.Geometries.Lines
+﻿namespace MapinfoWrapper.Geometries.Lines
 {
+    using System;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Mapinfo;
+
     /// <summary>
     /// Represents a line object in Mapinfo.  Provides real time access to properties
     /// and method for working with a Mapinfo line object.

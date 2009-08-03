@@ -1,25 +1,25 @@
-﻿using System;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.Embedding
+﻿namespace MapinfoWrapper.Embedding
 {
+    using System;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Mapinfo;
+
     /// <summary>
     /// Contains methods for retiving application information about
     /// the current running instance of Mapinfo.
     /// </summary>
     public class SystemInfo
     {
-        private readonly MapinfoSession wrapper;
+        private readonly MapinfoSession misession;
 
         /// <summary>
         /// Creates a new SystemInfo object used to retive information
         /// about the current instace of mapinfo.
         /// </summary>
         /// <param name="mapinfoWrapper">A wrapper object containing the running instace of mapinfo.</param>
-        public SystemInfo(MapinfoSession mapinfoWrapper)
+        public SystemInfo(MapinfoSession MISession)
         {
-            this.wrapper = mapinfoWrapper;
+            this.misession = MISession;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace MapinfoWrapper.Embedding
         public object RunSystemInfoCommand(SystemInfoEnum systemInfoEnum)
         {
             string command = "SystemInfo({0})".FormatWith((int)systemInfoEnum);
-            return wrapper.Evaluate(command);
+            return misession.Evaluate(command);
         }
     }
 }

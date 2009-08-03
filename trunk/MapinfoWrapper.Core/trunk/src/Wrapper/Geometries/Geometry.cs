@@ -1,9 +1,9 @@
-﻿using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.Geometries
+﻿namespace MapinfoWrapper.Geometries
 {
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Mapinfo;
+
     public class Geometry : MapbasicObject, IGeometry
 	{
         internal Geometry(MapinfoSession MISession, IVariable variable)

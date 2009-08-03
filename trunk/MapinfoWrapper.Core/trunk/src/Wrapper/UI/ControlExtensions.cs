@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
-
-
-namespace MapinfoWrapper.Embedding
+﻿namespace MapinfoWrapper.UI
 {
+    using System.Windows.Forms;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Mapinfo;
+
     /// <summary>
     /// A collection of Mapinfo control based extensions.
     /// </summary>

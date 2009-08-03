@@ -1,7 +1,7 @@
-﻿using System.Runtime.InteropServices;
-
-namespace MapinfoWrapper.Mapinfo.Internals
+﻿namespace MapinfoWrapper.Mapinfo.Internals
 {
+    using System.Runtime.InteropServices;
+
     [TypeLibType(4096)]
     [InterfaceType(2)]
     [Guid("1D42EC63-7B28-11CE-B83D-00AA002C4F58")]

@@ -1,8 +1,8 @@
-using MapinfoWrapper.DataAccess.RowOperations;
-using MapinfoWrapper.Mapinfo;
-
 namespace MapinfoWrapper.MapbasicOperations
 {
+    using MapinfoWrapper.DataAccess.RowOperations;
+    using MapinfoWrapper.Mapinfo;
+
     public class TableObjVariable : Variable
     {
         private readonly int rowid;

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MapinfoWrapper.Wrapper.Exceptions
+﻿namespace MapinfoWrapper.Exceptions
 {
+    using System;
     using System.Runtime.Serialization;
 
     [Serializable]

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Collections;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-
-namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
+﻿namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+
     public class RowList<TTabeDef> : IEnumerable<TTabeDef>
         where TTabeDef : BaseEntity, new()
     {

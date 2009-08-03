@@ -1,7 +1,7 @@
-﻿using MapinfoWrapper.Geometries;
-
-namespace MapinfoWrapper.DataAccess.RowOperations.Entities
+﻿namespace MapinfoWrapper.DataAccess.RowOperations.Entities
 {
+    using MapinfoWrapper.Geometries;
+
     /// <summary>
     /// Represents a mappable row in a table table.
     /// </summary>

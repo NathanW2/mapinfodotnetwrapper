@@ -1,8 +1,8 @@
 namespace MapinfoWrapper.DataAccess
 {
     using Core.Extensions;
-
     using Mapinfo;
+    using MapinfoWrapper.Exceptions;
 
     internal class MapbasicWrapper
     {

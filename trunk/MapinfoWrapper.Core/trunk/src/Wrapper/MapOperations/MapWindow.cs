@@ -1,9 +1,9 @@
-﻿using System;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
-
-namespace MapinfoWrapper.MapOperations
+﻿namespace MapinfoWrapper.MapOperations
 {
+    using System;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Mapinfo;
+
     public class MapWindow
     {
         private MapinfoSession misession;

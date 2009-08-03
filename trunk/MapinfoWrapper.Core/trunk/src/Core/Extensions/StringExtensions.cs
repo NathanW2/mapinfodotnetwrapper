@@ -1,25 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace MapinfoWrapper.Core.Extensions
+﻿namespace MapinfoWrapper.Core.Extensions
 {
+    using System;
+    using System.Diagnostics;
+
     public static class StringExtensions
     {
-
-        /// <summary>
-        /// Wraps a string in quotes.
-        /// </summary>
-        /// <param name="value">The string to wrap in quotes.</param>
-        /// <returns>A string wrapped in double quotes.</returns>
-        [DebuggerStepThrough]
-        public static string InQuotes(this string value)
-        {
-            if (value == null)
-                throw new ArgumentNullException("Value");
-
-            return "\"" + value + "\"";
-        }
-
         /// <summary>
         /// Formats a string with a list of literal placeholders.
         /// </summary>
@@ -69,6 +54,20 @@ namespace MapinfoWrapper.Core.Extensions
         public static string FormatWith(this string text, object arg0, object arg1, object arg2)
         {
             return string.Format(text, arg0, arg1, arg2);
+        }
+
+        /// <summary>
+        /// Wraps a string in quotes.
+        /// </summary>
+        /// <param name="value">The string to wrap in quotes.</param>
+        /// <returns>A string wrapped in double quotes.</returns>
+        [DebuggerStepThrough]
+        public static string InQuotes(this string value)
+        {
+            if (value == null)
+                throw new ArgumentNullException("Value");
+
+            return "\"" + value + "\"";
         }
     }
 }
