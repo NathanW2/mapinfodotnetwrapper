@@ -206,11 +206,11 @@
                             }
                         }
 
-                        Coordinate? point = c.Value as Coordinate?;
-                        if (point != null && point.HasValue)
+                        Coordinate point = c.Value as Coordinate;
+                        if (point != null)
                         {
-                            sb.Replace("{X}", point.Value.X.ToString());
-                            sb.Replace("{Y}", point.Value.Y.ToString());
+                            sb.Replace("{X}", point.X.ToString());
+                            sb.Replace("{Y}", point.Y.ToString());
                         }
 
                         break;

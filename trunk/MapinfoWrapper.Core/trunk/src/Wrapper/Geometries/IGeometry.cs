@@ -2,7 +2,7 @@ namespace MapinfoWrapper.Geometries
 {
     public interface IGeometry : IMapbasicObject
     {
-        bool Contains(Geometry mapinfoObject);
+        bool Contains(MIGeometry mapinfoObject);
         Coordinate Centroid
         {
             get;

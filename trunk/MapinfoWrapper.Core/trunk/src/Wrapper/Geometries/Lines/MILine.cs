@@ -9,7 +9,7 @@
     /// Represents a line object in Mapinfo.  Provides real time access to properties
     /// and method for working with a Mapinfo line object.
     /// </summary>
-	public class MILine : Geometry, IMILine
+	public class MILine : MIGeometry, IMILine
 	{
 	    internal MILine(MapinfoSession MISession, IVariable variable)
             : base(MISession, variable)

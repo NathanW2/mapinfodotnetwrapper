@@ -8,6 +8,6 @@
     {
         MILine CreateLine(Coordinate start, Coordinate end);
         MIPoint CreatePoint(Coordinate location);
-        Geometry GetGeometryFromVariable(IVariable variable);
+        MIGeometry GetGeometryFromVariable(IVariable variable);
     }
 }
