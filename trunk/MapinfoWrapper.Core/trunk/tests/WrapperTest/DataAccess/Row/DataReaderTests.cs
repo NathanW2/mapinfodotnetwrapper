@@ -1,7 +1,6 @@
 ﻿using MapinfoWrapper.DataAccess.RowOperations;
 using NUnit.Framework;
 using Moq;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Mapinfo;
 

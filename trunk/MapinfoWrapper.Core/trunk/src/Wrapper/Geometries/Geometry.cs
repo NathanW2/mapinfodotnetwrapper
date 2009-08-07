@@ -1,4 +1,4 @@
-namespace MapinfoWrapper.Geometries.Points
+namespace MapinfoWrapper.Geometries
 {
     public abstract class Geometry
     {

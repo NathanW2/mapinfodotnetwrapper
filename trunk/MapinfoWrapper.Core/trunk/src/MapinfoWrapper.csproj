@@ -63,6 +63,8 @@
     <Compile Include="Core\Wrappers\MapbasicWrapper.cs" />
     <Compile Include="Wrapper\Exceptions\MapbasicException.cs" />
     <Compile Include="Wrapper\Geometries\Geometry.cs" />
+    <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\MapbasicCommand.cs" />
     <Compile Include="Wrapper\UI\ButtonPad.cs" />
     <Compile Include="Wrapper\UI\MIButton.cs" />
     <Compile Include="Wrapper\UI\PushButton.cs" />
@@ -77,7 +79,6 @@
     <Compile Include="Wrapper\UI\ButtonPadCollection.cs" />
     <Compile Include="Wrapper\Mapinfo\MapinfoSession.cs" />
     <Compile Include="Wrapper\Geometries\Coordinate.cs" />
-    <Compile Include="Wrapper\Geometries\MIGeometry.cs" />
     <Compile Include="Wrapper\Geometries\GeometryFactory.cs" />
     <Compile Include="Wrapper\Geometries\IGeometry.cs" />
     <Compile Include="Wrapper\Geometries\IMapbasicObject.cs" />

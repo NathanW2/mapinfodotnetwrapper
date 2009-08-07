@@ -2,6 +2,7 @@
 {
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Mapinfo;
+    using MapinfoWrapper.Geometries.Lines;
 
     public class MIPolyline : MIGeometry
     {

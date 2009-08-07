@@ -1,6 +1,7 @@
 ﻿namespace MapinfoWrapper.Geometries
 {
     using System;
+    using MapinfoWrapper.Core.Extensions;
 
     /// <summary>
     /// A structure for holding X and Y pair.
@@ -60,6 +61,11 @@
             hash = (hash * 23) + this.X.GetHashCode();
             hash = (hash * 23) + this.Y.GetHashCode();
             return hash;
+        }
+
+        public override string ToString()
+        {
+            return "{0},{1}".FormatWith(this.X.ToString(), this.Y.ToString());
         }
 
         /// <summary>

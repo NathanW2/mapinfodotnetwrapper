@@ -5,7 +5,6 @@ using System.Text;
 using MapinfoWrapper.MapbasicOperations;
 using NUnit.Framework;
 using MapinfoWrapper.Core.Internals;
-using MapinfoWrapper.Core.IoC;
 using Moq;
 using MapinfoWrapper.Mapinfo;
 

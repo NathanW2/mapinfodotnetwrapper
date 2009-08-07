@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.Geometries.Points
+﻿namespace MapinfoWrapper.Geometries
 {
     using System;
     using MapinfoWrapper.Geometries;
