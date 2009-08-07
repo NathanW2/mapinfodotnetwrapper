@@ -81,6 +81,7 @@
     <Compile Include="WrapperTest\MapinfoFactoryTest\MapinfoFactoryTests.cs" />
     <Compile Include="WrapperTest\MapOperations\MapTests.cs" />
     <Compile Include="WrapperTest\ObjectOperations\GeometryTests.cs" />
+    <Compile Include="WrapperTest\ObjectOperations\LineTests.cs" />
     <Compile Include="WrapperTest\ObjectOperations\Points\PointTests.cs" />
     <Compile Include="WrapperTest\DataAccess\GenericTableTests.cs" />
     <Compile Include="WrapperTest\DataAccess\OpenTableCommandBuilderTests.cs" />

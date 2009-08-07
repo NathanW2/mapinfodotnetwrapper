@@ -2,6 +2,7 @@
 {
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Mapinfo;
+    using MapinfoWrapper.Geometries.Lines;
 
     /// <summary>
     /// Represents a point object in Mapinfo.  Provides real time access to properties

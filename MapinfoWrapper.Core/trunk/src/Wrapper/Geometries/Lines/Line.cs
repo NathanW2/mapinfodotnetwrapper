@@ -1,36 +1,73 @@
-﻿using System;
-using MapinfoWrapper.MapbasicOperations;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Wrapper.Geometries;
-using MapinfoWrapper.Core.IoC;
-
-namespace MapinfoWrapper.Geometries.Lines
+﻿namespace MapinfoWrapper.Wrapper.Geometries
 {
-	public class Line : Geometry, ILine
-	{
-		public Line(IVariable variable) : base(variable)
-		{ }
+    using System;
+    using MapinfoWrapper.Core.Extensions;
+    using MapinfoWrapper.Geometries;
+    using MapinfoWrapper.Wrapper.MapbasicOperations;
 
-        /// <summary>
-        /// Creates a new line object in Mapinfo. 
-        /// Returns a <see cref="T:MapinfoWrapper.Geometries.Lines.Line"/> which can be inserted into a
-        /// <see cref="T:MapinfoWrapper.DataAccess.Table"/>
-        /// <para>This function will create a new object variable in Mapinfo with a modified GUID as its name.</para>
-        /// </summary>
-        /// <param name="start">The <see cref="T:MapinfoWrapper.Geometries.Coordinate"/> for the start of the line.</param>
-        /// <param name="end">The <see cref="T:MapinfoWrapper.Geometries.Coordinate"/> for the end of the line.</param></param>
-        /// <returns>A new <see cref="T:MapinfoWrapper.Geometries.Lines.ILine"/>.</returns>
-        public static Line CreateLine(Coordinate start, Coordinate end)
+    /// <summary>
+    /// Represents a point object.
+    /// </summary>
+    [Serializable]
+    public class Line : Geometry
+    {
+        public Line()
+            : this(0.0,0.0,0.0,0.0)
+        { }
+
+        public Line(double startx, double starty, double endx, double endy)
+            : this(new Coordinate(startx, starty), new Coordinate(endx, endy))
+        { }        
+
+        public Line(Coordinate start, Coordinate end)
         {
-            IGeometryFactory geofactory = ServiceLocator.GetInstance<IFactoryBuilder>().BuildGeomtryFactory();
-            return (Line)geofactory.CreateLine(start, end);
+            this.Start = start;
+            this.End = end;
         }
 
-		public decimal GetLength(string unit)
-		{
-		    string expression = base.Variable.GetExpression();
-            string length = base.mapinfoinstance.Evaluate("ObjectLen({0},{1})".FormatWith(expression, unit.InQuotes()));
-			return Convert.ToDecimal(length);
-		}
-	}
+        /// <summary>
+        /// Returns the start coordinates for the line.
+        /// </summary>
+        public Coordinate Start { get; set; }
+        
+        /// <summary>
+        /// Returns the end coordinates for the line.
+        /// </summary>
+        public Coordinate End { get; set; }
+
+        public override Coordinate Centroid()
+        {
+            throw new NotImplementedException();
+        }
+
+        private LineStyle style;
+        public LineStyle Style
+        {
+            get
+            {
+                return this.style;
+            }
+            set 
+            {
+                this.style = value;
+            }
+        }
+
+        public string ToExtendedCreateString()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal MapbasicCommand ToCreateCommand()
+        {
+            MapbasicCommand CreateCommand = new MapbasicCommand();
+            CreateCommand = "CreateLine({0},{1})".FormatWith(this.Start.ToString(), this.End.ToString());
+            return CreateCommand;
+        }
+    }
+
+    public class LineStyle
+    { 
+        
+    }
 }

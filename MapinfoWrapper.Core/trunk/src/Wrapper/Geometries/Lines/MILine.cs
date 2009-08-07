@@ -30,4 +30,33 @@
 			return Convert.ToDecimal(length);
 		}
 	}
+
+    public class MIGeometry : IGeometry
+    {
+        protected MapinfoSession misession;
+        public MIGeometry(MapinfoSession MISession,IVariable variable)
+        {
+
+        }
+
+        public bool Contains(IGeometry mapinfoObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Coordinate Centroid
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ObjectTypeEnum ObjectType
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IVariable Variable
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
 }

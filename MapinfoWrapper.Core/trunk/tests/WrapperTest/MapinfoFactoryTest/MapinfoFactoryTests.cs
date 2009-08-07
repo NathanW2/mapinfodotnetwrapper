@@ -6,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper;
-using MapinfoWrapper.Core.IoC;
 using MapinfoWrapper.Mapinfo.Internals;
 using MapinfoWrapper.Core.Internals;
 
