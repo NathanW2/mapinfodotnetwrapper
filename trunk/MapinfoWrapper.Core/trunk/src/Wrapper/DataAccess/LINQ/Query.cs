@@ -44,7 +44,7 @@
 
         #endregion
 
-        public string ToQueryString()
+        public override string ToString()
         {
             return ((MapinfoQueryProvider)this.Provider).GetQueryString(this.Expression);
         }

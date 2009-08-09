@@ -59,5 +59,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        internal override string ToBasicCreateCommand()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

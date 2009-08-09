@@ -8,10 +8,10 @@
     public class MappableEntity : BaseEntity
     {
         /// <summary>
-        /// Returns a <see cref="IGeometry"/> for the current record.
+        /// Returns a <see cref="Geometry"/> for the current record.
         /// <para>This property represents the obj column for the current record in the attaced mapinfo
         /// table.</para>
         /// </summary>
-        public IGeometry obj { get; set; }
+        public Geometry obj { get; set; }
     }
 }

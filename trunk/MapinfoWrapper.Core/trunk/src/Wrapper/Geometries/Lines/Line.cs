@@ -58,11 +58,9 @@
             throw new NotImplementedException();
         }
 
-        internal MapbasicCommand ToCreateCommand()
+        internal override string ToBasicCreateCommand()
         {
-            MapbasicCommand CreateCommand = new MapbasicCommand();
-            CreateCommand = "CreateLine({0},{1})".FormatWith(this.Start.ToString(), this.End.ToString());
-            return CreateCommand;
+            return "CreateLine({0},{1})".FormatWith(this.Start.ToString(), this.End.ToString());
         }
     }
 

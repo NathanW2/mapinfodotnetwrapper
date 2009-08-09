@@ -1,13 +1,12 @@
 ﻿namespace MapinfoWrapper.Geometries
 {
     using MapinfoWrapper.Geometries.Lines;
-    using MapinfoWrapper.Geometries.Points;
     using MapinfoWrapper.MapbasicOperations;
+    using MapinfoWrapper.Wrapper.Geometries;
 
     internal interface IGeometryFactory
     {
-        MILine CreateLine(Coordinate start, Coordinate end);
-        MIPoint CreatePoint(Coordinate location);
-        MIGeometry GetGeometryFromVariable(IVariable variable);
+        Line CreateLine(Coordinate start, Coordinate end);
+        Point CreatePoint(Coordinate location);
     }
 }
