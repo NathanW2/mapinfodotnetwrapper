@@ -73,7 +73,6 @@
     <Compile Include="Wrapper\Geometries\MIPolyline.cs" />
     <Compile Include="Wrapper\Geometries\Points\Point.cs" />
     <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />
-    <Compile Include="Wrapper\MapbasicOperations\TableObjVariable.cs" />
     <Compile Include="Wrapper\MapbasicOperations\Variable.cs" />
     <Compile Include="Wrapper\MapinfoCallback.cs" />
     <Compile Include="Wrapper\UI\ButtonPadCollection.cs" />
@@ -119,7 +118,6 @@
     <Compile Include="Wrapper\Geometries\MapbasicObject.cs" />
     <Compile Include="Wrapper\Geometries\ObjectInfoEnum.cs" />
     <Compile Include="Wrapper\Geometries\ObjectTypeEnum.cs" />
-    <Compile Include="Wrapper\Geometries\Points\MIPoint.cs" />
     <Compile Include="Wrapper\DataAccess\Row\Enumerators\RowEnumerator.cs" />
     <Compile Include="Wrapper\DataAccess\Table.cs" />
     <Compile Include="Wrapper\DataAccess\GridHandleEnum.cs" />

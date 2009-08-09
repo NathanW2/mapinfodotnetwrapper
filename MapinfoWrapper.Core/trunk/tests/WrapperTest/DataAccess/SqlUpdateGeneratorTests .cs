@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using MapinfoWrapper.Core.Extensions;
 using MapinfoWrapper.Geometries;
+using MapinfoWrapper.Wrapper.Geometries;
 
 namespace MapinfoWrapperTest.WrapperTest.Table_Operations
 {
@@ -39,19 +40,14 @@ namespace MapinfoWrapperTest.WrapperTest.Table_Operations
         }
 
         [Test]
-        public void GenerateInsertStringCanHandleGeometryObjects(
-            [Values("DummyVar","DummyTable.Obj")] string variableName)
+        public void GenerateInsertStringCanHandleGeometryObjects()
         {
-            Mock<IGeometry> mockobj = new Mock<IGeometry>();
-            mockobj.Setup(obj => obj.Variable.GetExpression())
-                   .Returns(variableName);
-
             SqlStringGenerator gen = new SqlStringGenerator();
             MappableEntity entity = new MappableEntity();
-            entity.obj = mockobj.Object;
+            entity.obj = new Line();
 
             string updatestring = gen.GenerateInsertString(entity, "DummyTable");
-            string expected = "INSERT INTO DummyTable (obj) VALUES ({0})".FormatWith(variableName);
+            string expected = "INSERT INTO DummyTable (obj) VALUES (CreateLine(0,0,0,0))";
             
             Assert.AreEqual(expected, updatestring);
         }

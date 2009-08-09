@@ -11,7 +11,6 @@
         bool EndOfTable();
         int GetColumnCount();
         object Get(string p);
-        string GetTableAndRowString(string columnName);
         TEntity PopulateEntity<TEntity>(TEntity obj);
     }
 }

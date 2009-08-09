@@ -87,12 +87,7 @@
 
             if (string.Equals(columnName, "obj", StringComparison.InvariantCultureIgnoreCase))
             {
-                int index = Convert.ToInt32(this.Get("rowid"));
-                TableObjVariable objvariable = new TableObjVariable("{0}.obj".FormatWith(this.tableName),
-                                                                    Variable.VariableType.Object, true, this.wrapper,
-                                                                    index, this);
-
-                return geometryfactory.GetGeometryFromVariable(objvariable);
+                return null;
             }
 
             string columntypestring = this.wrapper.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.tableName, columnName, 3));
@@ -142,11 +137,6 @@
                     return null;
             }
             return null;
-        }
-
-        public string GetTableAndRowString(string columnName)
-        {
-            return "{0}.{1}".FormatWith(this.tableName, columnName);
         }
 
         public TEntity PopulateEntity<TEntity>(TEntity obj)

@@ -27,10 +27,11 @@
 
                 if (string.Equals(Name, "obj", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (value == null)
-                    {
-                        break;   
-                    }
+                    if (value == null) break;
+
+                    string createstring = ((Geometry) value).ToBasicCreateCommand();
+                    mapping.Add(Name,createstring);
+                    break;
                 }
 
                 value = value ?? "";
@@ -52,13 +53,6 @@
                         if (tempdate.HasValue)
                         {
                             value = tempdate.ToString().InQuotes();
-                            break;
-                        }
-
-                        IGeometry obj = value as IGeometry;
-                        if (obj != null)
-                        {
-                            value = obj.Variable.GetExpression();
                             break;
                         }
                         break;
