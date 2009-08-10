@@ -197,12 +197,22 @@
         /// </param>
         public void SaveChanges(bool interactive)
         {
+            this.OnSaving();
+
             string command = "Commit Table {0}".FormatWith(this.Name);
 
             if (interactive)
                 command += " Interactive";
 
             this.miSession.RunCommand(command);
+        }
+
+        public event Action<Table> OnTableSaving;
+
+        private void OnSaving()
+        {
+            if (this.OnTableSaving != null)
+                this.OnTableSaving(this);
         }
 
         /// <summary>
