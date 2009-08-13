@@ -107,7 +107,6 @@ namespace MapinfoWrapper.DataAccess
             {
                 table.Close();
             }
-            this.CloseAll();
         }
 
         /// <summary>
@@ -135,6 +134,19 @@ namespace MapinfoWrapper.DataAccess
                 return this.innertablelist.Where(tab => tab.Name == tableName)
                                           .FirstOrDefault();
             }
+        }
+
+        public Table GetTable(string tableName)
+        {
+            Guard.AgainstNullOrEmpty(tableName, "tableName");
+
+            return this[tableName];
+        }
+
+        public Table<T> GetTable<T>(string tableName)
+            where T : BaseEntity, new()
+        {
+            return this.GetTable(tableName).ToGenericTable<T>();
         }
 
 

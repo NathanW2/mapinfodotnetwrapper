@@ -2,6 +2,7 @@
 {
     using System;
     using System.Reflection;
+    using MapinfoWrapper.Mapinfo.Internals;
 
     /// <summary>
     /// Holds an instance of Mapinfo which has been created in the miadm.dll 
@@ -82,6 +83,18 @@
             set
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        public bool Visible
+        {
+            get 
+            {
+                return ((IMapInfo)this.mapinfoinstance).Visible;
+            }
+            set 
+            {
+                ((IMapInfo)this.mapinfoinstance).Visible = true;
             }
         }
 

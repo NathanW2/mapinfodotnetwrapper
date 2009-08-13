@@ -8,6 +8,7 @@ namespace MapinfoWrapper.Mapinfo
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Internals;
     using MapinfoWrapper.Core.Extensions;
@@ -18,7 +19,6 @@ namespace MapinfoWrapper.Mapinfo
     using MapinfoWrapper.MapOperations;
     using MapinfoWrapper.UI;
     using Microsoft.Win32;
-    using System.Diagnostics;
 
     public class MapinfoSession : IMapinfoWrapper
     {
@@ -264,6 +264,18 @@ namespace MapinfoWrapper.Mapinfo
             this.RunCommand("End Mapinfo");
             if (this.SessionEnded != null)
                 this.SessionEnded();
+        }
+
+        public bool Visible
+        {
+            get 
+            {
+                return this.mapinfo.Visible;
+            }
+            set
+            {
+                this.mapinfo.Visible = value;
+            }
         }
     }
 }
