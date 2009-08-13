@@ -27,5 +27,7 @@
         object GetUnderlyingMapinfoInstance();
 
         MapinfoCallback Callback { get; set; }
+
+        bool Visible { get; set; }
     }
 }
