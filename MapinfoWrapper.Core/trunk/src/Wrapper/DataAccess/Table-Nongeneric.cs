@@ -1,4 +1,8 @@
-﻿namespace MapinfoWrapper.DataAccess
+﻿using System.Collections.ObjectModel;
+using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
+using MapinfoWrapper.Exceptions;
+
+namespace MapinfoWrapper.DataAccess
 {
     using System;
     using System.Collections.Generic;
@@ -28,16 +32,51 @@
         protected readonly IDataReader reader;
         private readonly TableInfoWrapper tableinfo;
 
-        protected List<BaseEntity> EntitesToBeInserted = new List<BaseEntity>();
+        public event Action<Table> OnTableSaving;
 
         internal Table(MapinfoSession MISession, string tableName)
         {
             Guard.AgainstNull(MISession,"MISession");
+            Guard.AgainstNullOrEmpty(tableName,"tableName");
            
             this.miSession = MISession;
             this.name = tableName;
             this.reader = new DataReader(this.miSession, tableName);
             this.tableinfo = new TableInfoWrapper(MISession);
+            this.TableManger = new TableChangeManger();
+        }
+
+        /// <summary>
+        /// Builds up entities for table, setting all the needed properties.
+        /// </summary>
+        // HACK! This class is doing similer things to DataReader and might need to be refactored.
+        // HACK! This class doesn't belong here.
+        internal class EntityBuilder
+        {
+            private readonly MapinfoSession miSession;
+            private readonly Table table;
+            private readonly DataReader datareader;
+
+            public EntityBuilder(MapinfoSession MISession, Table table)
+            {
+                miSession = MISession;
+                this.table = table;
+                this.datareader = new DataReader(MISession, table.Name);
+            }
+
+            public int CurrentRecord { get; set; }
+
+            public TEntity GenerateEntityForIndex<TEntity>(int index)
+                where TEntity : BaseEntity, new()
+            {
+                string name = this.table.Name;
+                if (index != this.CurrentRecord)
+                    this.datareader.Fetch(index);
+
+                TEntity entity = new TEntity();
+                entity.Table = this.table;
+                return this.datareader.PopulateEntity(entity);
+            }
         }
 
         /// <summary>
@@ -55,6 +94,12 @@
         }
 
         /// <summary>
+        /// Gets the <see cref="TableManger"/> for the current table.  Allows for access to current
+        /// change set for the table.
+        /// </summary>
+        public TableChangeManger TableManger { get; private set; }
+
+        /// <summary>
         /// Rows a collection of rows from the table, using <see cref="BaseEntity"/> as
         /// the row collection type.
         /// </summary>
@@ -64,37 +109,6 @@
             {
                 return new RowList<BaseEntity>(this.Name, this.reader);
             }
-        }
-
-        /// <summary>
-        /// Deletes a row from the table at the specified index.
-        /// </summary>
-        /// <param name="index"></param>
-        public void DeleteRowAt(int index)
-        {
-            Guard.AgainstIsZero(index, "index");
-
-            this.miSession.RunCommand("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
-        }
-
-        /// <summary>
-        /// Deletes the selected row from the current table.
-        /// </summary>
-        /// <param name="entity">The row that will be deleted.</param>
-        public void DeleteRow(BaseEntity entity)
-        {
-            Guard.AgainstNull(entity, "entity");
-
-            // TODO This will need to be added again once the bug of entities not being attached to table when queried is fixed.
-            //if (entity.AttachedTo != this) 
-            //    throw new TableException("Entity is not currently attached to this table");
-
-            this.DeleteRowAt(entity.RowId);
-        }
-
-        internal BaseEntity InsertRow(BaseEntity newRow)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -197,7 +211,7 @@
         /// </param>
         public void SaveChanges(bool interactive)
         {
-            this.OnSaving();
+            this.RaiseOnSaving();
 
             string command = "Commit Table {0}".FormatWith(this.Name);
 
@@ -207,9 +221,7 @@
             this.miSession.RunCommand(command);
         }
 
-        public event Action<Table> OnTableSaving;
-
-        private void OnSaving()
+        private void RaiseOnSaving()
         {
             if (this.OnTableSaving != null)
                 this.OnTableSaving(this);
@@ -232,55 +244,119 @@
         }
 
         /// <summary>
-        /// Returns a new <see cref="Table{TEntity}"/> using the <typeparamref name="TEntity"/> as the
-        /// tables row entity.
-        /// 
-        /// <para>This function is usful if you have retrived an table from a <see cref="MapinfoSession"/>'s  <see cref="TableCollection"/> 
-        /// which are stored as <see cref="Table"/> but you know the entity type for it.</para>
+        /// Deletes a row from the table at the specified index.
         /// </summary>
-        /// <typeparam name="TEntity">The type to use as the entity type for the table.</typeparam>
-        /// <returns>A new <see cref="Table{TEntity}"/> for the same table as this <see cref="Table"/>.</returns>
-        public Table<TEntity> ToGenericTable<TEntity>()
-            where TEntity : BaseEntity, new()
+        /// <param name="index"></param>
+        public void DeleteRowAt(int index)
         {
-            // We can return a new generic version of the table here,
-            // because we have overriden Equals and GetHashCode, making the
-            // new table and this one equal.
-            return new Table<TEntity>(miSession, this.Name);
+            Guard.AgainstIsZero(index, "index");
+
+            this.miSession.RunCommand("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
         }
 
         /// <summary>
-        /// Builds up entities for table, setting all the needed properties.
+        /// Deletes the selected entity from the current table.
         /// </summary>
-        // HACK! This class is doing similer things to DataReader and might need to be refactored.
-        // HACK! This class doesn't belong here.
-        internal class EntityBuilder
+        /// <param name="entity">The row that will be deleted.</param>
+        public void Delete(BaseEntity entity)
         {
-            private readonly MapinfoSession miSession;
-            private readonly Table table;
-            private readonly DataReader datareader;
+            Guard.AgainstNull(entity, "entity");
 
-            public EntityBuilder(MapinfoSession MISession, Table table)
+            this.DeleteRowAt(entity.RowId);
+
+            entity.State = BaseEntity.EntityState.Deleted;
+        }
+
+        /// <summary>
+        /// Inserts the supplied entity into the current table.
+        /// </summary>
+        /// <param name="entity">The entity that will be inserted into the table.</param>
+        public void Insert(BaseEntity entity)
+        {
+            string insertstring = this.TableManger.GetInsertString(entity, this.Name);
+            this.miSession.RunCommand(insertstring);
+            // TODO We need to repopulate the entity here, so that it has a rowid.
+        }
+
+        public void Update(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Adds the entity to the table in a pending insert state.  Entities that are
+        /// added to the table using this method are not inserted until CommitPendingChanges
+        /// is called.
+        /// </summary>
+        /// <param name="entity">The entity to add the current table.</param>
+        public void InsertOnCommit(BaseEntity entity)
+        {
+            this.TableManger.AddForInsert(entity);
+        }
+
+        /// <summary>
+        /// Adds the entity to the table in a pending delete state.  Entities that are
+        /// removed from the table using this method are not deleted until CommitPendingChanges
+        /// is called.
+        /// </summary>
+        /// <param name="entity">The entity to add the current table.</param>
+        public void DeleteOnCommit(BaseEntity entity)
+        {
+            this.TableManger.AddForDelete(entity);
+        }
+
+        /// <summary>
+        /// Adds the entity to the table in a pending update state.  Entities that are
+        /// updated using this method are not updated in the table until CommitPendingChanges
+        /// is called.
+        /// </summary>
+        /// <param name="entity">The entity to add the current table.</param>
+        public void UpdateOnCommit(BaseEntity entity)
+        {
+            if (entity.RowId == 0)
+                throw new TableException("Entity is not yet inserted into this table, so it may not be updated");
+
+            this.TableManger.AddForUpdate(entity);
+        }
+
+        /// <summary>
+        /// Commits any pending inserts,updates and deletes to the table in Mapinfo.  
+        /// This method does NOT save the underlying Mapinfo table.  
+        /// To save any changes that have been made from calling this method you will need
+        /// to call SaveChanges.
+        /// </summary>
+        public void CommitPendingChanges()
+        {
+            var changeset = this.TableManger.GetCurrentChangeSet();
+
+            // Just return if we have no entities to process.
+            if (changeset == null)
+                return;
+            
+            //Process the inserts first.
+            foreach (var entity in changeset.ForInsert)
             {
-                miSession = MISession;
-                this.table = table;
-                this.datareader = new DataReader(MISession, table.Name);
+
             }
 
-            public int CurrentRecord { get; set; }  
+            // Remove all the entites from the pending insert list.
+            this.TableManger.ClearInsertes();
 
-            public TEntity GenerateEntityForIndex<TEntity>(int index)
-                where TEntity : BaseEntity, new()
+            // Process the updates next.
+            foreach (var entity in changeset.ForUpdate)
             {
-                string name = this.table.Name;
-                if (index != this.CurrentRecord)
-                    this.datareader.Fetch(index);
-
-                TEntity entity = new TEntity();
-                entity.AttachedTo = this.table;
-                entity.reader = this.datareader;
-                return this.datareader.PopulateEntity(entity);
+                // TODO Implement update logic here.
             }
+
+            // TODO Clear the update list.
+
+            // Finally run though the deletes
+            foreach (var entity in changeset.ForDelete)
+            {
+                this.Delete(entity);
+            }
+
+            this.TableManger.ClearDeletes();
         }
 
         /// <summary>
@@ -338,6 +414,24 @@
         public MapinfoSession MapinfoSession
         {
             get { return this.miSession; }
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="Table{TEntity}"/> using the <typeparamref name="TEntity"/> as the
+        /// tables row entity.
+        /// 
+        /// <para>This function is usful if you have retrived an table from a <see cref="MapinfoSession"/>'s  <see cref="TableCollection"/> 
+        /// which are stored as <see cref="Table"/> but you know the entity type for it.</para>
+        /// </summary>
+        /// <typeparam name="TEntity">The type to use as the entity type for the table.</typeparam>
+        /// <returns>A new <see cref="Table{TEntity}"/> for the same table as this <see cref="Table"/>.</returns>
+        public Table<TEntity> ToGenericTable<TEntity>()
+            where TEntity : BaseEntity, new()
+        {
+            // We can return a new generic version of the table here,
+            // because we have overriden Equals and GetHashCode, making the
+            // new table and this one equal.
+            return new Table<TEntity>(miSession, this.Name);
         }
     }   
 }

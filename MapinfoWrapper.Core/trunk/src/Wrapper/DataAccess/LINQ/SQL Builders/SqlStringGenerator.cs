@@ -6,15 +6,18 @@
     using System.Text;
     using MapinfoWrapper.Core.Extensions;
     using MapinfoWrapper.Geometries;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
     internal class SqlStringGenerator
     {
-        public string GenerateInsertString<T>(T entity, string tableName)
+        public string GenerateInsertString(BaseEntity entity, string tableName)
         {
             Dictionary<string, object> mapping = new Dictionary<string, object>();
+            PropertyInfo[] props = entity.GetType().GetProperties();
 
             StringBuilder sb = new StringBuilder("INSERT INTO {0}".FormatWith(tableName));
-            foreach (PropertyInfo property in typeof(T).GetProperties())
+
+            foreach (PropertyInfo property in props)
             {
                 string Name = property.Name;
 

@@ -7,6 +7,5 @@
         where TTableDef : new()
     {
         IEnumerable<TTableDef> Rows { get; }
-        void InsertRow(TTableDef row);
     }
 }
