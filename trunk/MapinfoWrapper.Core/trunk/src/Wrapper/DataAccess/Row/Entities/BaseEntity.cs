@@ -4,61 +4,68 @@
 
     /// <summary>
     /// Represents a basic row in a Mapinfo table.
+    /// <para>When creating strong typed entities you will need to inherit from this class or 
+    /// <see cref="MappableEntity"/></para>
     /// </summary>
     public class BaseEntity
     {
-        /// <summary>
-        /// Returns the row id for the current record in the attached table.
-        /// </summary>
-        public int RowId { get; internal set; }
-
-        /// <summary>
-        /// Returns the value for the current record using the supplied column.
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <returns></returns>
-        public object Get(string columnName)
+        public enum EntityState
         {
-            if (RowId == 0 || this.reader == null)
-                throw new NotSupportedException("The current row has not been inserted to a table so rows can not be read.");
+            /// <summary>
+            /// The entity is in a new state and has not been added to a table.
+            /// </summary>
+            New = 0,
+            /// <summary>
+            /// The entity is in a deleted state, if the entity is in this state it is
+            /// considered to be out of date.
+            /// </summary>
+            Deleted = 2,
+            /// <summary>
+            /// The entity is in a modifed state.
+            /// </summary>
+            Modifed = 4,
+        }
 
-            return this.reader.Get(columnName);
+        private int rowid;
+
+        public BaseEntity()
+        {
+            this.State = EntityState.New;       
         }
 
         /// <summary>
-        /// Returns the <see cref="Table"/> that this record is contained in.  Returns null if the
-        /// record is not inserted into a table
+        /// Gets the row id for the current entity.
+        /// <para>Returns 0 if the entity has deleted or is a new entity.</para>
         /// </summary>
-        [MapinfoIgnore]
-        public Table AttachedTo { get; internal set; }
-
-        /// <summary>
-        /// Returns the <see cref="IDataReader"/> for the current record.  This is here to support
-        /// non-strong typed records.
-        /// </summary>
-        protected internal IDataReader reader;
-
-        /// <summary>
-        /// Returns a <see cref="EntityState"/> representing the current state of the entity.
-        /// </summary>
-        [MapinfoIgnore]
-        public EntityState State 
+        public int RowId
         {
             get
             {
-                if (RowId == 0 || this.reader == null || AttachedTo == null)
+                if (this.State == EntityState.Deleted || 
+                    this.State == EntityState.New)
                 {
-                    return EntityState.NotInserted;
+                    return 0;
                 }
-                return EntityState.Attached;
+                return this.rowid;
+            }
+            internal set
+            {
+                this.rowid = value;
             }
         }
 
-        public enum EntityState
-        {
-            Attached = 0,
-            NotInserted = 1
-        }
+        /// <summary>
+        /// Gets the <see cref="Table"/> that this record is associated with.  Returns null if the
+        /// record is not inserted into a table
+        /// </summary>
+        [MapinfoIgnore]
+        public Table Table { get; internal set; }
+
+        /// <summary>
+        /// Gets a <see cref="EntityState"/> representing the current state of the entity.
+        /// </summary>
+        [MapinfoIgnore]
+        public EntityState State { get; internal set;}
     }
 
     /// <summary>

@@ -38,7 +38,7 @@
                 return entity;
             }
         }
-		
+
         /// <summary>
         /// Rows a collection of rows from the table, using <typeparam name="TEntity" /> as
         /// the row collection type.
@@ -51,36 +51,24 @@
 	        }
 	    }
 
-		/// <summary>
-		/// Adds the supplied <typeparamref name="TEntity"/> to the 
-		/// internal list to be inserted.
-		/// </summary>
-		/// <param name="newRow"></param>
-		public void InsertRow(TEntity newRow)
+        public IEnumerator<TEntity> GetEnumerator()
 		{
-            Guard.AgainstNull(newRow, "newRow");
-
-		    Debug.Assert(base.EntitesToBeInserted != null);
-
-		    base.EntitesToBeInserted.Add(newRow);
-		}
-
-		public IEnumerator<TEntity> GetEnumerator()
-		{
-			return ((IEnumerable<TEntity>)this.Provider.Execute(Expression)).GetEnumerator();
+		    return this.GetEnumerator();
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
-			return ((IEnumerable<TEntity>)this.Provider.Execute(Expression)).GetEnumerator();
+		    var queryabletable = (IQueryable) this;
+            return ((IEnumerable<TEntity>)queryabletable.Provider.Execute(queryabletable.Expression))
+                                                                 .GetEnumerator();
 		}
 
-		public Type ElementType
+        Type IQueryable.ElementType
 		{
 			get { return typeof(TEntity); }
 		}
 
-		public Expression Expression
+        Expression IQueryable.Expression
 		{
 			get
 			{
@@ -90,7 +78,7 @@
 		}
 
 	    private IQueryProvider provider;
-	    public IQueryProvider Provider
+        IQueryProvider IQueryable.Provider
 	    {
 	        get 
             { 
@@ -102,29 +90,5 @@
             }
 	    }
 
-        /// <summary>
-        /// Commits any pending inserts and deletes to the table in Mapinfo.  
-        /// This method does NOT save the underlying Mapinfo table.  
-        /// To save any changes that have been made from calling this method you will need
-        /// to call SaveChanges.
-        /// </summary>
-        public void CommitPendingChanges()
-        {
-            foreach (var entity in base.EntitesToBeInserted)
-            {
-                TEntity e = (TEntity) entity;
-                // NOTE! This might be able to be moved down into subclass.
-                SqlStringGenerator sqlstringgen = new SqlStringGenerator();
-                string insertstring = sqlstringgen.GenerateInsertString(e, this.Name);
-                
-                // Insert the entity into the table.
-                base.miSession.RunCommand(insertstring);
-
-                e.reader = this.reader;
-                e.AttachedTo = this;
-            }
-            // Remove all the entites from the pending insert list.
-            base.EntitesToBeInserted.Clear();
-        }
 	}
 }
