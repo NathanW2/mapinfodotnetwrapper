@@ -1,6 +1,6 @@
 ﻿namespace MapinfoWrapper.DataAccess.RowOperations
 {
-    enum ColumnTypes
+    public enum ColumnTypes
     {
         CHAR = 1,
         DECIMAL = 2,

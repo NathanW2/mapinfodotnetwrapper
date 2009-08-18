@@ -33,8 +33,7 @@
         {
             get
             {
-                EntityBuilder builder = new EntityBuilder(this.miSession, this);
-                TEntity entity = builder.GenerateEntityForIndex<TEntity>(index);
+                TEntity entity = base.EntityFactory.GenerateEntityForIndex<TEntity>(index);
                 return entity;
             }
         }
@@ -47,7 +46,7 @@
 	    {
 	        get
 	        {
-	            return new RowList<TEntity>(this.Name, this.reader);
+	            return new RowList<TEntity>(this, this.reader, this.MapinfoSession);
 	        }
 	    }
 
@@ -84,7 +83,7 @@
             { 
                 if (provider == null)
                 {
-                    provider = new MapinfoQueryProvider(this.miSession);
+                    provider = new MapinfoQueryProvider(this.MapinfoSession);
                 }
                 return provider;
             }

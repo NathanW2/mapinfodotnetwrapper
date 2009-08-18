@@ -25,6 +25,7 @@
             this.misession.RunCommand(result.CommandText);
 
             Type elementType = TypeSystem.GetElementType(expression.Type);
+
             IDataReader reader = new DataReader(misession, result.TableName);
             if (result.Projector != null)
             {
@@ -34,8 +35,10 @@
             }
             else
             {
+                Table table = this.misession.Tables.GetTable(result.TableName);
+
                 return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
-                                                new object[] { result.TableName, reader });
+                                                new object[] { table, reader, this.misession });
             }
         }
 

@@ -9,6 +9,7 @@
     using MapinfoWrapper.Geometries;
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Mapinfo;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Reads data from the suppiled Mapinfo table.
@@ -17,62 +18,53 @@
     internal class DataReader : IDataReader
     {
         private readonly MapinfoSession wrapper;
-        private readonly string tableName;
         private readonly IGeometryFactory geometryfactory;
+        private int currentrecord;
 
         public DataReader(MapinfoSession MISession, string tableName)
         {
             this.wrapper = MISession;
-            this.tableName = tableName;
+            this.TableName = tableName;
             this.geometryfactory = new GeometryFactory(MISession);
         }
 
-        internal DataReader(MapinfoSession wrapper,string tableName, IGeometryFactory geometryFactory)
+        public string TableName {get; private set;}
+        public int CurrentRecord
         {
-            this.wrapper = wrapper;
-            this.tableName = tableName;
-            this.geometryfactory = geometryFactory;
-        }
-
-        public string GetName(int index)
-        {
-            return this.wrapper.Evaluate("ColumnInfo({0},COL{1},1)".FormatWith(this.tableName, index.ToString().InQuotes()));
+            get 
+            {
+                return Convert.ToInt32(this.Get("RowID"));
+            }
         }
 
         public void Fetch(int recordIndex)
         {
-            this.wrapper.RunCommand("Fetch Rec {0} From {1}".FormatWith(recordIndex, this.tableName));
+            this.wrapper.RunCommand("Fetch Rec {0} From {1}".FormatWith(recordIndex, this.TableName));
         }
 
         public void FetchLast()
         {
-            this.wrapper.RunCommand("Fetch Last From {0}".FormatWith(this.tableName));
+            this.wrapper.RunCommand("Fetch Last From {0}".FormatWith(this.TableName));
         }
 
         public void FetchNext()
         {
-            this.wrapper.RunCommand("Fetch Next From {0}".FormatWith(this.tableName));
+            this.wrapper.RunCommand("Fetch Next From {0}".FormatWith(this.TableName));
         }
 
         public void FetchFirst()
         {
-            this.wrapper.RunCommand("Fetch First From {0}".FormatWith(this.tableName));
+            this.wrapper.RunCommand("Fetch First From {0}".FormatWith(this.TableName));
         }
 
         public bool EndOfTable()
         {
-            return (wrapper.Evaluate("EOT({0})".FormatWith(this.tableName)) == "T");
-        }
-
-        public int GetColumnCount()
-        {
-            string value = this.wrapper.Evaluate("TableInfo({0},4)".FormatWith(this.tableName));
-            return Convert.ToInt32(value);
+            return (wrapper.Evaluate("EOT({0})".FormatWith(this.TableName)) == "T");
         }
 
         public object Get(string columnName)
         {
-            string value = this.wrapper.Evaluate("{0}.{1}".FormatWith(this.tableName, columnName));
+            string value = this.wrapper.Evaluate("{0}.{1}".FormatWith(this.TableName, columnName));
             return CastToColumnType(columnName, value);
         }
 
@@ -90,7 +82,7 @@
                 return null;
             }
 
-            string columntypestring = this.wrapper.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.tableName, columnName, 3));
+            string columntypestring = this.wrapper.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.TableName, columnName, 3));
             int columntypeval = Convert.ToInt32(columntypestring);
             ColumnTypes columntype = (ColumnTypes)columntypeval;
             switch (columntype)
@@ -139,30 +131,10 @@
             return null;
         }
 
-        public TEntity PopulateEntity<TEntity>(TEntity obj)
-        {
-            PropertyInfo[] properties = (from prop in typeof (TEntity).GetProperties()
-                                         where !prop.GetCustomAttributes(false).Any(
-                                                    att => att.GetType() == typeof (MapinfoIgnore))
-                                         select prop).ToArray();
-
-            for (int i = 0, n = properties.Length; i < n; i++)
-            {
-                PropertyInfo fi = properties[i];
-                fi.SetValue(obj, this.Get(fi.Name), null);
-            }
-
-            return obj;
-        }
-
-        #region IDataReader Members
-
         public bool Read()
         {
             this.FetchNext();
             return this.EndOfTable();
         }
-
-        #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-using MapinfoWrapper.Exceptions;
-
-namespace MapinfoWrapper.DataAccess
+﻿namespace MapinfoWrapper.DataAccess
 {
     using System;
     using System.Collections.Generic;
@@ -13,6 +9,9 @@ namespace MapinfoWrapper.DataAccess
     using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
     using MapinfoWrapper.Mapinfo;
+    using System.Collections.ObjectModel;
+    using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
+    using MapinfoWrapper.Exceptions;
 
     public interface IExposesSession
     {
@@ -27,11 +26,13 @@ namespace MapinfoWrapper.DataAccess
     // HACK! This class feels like it's doing to much, needs a bit of a refactor.
     public class Table : ITable, IEquatable<Table>, IExposesSession
     {
-        protected readonly MapinfoSession miSession;
         private readonly string name;
         protected readonly IDataReader reader;
         private readonly TableInfoWrapper tableinfo;
 
+        /// <summary>
+        /// The event that is raised just before the table is saved.
+        /// </summary>
         public event Action<Table> OnTableSaving;
 
         internal Table(MapinfoSession MISession, string tableName)
@@ -39,45 +40,29 @@ namespace MapinfoWrapper.DataAccess
             Guard.AgainstNull(MISession,"MISession");
             Guard.AgainstNullOrEmpty(tableName,"tableName");
            
-            this.miSession = MISession;
+            this.MapinfoSession = MISession;
             this.name = tableName;
-            this.reader = new DataReader(this.miSession, tableName);
+            this.reader = new DataReader(MISession, tableName);
             this.tableinfo = new TableInfoWrapper(MISession);
             this.TableManger = new TableChangeManger();
+            this.EntityFactory = new EntityFactory(MISession, this);
         }
 
         /// <summary>
-        /// Builds up entities for table, setting all the needed properties.
+        /// Gets the <see cref="MapinfoSession"/> that this table is associated with.
         /// </summary>
-        // HACK! This class is doing similer things to DataReader and might need to be refactored.
-        // HACK! This class doesn't belong here.
-        internal class EntityBuilder
-        {
-            private readonly MapinfoSession miSession;
-            private readonly Table table;
-            private readonly DataReader datareader;
+        public MapinfoSession MapinfoSession { get; private set; }
 
-            public EntityBuilder(MapinfoSession MISession, Table table)
-            {
-                miSession = MISession;
-                this.table = table;
-                this.datareader = new DataReader(MISession, table.Name);
-            }
-
-            public int CurrentRecord { get; set; }
-
-            public TEntity GenerateEntityForIndex<TEntity>(int index)
-                where TEntity : BaseEntity, new()
-            {
-                string name = this.table.Name;
-                if (index != this.CurrentRecord)
-                    this.datareader.Fetch(index);
-
-                TEntity entity = new TEntity();
-                entity.Table = this.table;
-                return this.datareader.PopulateEntity(entity);
-            }
-        }
+        /// <summary>
+        /// Gets the <see cref="TableManger"/> for the current table.  Allows for access to current
+        /// change set for the table.
+        /// </summary>
+        public TableChangeManger TableManger { get; private set; }
+        
+        /// <summary>
+        /// Gets the <see cref="EntityFactory"/> that is used by this table to create entities.
+        /// </summary>
+        internal EntityFactory EntityFactory { get; set; }
 
         /// <summary>
         /// Returns a <see cref="BaseEntity"/> for the supplied index in the table.
@@ -88,16 +73,9 @@ namespace MapinfoWrapper.DataAccess
         {
             get
             {
-                EntityBuilder builder = new EntityBuilder(this.miSession, this);
-                return builder.GenerateEntityForIndex<BaseEntity>(index);
+                return this.EntityFactory.GenerateEntityForIndex<BaseEntity>(index);
             }
         }
-
-        /// <summary>
-        /// Gets the <see cref="TableManger"/> for the current table.  Allows for access to current
-        /// change set for the table.
-        /// </summary>
-        public TableChangeManger TableManger { get; private set; }
 
         /// <summary>
         /// Rows a collection of rows from the table, using <see cref="BaseEntity"/> as
@@ -107,7 +85,7 @@ namespace MapinfoWrapper.DataAccess
         {
             get 
             {
-                return new RowList<BaseEntity>(this.Name, this.reader);
+                return new RowList<BaseEntity>(this, this.reader,this.MapinfoSession);
             }
         }
 
@@ -195,6 +173,27 @@ namespace MapinfoWrapper.DataAccess
             return cols.Value;
         }
 
+        private IEnumerable<Column> columns;
+        public IEnumerable<Column> Columns
+        {
+            get
+            {
+                if (this.columns == null)
+                {
+                    List<Column> cols = new List<Column>();
+                    ColumnFactory colfactory = new ColumnFactory(this.MapinfoSession,this);
+                    // Create the row id and object column.
+                    cols.Add(colfactory.CreateColumnForRowId());
+                    for (int i = 1; i < this.GetNumberOfColumns() + 1; i++)
+                    {
+                        cols.Add(colfactory.CreateColumnFor(i));
+                    }
+                    this.columns = cols;
+                }
+                return this.columns;
+            }
+        }
+
         /// <summary>
         /// Commits any pending changes for the current table.
         /// </summary>
@@ -218,9 +217,12 @@ namespace MapinfoWrapper.DataAccess
             if (interactive)
                 command += " Interactive";
 
-            this.miSession.RunCommand(command);
+            this.MapinfoSession.RunCommand(command);
         }
 
+        /// <summary>
+        /// Raises the OnTableSaving event for this table.
+        /// </summary>
         private void RaiseOnSaving()
         {
             if (this.OnTableSaving != null)
@@ -232,7 +234,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public void DiscardChanges()
         {
-            this.miSession.RunCommand("Rollback Table {0}".FormatWith(this.Name));
+            this.MapinfoSession.RunCommand("Rollback Table {0}".FormatWith(this.Name));
         }
 
         /// <summary>
@@ -240,7 +242,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public void Close()
         {
-            this.miSession.RunCommand("Close Table {0}".FormatWith(this.Name));
+            this.MapinfoSession.RunCommand("Close Table {0}".FormatWith(this.Name));
         }
 
         /// <summary>
@@ -251,7 +253,7 @@ namespace MapinfoWrapper.DataAccess
         {
             Guard.AgainstIsZero(index, "index");
 
-            this.miSession.RunCommand("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
+            this.MapinfoSession.RunCommand("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
         }
 
         /// <summary>
@@ -274,7 +276,7 @@ namespace MapinfoWrapper.DataAccess
         public void Insert(BaseEntity entity)
         {
             string insertstring = this.TableManger.GetInsertString(entity, this.Name);
-            this.miSession.RunCommand(insertstring);
+            this.MapinfoSession.RunCommand(insertstring);
             // TODO We need to repopulate the entity here, so that it has a rowid.
         }
 
@@ -370,7 +372,7 @@ namespace MapinfoWrapper.DataAccess
         {
             int hash = 17;
             hash = (hash * 23) + this.Name.GetHashCode();
-            hash = (hash * 23) + this.miSession.GetHashCode();
+            hash = (hash * 23) + this.MapinfoSession.GetHashCode();
             return hash;
         }
 
@@ -387,7 +389,7 @@ namespace MapinfoWrapper.DataAccess
             if (other == null) 
                 return false;
 
-            return (this.miSession == other.miSession && this.name == other.Name);
+            return (this.MapinfoSession == other.MapinfoSession && this.name == other.Name);
         }
 
         public override bool Equals(object obj)
@@ -399,21 +401,16 @@ namespace MapinfoWrapper.DataAccess
 
         public static bool operator ==(Table t1, Table t2)
         {
-            if ((object)t1 == null || ((object)t2 == null))
-                return false;
-            else return
-                t1.Equals(t2);
+            if ((object)t1 == null)
+                return ((object)t2 == null);
+            else
+                return t1.Equals(t2);
 
         }
 
         public static bool operator !=(Table t1, Table t2)
         {
             return !(t1 == t2);
-        }
-
-        public MapinfoSession MapinfoSession
-        {
-            get { return this.miSession; }
         }
 
         /// <summary>
@@ -431,7 +428,7 @@ namespace MapinfoWrapper.DataAccess
             // We can return a new generic version of the table here,
             // because we have overriden Equals and GetHashCode, making the
             // new table and this one equal.
-            return new Table<TEntity>(miSession, this.Name);
+            return new Table<TEntity>(this.MapinfoSession, this.Name);
         }
     }   
 }

@@ -3,15 +3,17 @@
     using System.Collections.Generic;
     using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
-    public class RowEnumerator<T> : IEnumerator<T>
+    class RowEnumerator<T> : IEnumerator<T>
         where T : BaseEntity, new()
     {
         private IDataReader datareader;
         private T current;
+        private readonly EntityFactory entityfactory;
 
-        public RowEnumerator(IDataReader recordSelector)
+        public RowEnumerator(IDataReader recordSelector, EntityFactory entityFactory)
         {
             this.datareader = recordSelector;
+            this.entityfactory = entityFactory;
         }
 
         #region IEnumerator<MapinfoRow> Members
@@ -52,9 +54,7 @@
             if (this.datareader.EndOfTable())
                 return false;
 
-            T instance = new T();
-
-            this.current = this.datareader.PopulateEntity(instance);
+            this.current = this.entityfactory.GenerateEntityForIndex<T>(this.datareader.CurrentRecord);
             return true;
         }
 
