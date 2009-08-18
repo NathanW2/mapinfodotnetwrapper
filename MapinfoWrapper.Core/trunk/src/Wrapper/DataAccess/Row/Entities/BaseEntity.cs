@@ -1,6 +1,8 @@
 ﻿namespace MapinfoWrapper.DataAccess.RowOperations.Entities
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Represents a basic row in a Mapinfo table.
@@ -66,10 +68,25 @@
         /// </summary>
         [MapinfoIgnore]
         public EntityState State { get; internal set;}
+
+        /// <summary>
+        /// Gets and sets the <see cref="List{T}"/> that is used as this entities backing store.
+        /// </summary>
+        [MapinfoIgnore]
+        internal List<ColumnMapping> BackingStore { get; set; }
+
+        [MapinfoIgnore]
+        public object this[string columnName]
+        {
+            get
+            {
+                return this.BackingStore.First(col => col.ColumnName.ToLower() == columnName.ToLower()).Data;
+            }
+        }
     }
 
     /// <summary>
-    /// An attribute used to mark a property to be ignored when being loaded with data.
+    /// Attribute used to mark a property to be ignored when being loaded with data.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property , Inherited = false, AllowMultiple = true)]
     internal sealed class MapinfoIgnore : Attribute

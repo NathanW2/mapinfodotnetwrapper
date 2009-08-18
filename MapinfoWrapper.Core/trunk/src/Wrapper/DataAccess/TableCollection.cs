@@ -131,8 +131,19 @@ namespace MapinfoWrapper.DataAccess
                 if (tableName.ToUpper() == "SELECTION") 
                     return new Table(miSession, "Selection");
 
-                return this.innertablelist.Where(tab => tab.Name == tableName)
-                                          .FirstOrDefault();
+                Table table = this.innertablelist.Where(tab => tab.Name == tableName)
+                                                 .FirstOrDefault();
+
+                // If we found the table on our first pass through then just return the table.
+                if (table != null)
+                {
+                    return table;
+                }
+
+                // If we have made it this far we need to call refresh then try and get the table again.
+                this.RefreshList();
+
+                return this[tableName];
             }
         }
 
