@@ -61,6 +61,9 @@
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
     <Compile Include="Core\Check.cs" />
     <Compile Include="Core\Wrappers\MapbasicWrapper.cs" />
+    <Compile Include="Wrapper\DataAccess\Column.cs" />
+    <Compile Include="Wrapper\DataAccess\ColumnFactory.cs" />
+    <Compile Include="Wrapper\DataAccess\EntityFactory.cs" />
     <Compile Include="Wrapper\DataAccess\LINQ\SQL Builders\UpdateExpression.cs" />
     <Compile Include="Wrapper\DataAccess\Row\Entities\EntityChangeSet.cs" />
     <Compile Include="Wrapper\DataAccess\TableChangeManager.cs" />
