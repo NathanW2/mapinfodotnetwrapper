@@ -20,14 +20,14 @@
     /// </summary>
     class EntityFactory
     {
-        private readonly DataReader datareader;
+        private readonly IDataReader datareader;
         private Dictionary<Type, PropertyInfo[]> CachedMappings = new Dictionary<Type, PropertyInfo[]>();
 
-        public EntityFactory(MapinfoSession MISession, Table table)
+        public EntityFactory(MapinfoSession MISession, Table table, IDataReader dataReader)
         {
             this.MapifoSession = MISession;
             this.Table = table;
-            this.datareader = new DataReader(MISession, table.Name);
+            this.datareader = dataReader;
         }
 
         public MapinfoSession MapifoSession { get; private set; }
@@ -79,6 +79,8 @@
                 object data = ColumnDataMap.First(col => col.ColumnName.ToLower() == fi.Name.ToLower()).Data;
                 fi.SetValue(obj, data, null);
             }
+
+            obj.State = BaseEntity.EntityState.Fresh;
 
             return obj;
         }

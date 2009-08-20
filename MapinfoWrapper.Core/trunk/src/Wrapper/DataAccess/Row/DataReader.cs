@@ -17,13 +17,13 @@
     // HACK! This object feels like it is doing a bit to much and needs to be refactored.
     internal class DataReader : IDataReader
     {
-        private readonly MapinfoSession wrapper;
+        private readonly MapinfoSession MapinfoSession;
         private readonly IGeometryFactory geometryfactory;
         private int currentrecord;
 
         public DataReader(MapinfoSession MISession, string tableName)
         {
-            this.wrapper = MISession;
+            this.MapinfoSession = MISession;
             this.TableName = tableName;
             this.geometryfactory = new GeometryFactory(MISession);
         }
@@ -39,32 +39,32 @@
 
         public void Fetch(int recordIndex)
         {
-            this.wrapper.RunCommand("Fetch Rec {0} From {1}".FormatWith(recordIndex, this.TableName));
+            this.MapinfoSession.RunCommand("Fetch Rec {0} From {1}".FormatWith(recordIndex, this.TableName));
         }
 
         public void FetchLast()
         {
-            this.wrapper.RunCommand("Fetch Last From {0}".FormatWith(this.TableName));
+            this.MapinfoSession.RunCommand("Fetch Last From {0}".FormatWith(this.TableName));
         }
 
         public void FetchNext()
         {
-            this.wrapper.RunCommand("Fetch Next From {0}".FormatWith(this.TableName));
+            this.MapinfoSession.RunCommand("Fetch Next From {0}".FormatWith(this.TableName));
         }
 
         public void FetchFirst()
         {
-            this.wrapper.RunCommand("Fetch First From {0}".FormatWith(this.TableName));
+            this.MapinfoSession.RunCommand("Fetch First From {0}".FormatWith(this.TableName));
         }
 
         public bool EndOfTable()
         {
-            return (wrapper.Evaluate("EOT({0})".FormatWith(this.TableName)) == "T");
+            return (MapinfoSession.Evaluate("EOT({0})".FormatWith(this.TableName)) == "T");
         }
 
         public object Get(string columnName)
         {
-            string value = this.wrapper.Evaluate("{0}.{1}".FormatWith(this.TableName, columnName));
+            string value = this.MapinfoSession.Evaluate("{0}.{1}".FormatWith(this.TableName, columnName));
             return CastToColumnType(columnName, value);
         }
 
@@ -79,10 +79,12 @@
 
             if (string.Equals(columnName, "obj", StringComparison.InvariantCultureIgnoreCase))
             {
-                return null;
+                GeometryBuilder georeader = new GeometryBuilder(this.TableName,this.MapinfoSession);
+                Geometry geo = georeader.CreateGeometry();
+                return geo;
             }
 
-            string columntypestring = this.wrapper.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.TableName, columnName, 3));
+            string columntypestring = this.MapinfoSession.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.TableName, columnName, 3));
             int columntypeval = Convert.ToInt32(columntypestring);
             ColumnTypes columntype = (ColumnTypes)columntypeval;
             switch (columntype)

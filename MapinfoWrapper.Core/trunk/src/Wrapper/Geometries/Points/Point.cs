@@ -2,6 +2,7 @@
 {
     using System;
     using MapinfoWrapper.Geometries;
+    using MapinfoWrapper.Core.Extensions;
 
     /// <summary>
     /// Represents a point object.
@@ -62,7 +63,7 @@
 
         internal override string ToBasicCreateCommand()
         {
-            throw new NotImplementedException();
+            return "CreatePoint({0},{1})".FormatWith(X.ToString(), Y.ToString());
         }
     }
 }

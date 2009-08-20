@@ -45,7 +45,7 @@
             this.reader = new DataReader(MISession, tableName);
             this.tableinfo = new TableInfoWrapper(MISession);
             this.TableManger = new TableChangeManger();
-            this.EntityFactory = new EntityFactory(MISession, this);
+            this.EntityFactory = new EntityFactory(MISession, this,this.reader);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@
         {
             get 
             {
-                return new RowList<BaseEntity>(this, this.reader,this.MapinfoSession);
+                return new RowList<BaseEntity>(this, this.reader,this.MapinfoSession,this.EntityFactory);
             }
         }
 
@@ -184,6 +184,7 @@
                     ColumnFactory colfactory = new ColumnFactory(this.MapinfoSession,this);
                     // Create the row id and object column.
                     cols.Add(colfactory.CreateColumnForRowId());
+                    cols.Add(colfactory.CreateColumnForObj());
                     for (int i = 1; i < this.GetNumberOfColumns() + 1; i++)
                     {
                         cols.Add(colfactory.CreateColumnFor(i));
@@ -277,7 +278,7 @@
         {
             string insertstring = this.TableManger.GetInsertString(entity, this.Name);
             this.MapinfoSession.RunCommand(insertstring);
-            // TODO We need to repopulate the entity here, so that it has a rowid.
+            // TODO Return the new repopulated entity, you just have to requery the object for the time being.
         }
 
         public void Update(BaseEntity entity)
@@ -338,7 +339,7 @@
             //Process the inserts first.
             foreach (var entity in changeset.ForInsert)
             {
-
+                this.Insert(entity);
             }
 
             // Remove all the entites from the pending insert list.
