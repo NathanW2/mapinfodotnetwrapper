@@ -121,6 +121,16 @@
             return column;
         }
 
+        public Column CreateColumnForObj()
+        {
+            Column column = new Column();
+            column.Name = "Obj";
+            column.Type = ColumnTypes.GRAPHIC;
+            column.Table = this.Table;
+            column.Number = 0;
+            return column;
+        }
+
         /// <summary>
         /// Creates and returns a new <see cref="Column"/> for the supplied column index.
         /// </summary>

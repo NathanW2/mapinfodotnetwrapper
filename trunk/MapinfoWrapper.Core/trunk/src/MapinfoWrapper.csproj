@@ -69,6 +69,7 @@
     <Compile Include="Wrapper\DataAccess\TableChangeManager.cs" />
     <Compile Include="Wrapper\Exceptions\MapbasicException.cs" />
     <Compile Include="Wrapper\Geometries\Geometry.cs" />
+    <Compile Include="Wrapper\Geometries\GeometryBuilder.cs" />
     <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
     <Compile Include="Wrapper\MapbasicOperations\MapbasicCommand.cs" />
     <Compile Include="Wrapper\UI\ButtonPad.cs" />

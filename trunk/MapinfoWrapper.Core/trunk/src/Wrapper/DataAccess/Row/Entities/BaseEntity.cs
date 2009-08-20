@@ -26,6 +26,10 @@
             /// The entity is in a modifed state.
             /// </summary>
             Modifed = 4,
+            /// <summary>
+            /// The entity is stright from the Mapinfo table and has not yet been modified.
+            /// </summary>
+            Fresh = 8
         }
 
         private int rowid;

@@ -46,20 +46,20 @@
 	    {
 	        get
 	        {
-	            return new RowList<TEntity>(this, this.reader, this.MapinfoSession);
+	            return new RowList<TEntity>(this, this.reader, this.MapinfoSession,this.EntityFactory);
 	        }
 	    }
 
         public IEnumerator<TEntity> GetEnumerator()
 		{
-		    return this.GetEnumerator();
+            var queryabletable = (IQueryable)this;
+            return ((IEnumerable<TEntity>)queryabletable.Provider.Execute(queryabletable.Expression))
+                                                                 .GetEnumerator();
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
-		    var queryabletable = (IQueryable) this;
-            return ((IEnumerable<TEntity>)queryabletable.Provider.Execute(queryabletable.Expression))
-                                                                 .GetEnumerator();
+            return this.GetEnumerator();
 		}
 
         Type IQueryable.ElementType
@@ -83,7 +83,7 @@
             { 
                 if (provider == null)
                 {
-                    provider = new MapinfoQueryProvider(this.MapinfoSession);
+                    provider = new MapinfoQueryProvider(this.MapinfoSession, this.EntityFactory);
                 }
                 return provider;
             }

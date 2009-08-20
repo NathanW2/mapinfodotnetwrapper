@@ -13,10 +13,12 @@
     internal class MapinfoQueryProvider : IQueryProvider
     {
         private readonly MapinfoSession misession;
+        private readonly EntityFactory entityfactory;
 
-        public MapinfoQueryProvider(MapinfoSession MISession)
+        public MapinfoQueryProvider(MapinfoSession MISession, EntityFactory factory)
         {
             this.misession = MISession;
+            this.entityfactory = factory;
         }
 
         public object Execute(Expression expression)
@@ -38,7 +40,7 @@
                 Table table = this.misession.Tables.GetTable(result.TableName);
 
                 return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
-                                                new object[] { table, reader, this.misession });
+                                                new object[] { table, reader, this.misession, this.entityfactory });
             }
         }
 
