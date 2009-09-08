@@ -45,7 +45,7 @@
             this.reader = new DataReader(MISession, tableName);
             this.tableinfo = new TableInfoWrapper(MISession);
             this.TableManger = new TableChangeManger();
-            this.EntityFactory = new EntityFactory(MISession, this,this.reader);
+            this.EntityFactory = new EntityMaterializer(MISession, this,this.reader);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@
         /// <summary>
         /// Gets the <see cref="EntityFactory"/> that is used by this table to create entities.
         /// </summary>
-        internal EntityFactory EntityFactory { get; set; }
+        internal EntityMaterializer EntityFactory { get; set; }
 
         /// <summary>
         /// Returns a <see cref="BaseEntity"/> for the supplied index in the table.
@@ -85,7 +85,7 @@
         {
             get 
             {
-                return new RowList<BaseEntity>(this, this.reader,this.MapinfoSession,this.EntityFactory);
+                return new RowList<BaseEntity>(this.reader,this.EntityFactory);
             }
         }
 

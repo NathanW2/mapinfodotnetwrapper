@@ -46,7 +46,7 @@
 	    {
 	        get
 	        {
-	            return new RowList<TEntity>(this, this.reader, this.MapinfoSession,this.EntityFactory);
+	            return new RowList<TEntity>(this.reader, this.EntityFactory);
 	        }
 	    }
 
@@ -83,7 +83,7 @@
             { 
                 if (provider == null)
                 {
-                    provider = new MapinfoQueryProvider(this.MapinfoSession, this.EntityFactory);
+                    provider = new MapinfoProvider(this.MapinfoSession, this.EntityFactory);
                 }
                 return provider;
             }

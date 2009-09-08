@@ -8,9 +8,9 @@
     {
         private IDataReader datareader;
         private T current;
-        private readonly EntityFactory entityfactory;
+        private readonly EntityMaterializer entityfactory;
 
-        public RowEnumerator(IDataReader recordSelector, EntityFactory entityFactory)
+        public RowEnumerator(IDataReader recordSelector, EntityMaterializer entityFactory)
         {
             this.datareader = recordSelector;
             this.entityfactory = entityFactory;

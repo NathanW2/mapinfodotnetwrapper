@@ -2,6 +2,8 @@
 {
     using MapinfoWrapper.Core.Extensions;
     using MapinfoWrapper.Mapinfo;
+    using System;
+    using MapinfoWrapper.Exceptions;
 
     /// <summary>
     /// Represents a Mapbasic variable. 
@@ -45,4 +47,33 @@
             Object
         }
     }
+
+    public class ObjectVariable : IDisposable
+    {
+        private ObjectVariable(MapinfoSession session, string name )
+        {
+            this.MapinfoSession = session;
+            this.Name = name;
+        }
+
+        public static ObjectVariable Declare(MapinfoSession session, string name)
+        {
+            session.RunCommand("Dim {0} as Object".FormatWith(name));
+            return new ObjectVariable(session, name);
+        }
+
+        public void SetWith(string expression)
+        {
+            this.MapinfoSession.RunCommand("{0} = {1}".FormatWith(this.Name, expression));
+        }
+
+        public MapinfoSession MapinfoSession { get; set; }
+        public string Name { get; set; }
+        
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }
