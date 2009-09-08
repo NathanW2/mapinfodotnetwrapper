@@ -27,9 +27,9 @@
             /// </summary>
             Modifed = 4,
             /// <summary>
-            /// The entity is stright from the Mapinfo table and has not yet been modified.
+            /// The entity is in a unknown state. Entities will be in this state when retived from a <see cref="Table"/>.
             /// </summary>
-            Fresh = 8
+            PossiblyModifed = 8
         }
 
         private int rowid;
@@ -75,6 +75,7 @@
 
         /// <summary>
         /// Gets and sets the <see cref="List{T}"/> that is used as this entities backing store.
+        /// <para>This backing store is used by the index property of this object, to allow for weak typed access.</para>
         /// </summary>
         [MapinfoIgnore]
         internal List<ColumnMapping> BackingStore { get; set; }

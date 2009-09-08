@@ -8,19 +8,14 @@
     internal class RowList<TTabeDef> : IEnumerable<TTabeDef>
         where TTabeDef : BaseEntity, new()
     {
-        private readonly Table table;
         private readonly IDataReader reader;
-        private readonly EntityFactory entityfactory;
+        private readonly EntityMaterializer entityfactory;
 
-        public RowList(Table table, IDataReader reader, MapinfoSession MISession, EntityFactory factory)
+        public RowList(IDataReader reader, EntityMaterializer factory)
         {
-            this.table = table;
             this.reader = reader;
-            this.MapinfoSession = MISession;
             this.entityfactory = factory;
         }
-
-        public MapinfoSession MapinfoSession { get; private set; }
 
         public IEnumerator<TTabeDef> GetEnumerator()
         {

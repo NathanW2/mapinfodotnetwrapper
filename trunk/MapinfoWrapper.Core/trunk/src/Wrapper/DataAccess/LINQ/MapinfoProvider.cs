@@ -6,29 +6,35 @@
     using System.Linq;
     using System.Linq.Expressions;
     using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
+    using MapinfoWrapper.DataAccess.Row;
     using MapinfoWrapper.DataAccess.RowOperations;
     using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
     using MapinfoWrapper.Mapinfo;
 
-    internal class MapinfoQueryProvider : IQueryProvider
+
+    class MapinfoProvider : IQueryProvider
     {
         private readonly MapinfoSession misession;
-        private readonly EntityFactory entityfactory;
+        private readonly EntityMaterializer entityfactory;
+        private readonly DataReaderFactory readerfactory;
 
-        public MapinfoQueryProvider(MapinfoSession MISession, EntityFactory factory)
+        public MapinfoProvider(MapinfoSession MISession, EntityMaterializer factory)
         {
             this.misession = MISession;
             this.entityfactory = factory;
+            this.readerfactory = new DataReaderFactory(MISession);
         }
 
         public object Execute(Expression expression)
         {
             TranslateResult result = this.Translate(expression);
+            
             this.misession.RunCommand(result.CommandText);
 
             Type elementType = TypeSystem.GetElementType(expression.Type);
 
-            IDataReader reader = new DataReader(misession, result.TableName);
+            IDataReader reader = this.readerfactory.GetReaderFor(result.TableName);
+
             if (result.Projector != null)
             {
                 Delegate projector = result.Projector.Compile();
@@ -37,10 +43,8 @@
             }
             else
             {
-                Table table = this.misession.Tables.GetTable(result.TableName);
-
                 return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
-                                                new object[] { table, reader, this.misession, this.entityfactory });
+                                                new object[] { reader, this.entityfactory });
             }
         }
 
@@ -60,7 +64,7 @@
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
         {
             Type elementType = TypeSystem.GetElementType(expression.Type);
-            return (IQueryable<TElement>)Activator.CreateInstance(typeof(Query<>).MakeGenericType(elementType),
+            return (IQueryable<TElement>)Activator.CreateInstance(typeof(LinqQuery<>).MakeGenericType(elementType),
                                                                   new object[] { this, expression });
         }
 

@@ -31,7 +31,6 @@
                 if (string.Equals(Name, "obj", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (value == null) break;
-
                     string createstring = ((Geometry) value).ToBasicCreateCommand();
                     mapping.Add(Name,createstring);
                     break;
@@ -85,6 +84,5 @@
             values.Append(")");
             return columns.ToString() + values.ToString();
         }
-
     }
 }

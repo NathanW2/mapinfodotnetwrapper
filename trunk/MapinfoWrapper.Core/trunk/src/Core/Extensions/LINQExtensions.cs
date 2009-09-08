@@ -26,9 +26,9 @@
 
         public static string ToQueryString<T>(this IQueryable<T> source)
         {
-            if (source.Provider is MapinfoQueryProvider)
+            if (source.Provider is MapinfoProvider)
             {
-                MapinfoQueryProvider provider = source.Provider as MapinfoQueryProvider;
+                MapinfoProvider provider = source.Provider as MapinfoProvider;
                 return provider.GetQueryString(source.Expression);
             }
             else

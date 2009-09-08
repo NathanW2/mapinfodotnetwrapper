@@ -18,12 +18,12 @@
     /// <summary>
     /// Factory used to create and populate entity objects.
     /// </summary>
-    class EntityFactory
+    class EntityMaterializer
     {
         private readonly IDataReader datareader;
         private Dictionary<Type, PropertyInfo[]> CachedMappings = new Dictionary<Type, PropertyInfo[]>();
 
-        public EntityFactory(MapinfoSession MISession, Table table, IDataReader dataReader)
+        public EntityMaterializer(MapinfoSession MISession, Table table, IDataReader dataReader)
         {
             this.MapifoSession = MISession;
             this.Table = table;
@@ -80,7 +80,7 @@
                 fi.SetValue(obj, data, null);
             }
 
-            obj.State = BaseEntity.EntityState.Fresh;
+            obj.State = BaseEntity.EntityState.PossiblyModifed;
 
             return obj;
         }

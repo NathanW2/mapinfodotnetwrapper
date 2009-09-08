@@ -4,49 +4,55 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
-    public sealed class Query<T> : IQueryable<T>
+    public sealed class LinqQuery<T> : IQueryResult<T>, IQueryable<T>
     {
-        public Query(IQueryProvider provider,Expression expression)
+        public LinqQuery(IQueryProvider provider, Expression expression)
         {
-            this.Provider = provider;
-            this.Expression = expression;
+            this.provider = provider;
+            this.expression = expression;
         }
-
-        #region IEnumerable<T> Members
 
         public IEnumerator<T> GetEnumerator()
         {
-            return ((IEnumerable<T>)this.Provider.Execute<IEnumerable<T>>(Expression)).GetEnumerator();
+            IQueryable<T> query = (IQueryable<T>)this;
+            return ((IEnumerable<T>)query.Provider.Execute(query.Expression))
+                                                 .GetEnumerator();
         }
-
-        #endregion
-
-        #region IEnumerable Members
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
-        #endregion
-
-        #region IQueryable Members
-
-        public Type ElementType
+        Type IQueryable.ElementType
         {
             get { return typeof(T); }
         }
 
-        public System.Linq.Expressions.Expression Expression {get; private set;}
+        private Expression expression;
+        Expression IQueryable.Expression
+        {
+            get { return this.expression; }
+        }
 
-        public IQueryProvider Provider { get; private set; }
+        private IQueryProvider provider;
+        IQueryProvider IQueryable.Provider 
+        {
+            get { return this.provider; }
+        }
 
-        #endregion
+        public string GetQueryString()
+        {
+            IQueryable<T> query = (IQueryable<T>)this;
+            return ((MapinfoProvider)query.Provider).GetQueryString(query.Expression);
+        }
 
         public override string ToString()
         {
-            return ((MapinfoQueryProvider)this.Provider).GetQueryString(this.Expression);
+            return this.GetQueryString();
         }
+
     }
 }
