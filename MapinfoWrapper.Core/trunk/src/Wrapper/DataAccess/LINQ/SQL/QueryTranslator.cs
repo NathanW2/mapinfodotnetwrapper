@@ -8,10 +8,21 @@
     using MapinfoWrapper.DataAccess.RowOperations;
     using MapinfoWrapper.Geometries;
 
+    /// <summary>
+    /// The result object that is returned from parsing an expression tree.
+    /// </summary>
     internal class TranslateResult
     {
-        internal string CommandText;
+        /// <summary>
+        /// The SQL command that needs to run in Mapinfo to get the results.
+        /// <para>If this is null, check the <c>TableName</c> because we might just want all the records from that table.</para>
+        /// </summary>
+        internal string SQLCommand;
+        /// <summary>
+        /// The resulting table we the results are held.
+        /// </summary>
         internal string TableName;
+
         internal LambdaExpression Projector;
     }
     
@@ -34,21 +45,37 @@
             this.sb = new StringBuilder();
             this.selectbuilder = new StringBuilder();
             this.datareader = Expression.Parameter(typeof(IDataReader), "datareader");
+            
             // If the expression is just a constant and is a table. Then we select all from that table.
             // HACK This really should be done better.
             if (expression.NodeType == ExpressionType.Constant && ((ConstantExpression)expression).Value is ITable)
             {
-                this.selectbuilder.Append("Select * From ");
+                ITable table = ((ConstantExpression)expression).Value as ITable;
+
+                if (table == null)
+                {
+                    throw new ArgumentNullException("Could not translate contanst to type ITable");
+                }
+
+                return new TranslateResult
+                {
+                    SQLCommand = null,
+                    TableName = table.Name,
+                    Projector = null
+                };
             }
+
             this.Visit(expression);
+
             this.tableName = this.tableName.Length == 0 ? "WrapperTempTable" : this.tableName;
+
             string query = this.selectbuilder.Append(this.sb).ToString() + " INTO {0}".FormatWith(this.tableName);
+            
             return new TranslateResult
             {
-                CommandText = query,
+                SQLCommand = query,
                 TableName = this.tableName,
-                Projector = this.projection != null ?
-                Expression.Lambda(this.projection.Selector, this.datareader) : null
+                Projector = this.projection != null ? Expression.Lambda(this.projection.Selector, this.datareader) : null
             };
         }
 

@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    internal interface ITable<TTableDef> : ITable, IQueryable<TTableDef>
+    public interface ITable<TTableDef> : ITable, IEnumerable<TTableDef>
         where TTableDef : new()
     {
-        IEnumerable<TTableDef> Rows { get; }
+
     }
 }

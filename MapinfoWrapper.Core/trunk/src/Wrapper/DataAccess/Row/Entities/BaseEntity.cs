@@ -65,7 +65,7 @@
         /// record is not inserted into a table
         /// </summary>
         [MapinfoIgnore]
-        public Table Table { get; internal set; }
+        public ITable Table { get; internal set; }
 
         /// <summary>
         /// Gets a <see cref="EntityState"/> representing the current state of the entity.
@@ -85,6 +85,10 @@
         {
             get
             {
+                if (this.BackingStore == null || this.BackingStore.Count == 0)
+                {
+                    throw new NotSupportedException("The backing store has not been enabled for this entity type, check yoursession.LoadOptions for information");
+                }
                 return this.BackingStore.First(col => col.ColumnName.ToLower() == columnName.ToLower()).Data;
             }
         }

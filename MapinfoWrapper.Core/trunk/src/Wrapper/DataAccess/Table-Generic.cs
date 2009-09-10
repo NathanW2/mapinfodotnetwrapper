@@ -12,28 +12,37 @@
     using System.Collections.ObjectModel;
     using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
     using MapinfoWrapper.Exceptions;
-
-    public interface IExposesSession
-    {
-        MapinfoSession MapinfoSession { get; }
-    }
+    using System.Linq;
+    using MapinfoWrapper.DataAccess.LINQ;
+    using System.Linq.Expressions;
 
     /// <summary>
-    /// A Mapinfo Table container which can be used when the
-    /// table definition is not known. This will still give you strong access
-    /// to the RowId column.
+    /// Represents a table that is currently opened in Mapinfo.
+    /// <para>By supplying a generic <c>type</c> to represent a row you will be able to using Linq-To-Mapinfo 
+    /// and have strong typed access to the columns in the table.</para>
     /// </summary>
-    // HACK! This class feels like it's doing to much, needs a bit of a refactor.
-    public class Table : ITable, IEquatable<Table>, IExposesSession
+    /// 
+    /// <example>
+    ///    An Example of a entity type would be:
+    ///    <code>
+    ///          public class MyEntity : BaseEntity
+    ///          {
+    ///              public string Name {get; set;}
+    ///          }
+    ///    </code>
+    ///    where <c>Name</c> represents the Name column for the table.
+    /// </example>
+    /// <typeparam name="TEntity">The entity type to be used by the table when representing a row.</typeparam>
+    public class Table<TEntity> : ITable<TEntity>, IEquatable<Table>, IQueryable<TEntity>
+           where TEntity : BaseEntity, new()
     {
         private readonly string name;
-        protected readonly IDataReader reader;
         private readonly TableInfoWrapper tableinfo;
 
         /// <summary>
         /// The event that is raised just before the table is saved.
         /// </summary>
-        public event Action<Table> OnTableSaving;
+        public event Action<ITable> OnTableSaving;
 
         internal Table(MapinfoSession MISession, string tableName)
         {
@@ -42,10 +51,8 @@
            
             this.MapinfoSession = MISession;
             this.name = tableName;
-            this.reader = new DataReader(MISession, tableName);
             this.tableinfo = new TableInfoWrapper(MISession);
             this.TableManger = new TableChangeManger();
-            this.EntityFactory = new EntityMaterializer(MISession, this,this.reader);
         }
 
         /// <summary>
@@ -58,36 +65,33 @@
         /// change set for the table.
         /// </summary>
         public TableChangeManger TableManger { get; private set; }
-        
-        /// <summary>
-        /// Gets the <see cref="EntityFactory"/> that is used by this table to create entities.
-        /// </summary>
-        internal EntityMaterializer EntityFactory { get; set; }
 
         /// <summary>
-        /// Returns a <see cref="BaseEntity"/> for the supplied index in the table.
+        /// Returns a <typeparamref name="TEntity"/> at the supplied index in the table.
         /// </summary>
-        /// <param name="index">The index at which to get the <see cref="BaseEntity"/></param>
-        /// <returns>An instace of <see cref="BaseEntity"/> for the supplied index.</returns>
-        public BaseEntity this[int index]
+        /// <param name="index">The index at which to get the <typeparamref name="TEntity"/></param>
+        /// <returns>An instace of <typeparamref name="TEntity"/> for the supplied index.</returns>
+        new public TEntity this[int index]
         {
             get
             {
-                return this.EntityFactory.GenerateEntityForIndex<BaseEntity>(index);
+                throw new NotImplementedException();
+                // TODO: We need to call the provider with an expression to say we only need the item at this index.
             }
         }
 
         /// <summary>
-        /// Rows a collection of rows from the table, using <see cref="BaseEntity"/> as
+        /// Rows a collection of rows from the table, using <typeparam name="TEntity" /> as
         /// the row collection type.
         /// </summary>
-        public IEnumerable<BaseEntity> Rows
-        {
-            get 
-            {
-                return new RowList<BaseEntity>(this.reader,this.EntityFactory);
-            }
-        }
+        //internal IEnumerable<TEntity> Rows
+        //{
+        //    get
+        //    {
+        //        //NOTE I'm not sure if we even need this here as the table itself is enumerable
+        //        //just might add problems later.
+        //    }
+        //}
 
         /// <summary>
         /// Returns the name of the current table.
@@ -400,7 +404,7 @@
             return this.Equals(table);
         }
 
-        public static bool operator ==(Table t1, Table t2)
+        public static bool operator ==(Table<TEntity> t1, Table<TEntity> t2)
         {
             if ((object)t1 == null)
                 return ((object)t2 == null);
@@ -409,9 +413,45 @@
 
         }
 
-        public static bool operator !=(Table t1, Table t2)
+        public static bool operator !=(Table<TEntity> t1, Table<TEntity> t2)
         {
             return !(t1 == t2);
+        }
+
+        Type IQueryable.ElementType
+        {
+            get
+            {
+                return typeof(TEntity);
+            }
+        }
+
+        Expression IQueryable.Expression
+        {
+            get 
+            {
+                return Expression.Constant(this);
+            }
+        }
+
+        IQueryProvider IQueryable.Provider
+        {
+            get 
+            {
+                return this.MapinfoSession.MapinfoProvider;
+            }
+        }
+
+        public IEnumerator<TEntity> GetEnumerator()
+        {
+            var queryabletable = (IQueryable)this;
+            return ((IEnumerable<TEntity>)queryabletable.Provider.Execute(queryabletable.Expression))
+                                                                 .GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         /// <summary>
@@ -426,10 +466,12 @@
         public Table<TEntity> ToGenericTable<TEntity>()
             where TEntity : BaseEntity, new()
         {
+            TableFactory tabFactory = new TableFactory(this.MapinfoSession);
+
             // We can return a new generic version of the table here,
             // because we have overriden Equals and GetHashCode, making the
             // new table and this one equal.
-            return new Table<TEntity>(this.MapinfoSession, this.Name);
+            return tabFactory.GetTableFor<TEntity>(this.Name);
         }
     }   
 }

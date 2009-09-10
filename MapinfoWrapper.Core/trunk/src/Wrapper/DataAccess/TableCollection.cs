@@ -9,9 +9,14 @@ namespace MapinfoWrapper.DataAccess
     using MapinfoWrapper.Core.InfoWrappers;
     using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using MapinfoWrapper.Mapinfo;
+    using MapinfoWrapper.DataAccess.LINQ;
+    using MapinfoWrapper.DataAccess.RowOperations;
+    using MapinfoWrapper.DataAccess.Row;
+
+    
 
     /// <summary>
-    /// A factory that is used to CreateInto or Open tables in Mapinfo.
+    /// Represents a collection of tables for a MapinfoSession.
     /// </summary>
     public class TableCollection : IEnumerable<Table>
     {
@@ -19,8 +24,9 @@ namespace MapinfoWrapper.DataAccess
         private readonly TableInfoWrapper tableinfo;
         private readonly MapbasicWrapper mapbasic;
         private readonly List<Table> innertablelist;
+        private readonly TableFactory tablefactory;
 
-        public delegate void TableEvent(Table table);
+        public delegate void TableEvent(ITable table);
 
         /// <summary>
         /// The event fired when a new table is opened in Mapinfo.
@@ -33,6 +39,7 @@ namespace MapinfoWrapper.DataAccess
             this.tableinfo = new TableInfoWrapper(MISession);
             this.innertablelist = new List<Table>();
             this.mapbasic = new MapbasicWrapper(MISession);
+            this.tablefactory = new TableFactory(miSession);
         }
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace MapinfoWrapper.DataAccess
             Check.FileExists(tablePath);
 
             string name = this.OpenTableAndGetName(tablePath);
-            Table tab = new Table(miSession, name);
+            Table tab = this.tablefactory.GetTableFor(name);
             this.RefreshList();
             if (TableOpened != null)
             {
@@ -74,7 +81,7 @@ namespace MapinfoWrapper.DataAccess
             Check.FileExists(tablePath);
 
         	string name = this.OpenTableAndGetName(tablePath);
-            Table<TEntity> tab = new Table<TEntity>(miSession,name);
+            Table<TEntity> tab = this.tablefactory.GetTableFor<TEntity>(name);
             this.RefreshList();
             if (TableOpened != null)
             {
@@ -99,7 +106,7 @@ namespace MapinfoWrapper.DataAccess
         /// Close a collection of tables in Mapinfo.
         /// </summary>
         /// <param name="tables">A <see cref="IEnumerable&lt;ITable&gt;"/> containing the tables that need to be closed.</param>
-        public void CloseTables(IEnumerable<Table> tables)
+        public void CloseTables(IEnumerable<ITable> tables)
         {
             Guard.AgainstNull(tables, "tables");
 
@@ -128,8 +135,8 @@ namespace MapinfoWrapper.DataAccess
             get
             {
                 // HACK! This really needs to check for active selection before just returning.
-                if (tableName.ToUpper() == "SELECTION") 
-                    return new Table(miSession, "Selection");
+                if (tableName.ToUpper() == "SELECTION")
+                    return this.tablefactory.GetTableFor("Selection");
 
                 Table table = this.innertablelist.Where(tab => tab.Name == tableName)
                                                  .FirstOrDefault();
@@ -206,7 +213,7 @@ namespace MapinfoWrapper.DataAccess
             for (int i = 1; i <= numtables; i++)
             {
                 string tableName = tableinfo.GetName(i);
-                Table tab = new Table(miSession,tableName);
+                Table tab = this.tablefactory.GetTableFor(tableName);
                 this.innertablelist.Add(tab);
             }
         }

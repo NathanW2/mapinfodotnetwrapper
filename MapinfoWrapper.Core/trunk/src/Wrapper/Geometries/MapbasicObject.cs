@@ -27,7 +27,8 @@
         /// <returns>A string containing the returned result from calling the ObjectInfo command in Mapinfo.</returns>
         internal object ObjectInfo(ObjectInfoEnum attribute)
         {
-            return this.misession.ObjectInfo(this.Variable, attribute);
+            throw new NotImplementedException();
+            //return this.misession.ObjectInfo(this.Variable, attribute);
         }
 
         /// <summary>

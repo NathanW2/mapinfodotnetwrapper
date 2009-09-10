@@ -15,10 +15,10 @@
     class MapinfoProvider : IQueryProvider
     {
         private readonly MapinfoSession misession;
-        private readonly EntityMaterializer entityfactory;
+        private readonly MaterializerFactory entityfactory;
         private readonly DataReaderFactory readerfactory;
 
-        public MapinfoProvider(MapinfoSession MISession, EntityMaterializer factory)
+        public MapinfoProvider(MapinfoSession MISession, MaterializerFactory factory)
         {
             this.misession = MISession;
             this.entityfactory = factory;
@@ -28,29 +28,34 @@
         public object Execute(Expression expression)
         {
             TranslateResult result = this.Translate(expression);
-            
-            this.misession.RunCommand(result.CommandText);
+
+            if (result.SQLCommand != null)
+            {
+                this.misession.RunCommand(result.SQLCommand);
+            }
 
             Type elementType = TypeSystem.GetElementType(expression.Type);
 
             IDataReader reader = this.readerfactory.GetReaderFor(result.TableName);
+            EntityMaterializer materializer = this.entityfactory.CreateMaterializerFor(result.TableName, reader);
 
             if (result.Projector != null)
             {
                 Delegate projector = result.Projector.Compile();
+
                 return Activator.CreateInstance(typeof(ProjectionReader<>).MakeGenericType(elementType),
                                                 new object[] { reader, projector });
             }
             else
             {
                 return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
-                                                new object[] { reader, this.entityfactory });
+                                                new object[] { reader, materializer });
             }
         }
 
         public string GetQueryString(System.Linq.Expressions.Expression expression)
         {
-            return this.Translate(expression).CommandText;
+            return this.Translate(expression).SQLCommand;
         }
 
         public TranslateResult Translate(Expression expression)
