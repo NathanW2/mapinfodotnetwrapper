@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper", "MapinfoWr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper.Tests", "..\tests\MapinfoWrapper.Tests.csproj", "{AD417C06-1A89-46A5-8339-2CA728B08DA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQTests", "..\LINQTests\LINQTests.csproj", "{2A3BC819-FE39-4EA0-9E7E-2CF04C0B7004}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD417C06-1A89-46A5-8339-2CA728B08DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A3BC819-FE39-4EA0-9E7E-2CF04C0B7004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A3BC819-FE39-4EA0-9E7E-2CF04C0B7004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A3BC819-FE39-4EA0-9E7E-2CF04C0B7004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A3BC819-FE39-4EA0-9E7E-2CF04C0B7004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

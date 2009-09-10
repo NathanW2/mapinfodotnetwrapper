@@ -14,6 +14,6 @@ namespace MapinfoWrapper.DataAccess
         public virtual string Name { get; set; }
         public virtual int Number { get; set; }
         public virtual ColumnTypes Type { get; set; }
-        public virtual Table Table { get; set; }
+        public virtual ITable Table { get; set; }
     }
 }

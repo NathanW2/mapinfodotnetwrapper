@@ -1,68 +1,34 @@
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
-using MapinfoWrapper.Core.Internals;
-using MapinfoWrapper.Mapinfo;
-using System.Linq;
-
 namespace MapinfoWrapper.DataAccess
 {
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.Core.Internals;
+    using MapinfoWrapper.Mapinfo;
+    using System.Linq;
+    using MapinfoWrapper.DataAccess.Row;
+    using MapinfoWrapper.DataAccess.LINQ;
+
     /// <summary>
-    /// A factory that is used to Create or Open tables in Mapinfo.
+    /// A factory used to create new <see cref="Table"/> objects.
     /// </summary>
-    internal class TableFactory : ITableFactory
+    internal class TableFactory
     {
-        private readonly ITableCommandRunner tablerunner;
-        private readonly IQueryProvider provider;
+        private readonly MapinfoSession misession;
 
-        public TableFactory(ITableCommandRunner tableRunner, 
-                            IQueryProvider provider)
+        public TableFactory(MapinfoSession MISession)
         {
-            this.tablerunner = tableRunner;
-            this.provider = provider;
+            this.misession = MISession;
         }
 
-        /// <summary>
-        /// Opens a new table in Mapinfo and returns the opened table.
-        /// </summary>
-        /// <param name="tablePath">The path to the Mapinfo tab file to open.</param>
-        /// <returns>An instance of <see cref="T:MapinfoWrapper.DataAccess.ITable"/></returns>
-        public ITable OpenTable(string tablePath)
-        {
-            string name = this.OpenTableAndGetName(tablePath);
-            return this.BuildTable(name);
-        }
-
-        /// <summary>
-        /// Opens a new table in Mapinfo, using the <typeparamref name="TEntity"/> as the entity type
-        /// for the table and returns the opened table.
-        /// </summary>
-        /// <typeparam name="TEntity">The entity type to use a the entity for the table,
-        /// this will allow strong typed access to the columns in the table and LINQ support.</typeparam>
-        /// <param name="tablePath"></param>
-        /// <returns>An instance of <see cref="T:MapinfoWrapper.TableOperations.ITable&lt;TEntity&gt;"/></returns>
-        public ITable<TEntity> OpenTable<TEntity>(string tablePath)
+        public Table<TEntity> GetTableFor<TEntity>(string tableName)
             where TEntity : BaseEntity, new()
         {
-        	string name = this.OpenTableAndGetName(tablePath);
-            return this.BuildTable<TEntity>(name);
+            return new Table<TEntity>(this.misession, tableName);
         }
 
-        public ITable BuildTable(string tableName)
+        public Table GetTableFor(string tableName)
         {
-            return this.BuildTable<BaseEntity>(tableName);
-        }
-
-        public ITable<TEntity> BuildTable<TEntity>(string tableName)
-            where TEntity : BaseEntity, new()
-        {
-            return new Table<TEntity>(this.tablerunner, this.provider, tableName);
-        }
-
-        private string OpenTableAndGetName(string tablePath)
-        {
-			tablerunner.OpenTable(tablePath);
-            string name = tablerunner.GetName(0);        	
-        	return name;
+            return new Table(this.misession, tableName);
         }
     }
 }

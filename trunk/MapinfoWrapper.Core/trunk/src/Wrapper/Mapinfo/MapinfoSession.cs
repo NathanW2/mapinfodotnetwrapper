@@ -19,28 +19,20 @@ namespace MapinfoWrapper.Mapinfo
     using MapinfoWrapper.MapOperations;
     using MapinfoWrapper.UI;
     using Microsoft.Win32;
+    using MapinfoWrapper.DataAccess.LINQ;
 
     public class MapinfoSession : IMapinfoWrapper
     {
-		#region Fields (4) 
-
         private ButtonPadCollection buttonpads;
         private readonly IMapinfoWrapper mapinfo;
         private SystemInfo systeminfo;
         private TableCollection tables;
 
-		#endregion Fields 
-
-		#region Constructors (1) 
-
         public MapinfoSession(IMapinfoWrapper mapinfoAPI)
         {
             this.mapinfo = mapinfoAPI;
+            this.LoadOptions = null;
         }
-
-		#endregion Constructors 
-
-		#region Properties (4) 
 
         /// <summary>
         /// Returns a collection of custom buttons in Mapinfo. 
@@ -107,44 +99,58 @@ namespace MapinfoWrapper.Mapinfo
             }
         }
 
-		#endregion Properties 
+        /// <summary>
+        /// Gets or sets the visiblity of the current MapinfoSession
+        /// </summary>
+        public bool Visible
+        {
+            get
+            {
+                return this.mapinfo.Visible;
+            }
+            set
+            {
+                this.mapinfo.Visible = value;
+            }
+        }
 
-		#region Delegates and Events (2) 
+        private IQueryProvider provider;
+        internal IQueryProvider MapinfoProvider
+        {
+            get
+            {
+                if (this.provider == null)
+                {
+                    this.provider = new MapinfoProvider(this, new MaterializerFactory(this));
+                }
+                return this.provider;
+            }
+        }
 
-		// Delegates (1) 
+        private EntityLoadOptions loadoptions;
+        /// <summary>
+        /// Gets or sets a <see cref="EntityLoadOptions"/> that contain the options that will be 
+        /// used when retrieving entities from tables. 
+        /// </summary>
+        public EntityLoadOptions LoadOptions
+        { 
+            get
+            {
+                return this.loadoptions;
+            }
+            set
+            {
+                this.loadoptions = value ?? new EntityLoadOptions();
+            }
+        }
 
         public delegate void MapinfoSessionHandler(MapinfoSession session);
-		// Events (1) 
 
         /// <summary>
         /// A static event that gets fired when a Mapinfo session is created using the wrapper.
         /// </summary>
         public static event MapinfoSessionHandler SessionCreated;
         public event Action SessionEnded;
-
-		#endregion Delegates and Events 
-
-		#region Methods (10) 
-
-		// Public Methods (7) 
-
-        /// <summary>
-        /// Creates a new instance of Mapinfo and returns a <see cref="MapinfoSession"/>
-        /// which contains the instance. 
-        /// <para>The returned objet can be passed into objects and
-        /// methods that need it in the MapinfoWrapper API.</para>
-        /// </summary>
-        /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
-        public static MapinfoSession CreateCOMInstance()
-        {
-            
-            DMapInfo instance = CreateMapinfoInstance();
-            COMMapinfo mapinfo = new COMMapinfo(instance);
-            MapinfoSession session = new MapinfoSession(mapinfo);
-            if (SessionCreated != null)
-                SessionCreated(session);
-            return session;
-        }
 
         /// <summary>
         /// Runs and evaluates a command string in mapinfo.
@@ -153,10 +159,20 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>The result of the eval command in Mapinfo.</returns>
         public string Evaluate(string commandString)
         {
-            Debug.Print("Eval: " + commandString);
+            //Debug.Print("Eval: " + commandString);
             string value = this.mapinfo.Evaluate(commandString);
-            Debug.Print("    Result => " + value);
+            //Debug.Print("    Result => " + value);
             return value;
+        }
+
+        /// <summary>
+        /// Runs a command against the underlying Mapinfo instance.
+        /// </summary>
+        /// <param name="commandString">The command string to run in Mapinfo.</param>
+        public void RunCommand(string commandString)
+        {
+            //Debug.Print("Do: " + commandString);
+            this.mapinfo.RunCommand(commandString);
         }
 
         /// <summary>
@@ -167,30 +183,6 @@ namespace MapinfoWrapper.Mapinfo
         {
             int windowid = Convert.ToInt32(this.Evaluate("FrontWindow()"));
             return new MapWindow(this,windowid);
-        }
-
-        // TODO Callback properties need to be set and foward on to the correct Mapinfo here.
-        /// <summary>
-        /// Returns a <see cref="IEnumerable{T}"/> containing a list of all installed versions
-        /// of Mapinfo.
-        /// </summary>
-        /// <returns>A collection of int matching the versions of Mapinfo installed.</returns>
-        public static IEnumerable<int> GetInstalledMapinfoVersions()
-        {
-            string registryKey = @"SOFTWARE\MapInfo\MapInfo\Professional";
-
-            Microsoft.Win32.RegistryKey prokey = Registry.LocalMachine.OpenSubKey(registryKey);
-
-            if (prokey == null)
-                return null;
-
-            var versions = from a in prokey.GetSubKeyNames()
-                           let r = prokey.OpenSubKey(a)
-                           let name = r.Name
-                           let slashindex = name.LastIndexOf(@"\")
-                           select Convert.ToInt32(name.Substring(slashindex + 1, name.Length - slashindex - 1));
-            
-            return versions.ToList();
         }
 
         /// <summary>
@@ -216,15 +208,55 @@ namespace MapinfoWrapper.Mapinfo
         }
 
         /// <summary>
-        /// Runs a command against the underlying Mapinfo instance.
+        /// Ends the current session of Mapinfo.
         /// </summary>
-        /// <param name="commandString">The command string to run in Mapinfo.</param>
-        public void RunCommand(string commandString)
+        public void CloseMapinfo()
         {
-            Debug.Print("Do: " + commandString);
-            this.mapinfo.RunCommand(commandString);
+            this.RunCommand("End Mapinfo");
+            if (this.SessionEnded != null)
+                this.SessionEnded();
         }
-		// Private Methods (1) 
+
+        /// <summary>
+        /// Returns a <see cref="IEnumerable{T}"/> containing a list of all installed versions
+        /// of Mapinfo.
+        /// </summary>
+        /// <returns>A collection of int matching the versions of Mapinfo installed.</returns>
+        public static IEnumerable<int> GetInstalledMapinfoVersions()
+        {
+            string registryKey = @"SOFTWARE\MapInfo\MapInfo\Professional";
+
+            Microsoft.Win32.RegistryKey prokey = Registry.LocalMachine.OpenSubKey(registryKey);
+
+            if (prokey == null)
+                return null;
+
+            var versions = from a in prokey.GetSubKeyNames()
+                           let r = prokey.OpenSubKey(a)
+                           let name = r.Name
+                           let slashindex = name.LastIndexOf(@"\")
+                           select Convert.ToInt32(name.Substring(slashindex + 1, name.Length - slashindex - 1));
+            
+            return versions.ToList();
+        }
+
+        /// <summary>
+        /// Creates a new instance of Mapinfo and returns a <see cref="MapinfoSession"/>
+        /// which contains the instance. 
+        /// <para>The returned objet can be passed into objects and
+        /// methods that need it in the MapinfoWrapper API.</para>
+        /// </summary>
+        /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
+        public static MapinfoSession CreateCOMInstance()
+        {
+
+            DMapInfo instance = CreateMapinfoInstance();
+            COMMapinfo mapinfo = new COMMapinfo(instance);
+            MapinfoSession session = new MapinfoSession(mapinfo);
+            if (SessionCreated != null)
+                SessionCreated(session);
+            return session;
+        }
 
         private static DMapInfo CreateMapinfoInstance()
         {
@@ -232,50 +264,11 @@ namespace MapinfoWrapper.Mapinfo
             DMapInfo instance = (DMapInfo)Activator.CreateInstance(mapinfotype);
             return instance;
         }
-		// Internal Methods (2) 
 
         internal static MapinfoSession GetCurrentRunningInstance()
         {
             // TODO: Implement getting running instance of Mapinfo.
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Run the ObjectInfo mapbasic command in Mapinfo, and returns a string containing the result.
-        /// </summary>
-        /// <param name="variable">The variable used by the ObjectInfo call.</param>
-        /// <param name="attribute">The attribute specifying which information to return.</param>
-        /// <returns>A string containing the retured result from calling the ObjectInfo command in Mapinfo.</returns>
-        // TODO This doesn't belong here.
-        internal object ObjectInfo(IVariable variable, ObjectInfoEnum attribute)
-        {
-            string expression = variable.GetExpression();
-            string returnedstring = this.Evaluate("ObjectInfo({0},{1})".FormatWith(expression, (int)attribute));
-            return returnedstring;
-        }
-
-		#endregion Methods 
-        
-        /// <summary>
-        /// Ends the current session of Mapinfo.
-        /// </summary>
-        public void EndMapinfo()
-        {
-            this.RunCommand("End Mapinfo");
-            if (this.SessionEnded != null)
-                this.SessionEnded();
-        }
-
-        public bool Visible
-        {
-            get 
-            {
-                return this.mapinfo.Visible;
-            }
-            set
-            {
-                this.mapinfo.Visible = value;
-            }
         }
     }
 }

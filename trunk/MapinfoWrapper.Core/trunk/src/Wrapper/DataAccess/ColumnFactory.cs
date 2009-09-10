@@ -71,7 +71,7 @@
     {
         private string[] specialcolumns = { "rowid", "obj" };
 
-        public ColumnFactory(MapinfoSession MISession, Table table)
+        public ColumnFactory(MapinfoSession MISession, ITable table)
         {
             this.MapinfoSession = MISession;
             this.Table = table;
@@ -86,7 +86,7 @@
         /// <summary>
         /// Gets the <see cref="Table"/> that is associated with this <see cref="ColumnFactory"/>.
         /// </summary>
-        public Table Table { get; private set; }
+        public ITable Table { get; private set; }
 
         /// <summary>
         /// Gets the instance of the <see cref="ColumnInfoWrapper"/> used by this factory.
