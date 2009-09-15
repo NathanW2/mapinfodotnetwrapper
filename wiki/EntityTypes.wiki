@@ -47,8 +47,7 @@ notice how the properties in the class match the column names *exactly*, this is
 
 Before we can go ahead and use this in the wrapper there are a few more things we have to go over.  In the wrapper there are two inbuilt entity types, _BaseEntity_ and _MappableEntity_.
 
-=== _BaseEntity_ ===
-Is the main entity type that you *must* inherit from if you wish to use your entity objects with the Mapinfo wrapper, BaseEntity exposes a few properties which are needed by the internals of the wrapper.
+  * *BaseEntity* Is the main entity type that you *must* inherit from if you wish to use                                                       your entity objects with the Mapinfo wrapper, BaseEntity exposes a few properties which are needed by the internals of the wrapper.
 
 The properties it exposes are the following:
   * RowID <- Represents the row id column for the entity.
