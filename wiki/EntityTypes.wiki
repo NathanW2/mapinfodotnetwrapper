@@ -76,6 +76,8 @@ public class Node : BaseEntity
 
 The entity is now ready to be used with the Table type in the wrapper, how to use entity with the Table type can be found at [TableAndEntities Using entity types with tables].
 
+-----
+
 == Performance Issues ==
 The are two major performance issues to take note of.
 
