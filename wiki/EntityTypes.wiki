@@ -45,14 +45,16 @@ notice how the properties in the class match the column names *exactly*, this is
 
 Before we can go ahead and use this in the wrapper there are a few more things we have to go over.  In the wrapper there are two inbuilt entity types, _BaseEntity_ and _MappableEntity_.
 
-BaseEntity is the main entity type that you *must* inherit from if you wish to use your entity objects with the Mapinfo wrapper, BaseEntity exposes a few properties which are needed by the internals of the wrapper.
+=== _BaseEntity_ ===
+Is the main entity type that you *must* inherit from if you wish to use your entity objects with the Mapinfo wrapper, BaseEntity exposes a few properties which are needed by the internals of the wrapper.
 
 The properties it exposes are the following:
   * RowID <- Represents the row id column for the entity.
   * Table <- Contains the table that this entity belongs to.
   * State <- Represents the current state of the entity.
 
-MappableEntity is an optional entity type that exposes the obj column for the row, MappableEntity inherits from BaseEntity so by inheriting from MappableEntity you will still get access to all the properties from BaseEntity. 
+=== _MappableEntity_ ===
+Is an optional entity type that exposes the obj column for the row, MappableEntity inherits from BaseEntity so by inheriting from MappableEntity you will still get access to all the properties from BaseEntity. 
 
 _One important thing to note_ is you do not have inherit from MappableEntity if you do not intend to use the object column for that table, eg you are just going to update the names of all the nodes in our example table.
 
@@ -92,7 +94,9 @@ public class Node : BaseEntity
 
 This way the wrapper only has to get information about the name column plus the row id in BaseEntity.
 
-*2)* The current implementation,,(75% chance this will change),, of BaseEntity includes a backingstore which is used by the index property on BaseEntity to allow string based column access to columns for that row _eg 
+*2)* The current implementation,,(75% chance this will change),, of BaseEntity includes a backingstore which is used by the index property on BaseEntity to allow string based column access to columns for that row.
+
+_eg 
 
 {{{instanceofNode["Locality"]}}}
 
