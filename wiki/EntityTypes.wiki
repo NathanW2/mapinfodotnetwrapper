@@ -1,9 +1,11 @@
 #labels Pending,Phase-Implementation,Version-2
 #sidebar SideBar
 
-=== *Note:  The following information only currently applies to the upcoming version 2.0 of the wrapper and may be incomplete or have changed since writing.* ===
+*Note:  The following information only currently applies to the upcoming version 2.0 of the wrapper and may be incomplete or have changed since writing.*
 
 == Information about entity types in the Mapinfo wrapper. ==
+
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
@@ -45,19 +47,20 @@ public class Node
 
 notice how the properties in the class match the column names *exactly*, this is because the wrapper uses the name of the property to look up the column information and data. At the moment if a property name does not match any columns in the table an exception will be thrown, there are no safe guards in place to stop this so for now just be extra careful.  
 
-Before we can go ahead and use this in the wrapper there are a few more things we have to go over.  In the wrapper there are two inbuilt entity types, _BaseEntity_ and _MappableEntity_.
+Before we can go ahead and use this in the wrapper there are a few more things we have to go over.  
+
+In the wrapper there are two inbuilt entity types, _BaseEntity_ and _MappableEntity_.
 
   * *BaseEntity* Is the main entity type that you *must* inherit from if you wish to use                                                       your entity objects with the Mapinfo wrapper, BaseEntity exposes a few properties which are needed by the internals of the wrapper.
 
-The properties it exposes are the following:
-  * RowID <- Represents the row id column for the entity.
-  * Table <- Contains the table that this entity belongs to.
-  * State <- Represents the current state of the entity.
+                The properties it exposes are the following:
+                  * RowID <- Represents the row id for this record in the Mapinfo table.
+                  * Table <- Contains a referance to the [TableType Table] object this object belongs to.
+                  * State <- Represents the current state of the entity.
 
-=== _MappableEntity_ ===
-Is an optional entity type that exposes the obj column for the row, MappableEntity inherits from BaseEntity so by inheriting from MappableEntity you will still get access to all the properties from BaseEntity. 
+  * *MappableEntity* Is an optional entity type that exposes the obj column for the row, MappableEntity inherits from BaseEntity so by inheriting from MappableEntity you will still get access to all the properties from BaseEntity. 
 
-_One important thing to note_ is you do not have inherit from MappableEntity if you do not intend to use the object column for that table, eg you are just going to update the names of all the nodes in our example table.
+                     _One important thing to note_ is you do not have inherit from MappableEntity if you do not intend to use the object column for that table, eg you are just going to update the names of all the nodes in our example table.
 
 Taking all the above information on board we can now go ahead and change our node class to look like the following:
 
