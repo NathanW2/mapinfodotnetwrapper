@@ -1,4 +1,6 @@
 #labels Pending,Phase-Implementation,Version-2
+#sidebar [Sidebar]
+
 === *Note:  The following information only currently applies to the upcoming version 2.0 of the wrapper and may be incomplete or have changed since writing.* ===
 
 == Information about entity types in the Mapinfo wrapper. ==
