@@ -3,11 +3,11 @@
 
 *Note:  The following information only currently applies to the upcoming version 2.0 of the wrapper and may be incomplete or have changed since writing.*
 
-== Information about entity types in the Mapinfo wrapper. ==
+= Information about entity types in the Mapinfo wrapper. =
 
 <wiki:toc max_depth="2" />
 
-= Introduction =
+== Introduction ==
 
 In the Mapinfo .Net OLE wrapper you can have the option to represent a row in a table as a strong typed entity, anyone who has used LINQ-To-SQL, Entity Framework, NHibernate or any other ORM will feel familiar with this idea. 
 
