@@ -1,2 +1,2 @@
  * Details
-    * [EntityTypesn Information about entity types.]
+    * [EntityTypes Information about entity types.]
