@@ -182,7 +182,7 @@ namespace MapinfoWrapper.Mapinfo
         public MapWindow GetFrontWindow()
         {
             int windowid = Convert.ToInt32(this.Evaluate("FrontWindow()"));
-            return new MapWindow(this,windowid);
+            return new MapWindow(windowid, this);
         }
 
         /// <summary>

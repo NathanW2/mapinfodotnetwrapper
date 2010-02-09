@@ -13,8 +13,6 @@ namespace MapinfoWrapper.DataAccess
     using MapinfoWrapper.DataAccess.RowOperations;
     using MapinfoWrapper.DataAccess.Row;
 
-    
-
     /// <summary>
     /// Represents a collection of tables for a MapinfoSession.
     /// </summary>
@@ -166,7 +164,6 @@ namespace MapinfoWrapper.DataAccess
         {
             return this.GetTable(tableName).ToGenericTable<T>();
         }
-
 
         #region Implementation of IEnumerable
 

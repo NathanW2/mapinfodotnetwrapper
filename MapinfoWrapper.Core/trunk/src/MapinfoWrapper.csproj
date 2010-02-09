@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Globals.cs" />
     <Compile Include="Core\Guard.cs" />
     <Compile Include="Core\Wrappers\TableInfoWrapper.cs" />
     <Compile Include="Core\Internals\IVariableFactory.cs" />
@@ -78,6 +79,11 @@
     <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
     <Compile Include="Wrapper\Geometries\Polyline.cs" />
     <Compile Include="Wrapper\MapbasicOperations\MapbasicCommand.cs" />
+    <Compile Include="Wrapper\MapOperations\MapperInfoTypes.cs" />
+    <Compile Include="Wrapper\MapOperations\Window.cs" />
+    <Compile Include="Wrapper\MapOperations\WindowCollection.cs" />
+    <Compile Include="Wrapper\MapOperations\WindowInfo.cs" />
+    <Compile Include="Wrapper\MapOperations\WindowTypes.cs" />
     <Compile Include="Wrapper\UI\ButtonPad.cs" />
     <Compile Include="Wrapper\UI\MIButton.cs" />
     <Compile Include="Wrapper\UI\PushButton.cs" />
