@@ -31,18 +31,29 @@ namespace MapinfoWrapper.Wrapper.Geometries
             throw new System.NotImplementedException();
         }
 
-        internal override string ToBasicCreateCommand()
+        public override string ToBasicCreateCommand()
         {
             throw new NotSupportedException("The polyline class does not have a basic create string");
         }
 
-        internal string ToFullCreateCommand(string variableName)
+        public override string ToExtendedCreateString(string variableName)
         {
-            string createstring = "Create Pline Into Varaible {0} {1}".FormatWith(variableName,this.Nodes.Length);
+            string createstring = "Create Pline Into Varaible {0} {1}".FormatWith(variableName, this.Nodes.Length);
             string nodesstring = String.Empty;
             foreach (var node in this.Nodes)
             {
-                nodesstring += "({0}) ".FormatWith(node.ToString());               
+                nodesstring += "({0}) ".FormatWith(node.ToString());
+            }
+            return createstring + nodesstring;
+        }
+
+        public override string ToExtendedCreateString(int windowID)
+        {
+            string createstring = "Create Pline Into Window {0} {1}".FormatWith(windowID, this.Nodes.Length);
+            string nodesstring = String.Empty;
+            foreach (var node in this.Nodes)
+            {
+                nodesstring += "({0}) ".FormatWith(node.ToString());
             }
             return createstring + nodesstring;
         }

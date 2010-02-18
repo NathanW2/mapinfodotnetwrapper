@@ -4,6 +4,6 @@ namespace MapinfoWrapper.Core.Internals
 {
     internal interface IVariableFactory
     {
-        IVariable CreateNewWithGUID(Variable.VariableType type);
+        Variable DefineVariableWithGUID(VariableType type);
     }
 }

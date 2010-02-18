@@ -81,19 +81,6 @@
         }
 
         /// <summary>
-        /// Rows a collection of rows from the table, using <typeparam name="TEntity" /> as
-        /// the row collection type.
-        /// </summary>
-        //internal IEnumerable<TEntity> Rows
-        //{
-        //    get
-        //    {
-        //        //NOTE I'm not sure if we even need this here as the table itself is enumerable
-        //        //just might add problems later.
-        //    }
-        //}
-
-        /// <summary>
         /// Returns the name of the current table.
         /// </summary>
         public string Name
@@ -272,6 +259,12 @@
             this.DeleteRowAt(entity.RowId);
 
             entity.State = BaseEntity.EntityState.Deleted;
+        }
+
+        public void Insert(Geometries.Geometry obj)
+        {
+            this.MapinfoSession.RunCommand("Dim Temp123456 as Object");
+
         }
 
         /// <summary>

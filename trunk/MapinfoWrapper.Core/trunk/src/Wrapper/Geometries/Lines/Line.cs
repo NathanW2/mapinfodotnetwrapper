@@ -53,14 +53,25 @@
             }
         }
 
-        public string ToExtendedCreateString()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override string ToBasicCreateCommand()
+        public override string ToBasicCreateCommand()
         {
             return "CreateLine({0},{1})".FormatWith(this.Start.ToString(), this.End.ToString());
+        }
+
+        public override string ToExtendedCreateString(string variableName)
+        {
+            return "Create Line Into Variable {0} ({1}) ({2}) {3}".FormatWith(variableName,
+                                                                         this.Start.ToString(),
+                                                                         this.End.ToString(),
+                                                                         this.Style);
+        }
+
+        public override string ToExtendedCreateString(int windowID)
+        {
+            return "Create Line Into Window {0} ({1}) ({2}) {3}".FormatWith(windowID,
+                                                             this.Start.ToString(),
+                                                             this.End.ToString(),
+                                                             this.Style);
         }
     }
 

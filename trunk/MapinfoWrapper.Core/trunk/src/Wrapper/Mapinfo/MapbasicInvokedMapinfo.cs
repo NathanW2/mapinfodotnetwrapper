@@ -99,5 +99,20 @@
         }
 
         #endregion
+
+        #region IMapinfoWrapper Members
+
+
+        public int LastErrorCode
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string LastErrorMessage
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }

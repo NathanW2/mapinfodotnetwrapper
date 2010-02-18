@@ -57,8 +57,9 @@
     <Compile Include="Core\Globals.cs" />
     <Compile Include="Core\Guard.cs" />
     <Compile Include="Core\Wrappers\TableInfoWrapper.cs" />
-    <Compile Include="Core\Internals\IVariableFactory.cs" />
-    <Compile Include="Core\Internals\VariableFactory.cs" />
+    <Compile Include="Wrapper\Exceptions\MapbasicVariableException.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\IVariableFactory.cs" />
+    <Compile Include="Wrapper\MapbasicOperations\VariableFactory.cs" />
     <Compile Include="Core\Extensions\LINQExtensions.cs" />
     <Compile Include="Core\Check.cs" />
     <Compile Include="Core\Wrappers\MapbasicWrapper.cs" />

@@ -38,21 +38,7 @@
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         public void RunCommand(string commandString)
         {
-            Guard.AgainstNullOrEmpty(commandString, "commandString");
-
-            try
-            {
-                this.mapinfoinstance.Do(commandString);
-
-                if (this.mapinfoinstance.LastErrorCode > 0)
-                {
-                    throw new MapinfoException(this.mapinfoinstance.LastErrorMessage, null, this.mapinfoinstance.LastErrorCode);
-                }
-            }
-            catch (COMException comex)
-            {
-                throw new MapinfoException(comex.Message, comex, this.mapinfoinstance.LastErrorCode);
-            }
+            this.mapinfoinstance.Do(commandString);
         }
 
         /// <summary>
@@ -62,6 +48,7 @@
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
         public string Evaluate(string commandString)
         {
+            return this.mapinfoinstance.Eval(commandString);
             Guard.AgainstNullOrEmpty(commandString,"commandString");
 
             try
@@ -116,5 +103,19 @@
                 this.mapinfoinstance.Visible = value;
             }
         }
+
+        #region IMapinfoWrapper Members
+
+        public int LastErrorCode
+        {
+            get { return this.mapinfoinstance.LastErrorCode; }
+        }
+
+        public string LastErrorMessage
+        {
+            get { return this.mapinfoinstance.LastErrorMessage; }
+        }
+
+        #endregion
     }
 }
