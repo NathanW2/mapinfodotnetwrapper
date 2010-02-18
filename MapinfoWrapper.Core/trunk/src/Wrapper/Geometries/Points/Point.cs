@@ -58,12 +58,28 @@
 
         public override Coordinate Centroid()
         {
-            throw new System.NotImplementedException();
+            return this.Position;
         }
 
-        internal override string ToBasicCreateCommand()
+        public override string ToBasicCreateCommand()
         {
             return "CreatePoint({0},{1})".FormatWith(X.ToString(), Y.ToString());
+        }
+
+        public override string ToExtendedCreateString(string variableName)
+        {
+            return "Create Point Into Variable {0} ({1},{2}) {3}".FormatWith(variableName,
+                                                               this.Position.X,
+                                                               this.Position.Y,
+                                                               this.Style);
+        }
+
+        public override string ToExtendedCreateString(int windowID)
+        {
+            return "Create Point Into Window {0} ({1},{2}) {3}".FormatWith(windowID,
+                                                   this.Position.X,
+                                                   this.Position.Y,
+                                                   this.Style);
         }
     }
 }

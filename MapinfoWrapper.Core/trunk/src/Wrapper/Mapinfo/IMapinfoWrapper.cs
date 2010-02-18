@@ -29,5 +29,9 @@
         MapinfoCallback Callback { get; set; }
 
         bool Visible { get; set; }
+
+        int LastErrorCode { get; }
+
+        string LastErrorMessage { get; }
     }
 }

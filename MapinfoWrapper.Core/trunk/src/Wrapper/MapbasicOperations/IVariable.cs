@@ -4,6 +4,6 @@ namespace MapinfoWrapper.MapbasicOperations
     {
         string GetExpression();
         bool IsAssigned { get; }
-        IVariable Assign(string expression);
+        void Assign(string expression);
     }
 }

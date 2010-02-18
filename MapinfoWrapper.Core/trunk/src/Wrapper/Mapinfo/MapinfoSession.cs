@@ -20,6 +20,9 @@ namespace MapinfoWrapper.Mapinfo
     using MapinfoWrapper.UI;
     using Microsoft.Win32;
     using MapinfoWrapper.DataAccess.LINQ;
+    using MapinfoWrapper.Core;
+    using MapinfoWrapper.Exceptions;
+    using System.Runtime.InteropServices;
 
     public class MapinfoSession : IMapinfoWrapper
     {
@@ -171,8 +174,21 @@ namespace MapinfoWrapper.Mapinfo
         /// <param name="commandString">The command string to run in Mapinfo.</param>
         public void RunCommand(string commandString)
         {
-            //Debug.Print("Do: " + commandString);
-            this.mapinfo.RunCommand(commandString);
+            Guard.AgainstNullOrEmpty(commandString, "commandString");
+
+            try
+            {
+                this.mapinfo.RunCommand(commandString);
+
+                if (this.mapinfo.LastErrorCode > 0)
+                {
+                    throw new MapinfoException(this.mapinfo.LastErrorMessage, null, this.mapinfo.LastErrorCode);
+                }
+            }
+            catch (COMException comex)
+            {
+                throw new MapinfoException(comex.Message, comex, this.mapinfo.LastErrorCode);
+            }
         }
 
         /// <summary>
@@ -270,5 +286,20 @@ namespace MapinfoWrapper.Mapinfo
             // TODO: Implement getting running instance of Mapinfo.
             throw new NotImplementedException();
         }
+
+        #region IMapinfoWrapper Members
+
+
+        public int LastErrorCode
+        {
+            get { return this.mapinfo.LastErrorCode; }
+        }
+
+        public string LastErrorMessage
+        {
+            get { return this.mapinfo.LastErrorMessage; }
+        }
+
+        #endregion
     }
 }

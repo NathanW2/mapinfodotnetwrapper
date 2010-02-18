@@ -63,6 +63,10 @@
             return hash;
         }
 
+        /// <summary>
+        /// Returns a formated string the form of {X},{Y}.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return "{0},{1}".FormatWith(this.X.ToString(), this.Y.ToString());

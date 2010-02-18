@@ -14,7 +14,7 @@
             this.misession = MISession;
         }
 
-        public IVariable CreateNewWithGUID(Variable.VariableType type)
+        public Variable DefineVariableWithGUID(VariableType type)
         {
             Guid id = Guid.NewGuid();
             string striped = id.ToString().Replace("-","");
@@ -27,7 +27,7 @@
             }
             string variablename = striped.Substring(index);
 
-            string typename = Enum.GetName(typeof(Variable.VariableType), type);
+            string typename = Enum.GetName(typeof(VariableType), type);
             this.misession.RunCommand("Dim {0} as {1}".FormatWith(variablename, typename));
             
             Variable variable = new Variable(variablename,type,false,this.misession);
@@ -35,5 +35,23 @@
             return variable;
         }
 
+        public Variable DefineVariable(string name, VariableType type)
+        {
+            try
+            {
+                string typename = Enum.GetName(typeof(VariableType), type);
+                this.misession.RunCommand("Dim {0} as {1}".FormatWith(name, typename));
+
+                return new Variable(name, type, false, this.misession);
+            }
+            catch (Exceptions.MapinfoException mapinfoex)
+            {
+                if (mapinfoex.MapinfoErrorCode == 579)
+                {
+                    throw new Exceptions.MapbasicVariableException("Variable {0} already defined.".FormatWith(name), mapinfoex);
+                }
+                throw;
+            }
+        }
     }
 }
