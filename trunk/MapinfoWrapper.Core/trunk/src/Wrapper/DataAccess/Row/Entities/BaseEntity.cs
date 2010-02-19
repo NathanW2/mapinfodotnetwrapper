@@ -36,7 +36,7 @@
 
         public BaseEntity()
         {
-            this.State = EntityState.New;       
+            this.State = EntityState.New;
         }
 
         /// <summary>

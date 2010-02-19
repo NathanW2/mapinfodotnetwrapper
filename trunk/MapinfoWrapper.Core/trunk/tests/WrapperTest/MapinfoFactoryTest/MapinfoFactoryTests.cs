@@ -7,7 +7,6 @@ using NUnit.Framework;
 using MapinfoWrapper.Mapinfo;
 using MapinfoWrapper;
 using MapinfoWrapper.Mapinfo.Internals;
-using MapinfoWrapper.Core.Internals;
 
 
 namespace MapinfoWrapperTest.WrapperTest.MapinfoFactoryTest

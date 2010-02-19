@@ -62,11 +62,5 @@ namespace MapinfoWrapper.DataAccess
                 );
             return changeset;
         }
-
-        public string GetInsertString(BaseEntity entity, string tableName)
-        {
-            SqlStringGenerator stringgenerator = new SqlStringGenerator();
-            return stringgenerator.GenerateInsertString(entity, tableName);
-        }
     }
 }

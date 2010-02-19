@@ -10,8 +10,6 @@
     [Serializable]
     public sealed class Point : Geometry
     {
-        private Coordinate location;
-
         public Point()
         {
             this.Position = new Coordinate();
@@ -19,28 +17,28 @@
 
         public Point(double x, double y)
         {
-            this.location = new Coordinate(x, y);
+            this.Position = new Coordinate(x, y);
         }
 
         public Point(Coordinate location)
         {
-            this.location = location;
+            this.Position = location;
         }
 
         public double X
         {
-            get { return this.location.X; }
+            get { return this.Position.X; }
         }
 
         public double Y
         {
-            get { return this.location.Y; }
+            get { return this.Position.Y; }
         }
 
         public Coordinate Position
         {
-            get { return this.location; }
-            set { this.location = value; }
+            get { return this.Nodes[0]; }
+            set { this.Nodes[0] = value; }
         }
 
         private string style;

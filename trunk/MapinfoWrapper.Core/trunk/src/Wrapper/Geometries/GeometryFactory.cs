@@ -2,9 +2,7 @@
 {
     using MapinfoWrapper.Core;
     using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.Core.Internals;
     using MapinfoWrapper.DataAccess;
-    using MapinfoWrapper.Geometries.Lines;
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Mapinfo;
     using MapinfoWrapper.Wrapper.Geometries;

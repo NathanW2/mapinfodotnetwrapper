@@ -1,6 +1,5 @@
 ﻿namespace MapinfoWrapper.Geometries
 {
-    using MapinfoWrapper.Geometries.Lines;
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Wrapper.Geometries;
 

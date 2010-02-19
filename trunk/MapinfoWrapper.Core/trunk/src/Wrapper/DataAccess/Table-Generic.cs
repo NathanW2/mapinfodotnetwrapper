@@ -15,6 +15,7 @@
     using System.Linq;
     using MapinfoWrapper.DataAccess.LINQ;
     using System.Linq.Expressions;
+    using MapinfoWrapper.MapbasicOperations;
 
     /// <summary>
     /// Represents a table that is currently opened in Mapinfo.
@@ -71,7 +72,7 @@
         /// </summary>
         /// <param name="index">The index at which to get the <typeparamref name="TEntity"/></param>
         /// <returns>An instace of <typeparamref name="TEntity"/> for the supplied index.</returns>
-        new public TEntity this[int index]
+        public TEntity this[int index]
         {
             get
             {
@@ -99,7 +100,7 @@
         {
             get
             {
-                string returnValue = (String) this.tableinfo.GetTableInfo(this.name,
+                string returnValue = (String)this.tableinfo.GetTableInfo(this.name,
                                                                           TableInfo.Tabfile);
                 if (string.IsNullOrEmpty(returnValue))
                 {
@@ -261,21 +262,36 @@
             entity.State = BaseEntity.EntityState.Deleted;
         }
 
-        public void Insert(Geometries.Geometry obj)
+        /// <summary>
+        /// Returns the Mapbasic insert commands needed to insert the supplied entity into the current table.
+        /// </summary>
+        /// <param name="entity">The entity that needs to be inserted, entity is not inserted just used to generate insert commands.</param>
+        /// <returns>A string containing the needed Mapbasic commands to insert the entity into the current table.</returns>
+        public string GetInsertString(BaseEntity entity)
         {
-            this.MapinfoSession.RunCommand("Dim Temp123456 as Object");
-
+            SqlStringGenerator stringgenerator = new SqlStringGenerator();
+            return stringgenerator.GenerateInsertString(entity, this.Name);
         }
 
         /// <summary>
-        /// Inserts the supplied entity into the current table.
+        /// Inserts a <see cref="Geometry"/> into the current table as a new record.
+        /// </summary>
+        /// <param name="obj">The object to be inserted.</param>
+        public void Insert(Geometries.Geometry obj)
+        {
+            MappableEntity mappable = new MappableEntity();
+            mappable.obj = obj;
+            this.Insert(mappable);
+        }
+
+        /// <summary>
+        /// Inserts a entity into the current table.
         /// </summary>
         /// <param name="entity">The entity that will be inserted into the table.</param>
         public void Insert(BaseEntity entity)
         {
-            string insertstring = this.TableManger.GetInsertString(entity, this.Name);
+            string insertstring = this.GetInsertString(entity);
             this.MapinfoSession.RunCommand(insertstring);
-            // TODO Return the new repopulated entity, you just have to requery the object for the time being.
         }
 
         public void Update(BaseEntity entity)

@@ -90,7 +90,6 @@
     <Compile Include="Wrapper\UI\PushButton.cs" />
     <Compile Include="Wrapper\Exceptions\TableException.cs" />
     <Compile Include="Wrapper\Geometries\IGeometryFactory.cs" />
-    <Compile Include="Wrapper\Geometries\MIPolyline.cs" />
     <Compile Include="Wrapper\Geometries\Points\Point.cs" />
     <Compile Include="Wrapper\MapbasicOperations\IVariable.cs" />
     <Compile Include="Wrapper\MapbasicOperations\Variable.cs" />
@@ -101,8 +100,6 @@
     <Compile Include="Wrapper\Geometries\GeometryFactory.cs" />
     <Compile Include="Wrapper\Geometries\IGeometry.cs" />
     <Compile Include="Wrapper\Geometries\IMapbasicObject.cs" />
-    <Compile Include="Wrapper\Geometries\Lines\IMILine.cs" />
-    <Compile Include="Wrapper\Geometries\Lines\MILine.cs" />
     <Compile Include="Wrapper\DataAccess\ITable.cs" />
     <Compile Include="Wrapper\DataAccess\LINQ\SQL\ColumnProjection.cs" />
     <Compile Include="Wrapper\DataAccess\LINQ\SQL\ColumnProjector.cs" />

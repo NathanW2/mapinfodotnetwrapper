@@ -28,12 +28,20 @@
         /// <summary>
         /// Returns the start coordinates for the line.
         /// </summary>
-        public Coordinate Start { get; set; }
+        public Coordinate Start
+        {
+            get { return base.Nodes[0]; }
+            set { base.Nodes[0] = value; }
+        }
         
         /// <summary>
         /// Returns the end coordinates for the line.
         /// </summary>
-        public Coordinate End { get; set; }
+        public Coordinate End
+        {
+            get { return base.Nodes[1]; }
+            set { base.Nodes[1] = value; }
+        }
 
         public override Coordinate Centroid()
         {

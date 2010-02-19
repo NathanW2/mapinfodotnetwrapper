@@ -49,22 +49,6 @@
         public string Evaluate(string commandString)
         {
             return this.mapinfoinstance.Eval(commandString);
-            Guard.AgainstNullOrEmpty(commandString,"commandString");
-
-            try
-            {
-                string value = this.mapinfoinstance.Eval(commandString);
-
-                if (this.mapinfoinstance.LastErrorCode > 0)
-                {
-                    throw new MapinfoException(this.mapinfoinstance.LastErrorMessage, null, this.mapinfoinstance.LastErrorCode);
-                }
-                return value;
-            }
-            catch (COMException comex)
-            {
-                throw new MapinfoException(comex.Message, comex, this.mapinfoinstance.LastErrorCode);
-            }
         }
 
         /// <summary>

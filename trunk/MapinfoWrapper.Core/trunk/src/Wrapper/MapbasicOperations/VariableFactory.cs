@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.Core.Internals
+﻿namespace MapinfoWrapper.MapbasicOperations
 {
     using System;
     using MapinfoWrapper.Core.Extensions;
@@ -30,7 +30,7 @@
             string typename = Enum.GetName(typeof(VariableType), type);
             this.misession.RunCommand("Dim {0} as {1}".FormatWith(variablename, typename));
             
-            Variable variable = new Variable(variablename,type,false,this.misession);
+            Variable variable = new Variable(variablename,type,this.misession);
 
             return variable;
         }
@@ -42,7 +42,7 @@
                 string typename = Enum.GetName(typeof(VariableType), type);
                 this.misession.RunCommand("Dim {0} as {1}".FormatWith(name, typename));
 
-                return new Variable(name, type, false, this.misession);
+                return new Variable(name, type, this.misession);
             }
             catch (Exceptions.MapinfoException mapinfoex)
             {
