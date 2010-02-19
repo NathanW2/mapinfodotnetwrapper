@@ -7,13 +7,27 @@
     using MapinfoWrapper.Core.Extensions;
     using MapinfoWrapper.Geometries;
     using MapinfoWrapper.DataAccess.RowOperations.Entities;
+    using MapinfoWrapper.Core;
 
-    internal class SqlStringGenerator
+    public class SqlStringGenerator
     {
+        /// <summary>
+        /// Generates a insert string that can be used by Mapinfo to insert the entity into the table.
+        /// </summary>
+        /// <param name="entity">The entity which will be used to generate the insert string.</param>
+        /// <param name="tableName">The table that the enity will be inserted into.</param>
+        /// <returns>A string containing the Mapbasic commands needed to insert the entity into the table.</returns>
         public string GenerateInsertString(BaseEntity entity, string tableName)
         {
+            Guard.AgainstNull(entity,"entity");
+            Guard.AgainstNullOrEmpty(tableName, "tableName");
+
             Dictionary<string, object> mapping = new Dictionary<string, object>();
             PropertyInfo[] props = entity.GetType().GetProperties();
+
+            String objdeclareString = "";
+            String undimobjectvariablecommand = "";
+            String objectcreateString = "";
 
             StringBuilder sb = new StringBuilder("INSERT INTO {0}".FormatWith(tableName));
 
@@ -30,9 +44,17 @@
 
                 if (string.Equals(Name, "obj", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (value == null) break;
-                    string createstring = ((Geometry) value).ToBasicCreateCommand();
-                    mapping.Add(Name,createstring);
+                    // If there is no object we can just move to the next property.
+                    if (value == null) break; ;
+
+                    objdeclareString = "Dim InsertObjectVariable as Object";
+                    undimobjectvariablecommand = "UnDim InsertObjectVariable";
+
+                    // Add the create statment for the object to the create string.
+                    objectcreateString = ((Geometry)value).ToExtendedCreateString("InsertObjectVariable");
+
+                    // Adds the mapping to assign obj the value of InsertObjectVariable.
+                    mapping.Add(Name, "InsertObjectVariable");
                     break;
                 }
 
@@ -65,7 +87,14 @@
             }
 
             sb.Append(GenerateValuesColumnMapping(mapping));
-            return sb.ToString();
+
+            // Create the final string in the following format:
+            // {Variable Declare InsertObjectVariable string}
+            // {Assign InsertObjectVariable string}
+            // {Insert statement string}
+            // {Undim InsertObjectVariable string}
+            string finalstring =  "{0} \n\r {1} \n\r {2} \n\r {3}".FormatWith(objdeclareString, objectcreateString, sb.ToString(), undimobjectvariablecommand);
+            return finalstring;
         }
 
         private string GenerateValuesColumnMapping(Dictionary<string, object> mappings)

@@ -162,10 +162,22 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>The result of the eval command in Mapinfo.</returns>
         public string Evaluate(string commandString)
         {
-            //Debug.Print("Eval: " + commandString);
-            string value = this.mapinfo.Evaluate(commandString);
-            //Debug.Print("    Result => " + value);
-            return value;
+            Guard.AgainstNullOrEmpty(commandString, "commandString");
+
+            try
+            {
+                string value = this.mapinfo.Evaluate(commandString);
+
+                if (this.mapinfo.LastErrorCode > 0)
+                {
+                    throw new MapinfoException(this.mapinfo.LastErrorMessage, null, this.mapinfo.LastErrorCode);
+                }
+                return value;
+            }
+            catch (COMException comex)
+            {
+                throw new MapinfoException(comex.Message, comex, this.mapinfo.LastErrorCode);
+            }
         }
 
         /// <summary>

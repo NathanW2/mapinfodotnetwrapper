@@ -1,6 +1,6 @@
 using MapinfoWrapper.MapbasicOperations;
 
-namespace MapinfoWrapper.Core.Internals
+namespace MapinfoWrapper.MapbasicOperations
 {
     internal interface IVariableFactory
     {

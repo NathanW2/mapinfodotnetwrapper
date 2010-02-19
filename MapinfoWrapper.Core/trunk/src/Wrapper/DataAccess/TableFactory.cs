@@ -1,8 +1,6 @@
 namespace MapinfoWrapper.DataAccess
 {
     using MapinfoWrapper.DataAccess.RowOperations.Entities;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
-    using MapinfoWrapper.Core.Internals;
     using MapinfoWrapper.Mapinfo;
     using System.Linq;
     using MapinfoWrapper.DataAccess.Row;

@@ -1,7 +1,21 @@
+using System.Collections.Generic;
 namespace MapinfoWrapper.Geometries
 {
     public abstract class Geometry
     {
+        private List<Coordinate> nodes = new List<Coordinate>();
+        public List<Coordinate> Nodes
+        {
+            get
+            {
+                return this.nodes;
+            }
+            set
+            {
+                this.nodes = value;
+            }
+        }
+
         public abstract Coordinate Centroid();
         public abstract string ToBasicCreateCommand();
         public abstract string ToExtendedCreateString(string variableName);

@@ -68,8 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreTests\InternalsTests\VariableFactoryTests.cs" />
-    <Compile Include="MapbasicHooksTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WrapperTest\DataAccess\SqlStringGeneratorTests.cs" />
     <Compile Include="WrapperTest\DataAccess\TableEqualityTests.cs" />
     <Compile Include="WrapperTest\Embedding\ButtonPadTests.cs" />
     <Compile Include="WrapperTest\Embedding\ControlExtensionTests.cs" />

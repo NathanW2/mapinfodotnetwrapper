@@ -7,43 +7,84 @@
 
     /// <summary>
     /// Represents a Mapbasic variable.
-    /// To create a new variable use VariableFactory.
+    /// To declare a new variable use VariableFactory.
     /// </summary>
-    public class Variable
+    public class Variable : IDisposable
     {
         private readonly MapinfoSession misession;
         private readonly VariableType type;
 
-        internal Variable(string name, VariableType declareAs,bool isAssigned,MapinfoSession MISession)
+        internal Variable(string name, VariableType declareAs,MapinfoSession MISession)
         {
             this.Name = name;
             this.type = declareAs;
-            this.IsAssigned = isAssigned;
             this.misession = MISession;
         }
 
+        /// <summary>
+        /// Gets the name of the Mapbasic variable.
+        /// </summary>
         public string Name { get; private set; }
 
-        public virtual string GetExpression()
+        /// <summary>
+        /// Checks to see if a variable has been declared in the current Mapbasic session.
+        /// </summary>
+        public bool IsDeclared
         {
-            return this.Name;
+            get
+            {
+                try
+                {
+                    // Just try and use the variable this will tell us if it is defined or not.
+                    this.misession.Evaluate(this.Name);
+                    // If we get here and we havn't thrown an error then we can say the variable is declared.
+                    return true;
+                }
+                catch (MapinfoException mapinfoex)
+                {
+                    if (mapinfoex.MapinfoErrorCode == 414)
+                    {
+                        return false;
+                    }
+                    throw;
+                }
+            }
         }
 
-        public bool IsAssigned {get; private set;}
-
+        /// <summary>
+        /// Assigns the variable with the result from the mapbasic expression.  If the variable has become undelcared a <see cref="MapbasicVariableException"/> will be thrown.
+        /// </summary>
+        /// <param name="expression">A mapbasic expression from which the result will be assigned to variable.</param>
+        /// <exception cref="MapbasicVariableException"/>
+        /// <exception cref="MapinfoException" />
         public void Assign(string expression)
         {
-            try
+            if (!this.IsDeclared)
             {
-                this.misession.RunCommand("{0} = {1}".FormatWith(this.GetExpression(), expression));
-                this.IsAssigned = true;
+                throw new MapbasicVariableException(@"Variable {0} is not declared, or is in a invaild state and can not be assigned. 
+                                                      Please dispose and recreate using VariableFactory".FormatWith(this.Name));
             }
-            catch (MapinfoException mapinofex)
-            {
-                
-                throw;
-            }
+        
+            this.misession.RunCommand("{0} = {1}".FormatWith(this.Name, expression));
         }
+
+        #region IDisposable Members
+
+        /// <summary>
+        /// Undims the Mapbasic variable in the Mapbasic session.
+        /// </summary>
+        public void Dispose()
+        {
+            // If it is not delcared then we can just return.
+            if (!this.IsDeclared)
+            {
+                return;
+            }
+
+            this.misession.RunCommand("UnDim {0}".FormatWith(this.Name));
+        }
+
+        #endregion
     }
 
     public enum VariableType
