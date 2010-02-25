@@ -68,7 +68,6 @@ namespace MapinfoWrapper.MapOperations
         public void CloseWindow()
         {
             this.mapinfo.RunCommand("Close window {0}".FormatWith(this.ID));
-            // TODO Dispose of Mapwindow here.
         }
     }
 }

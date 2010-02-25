@@ -102,6 +102,20 @@ namespace MapinfoWrapper.Mapinfo
             }
         }
 
+        private WindowCollection windows;
+        public WindowCollection Windows
+        {
+            get
+            {
+                if (this.windows == null)
+                {
+                    this.windows = new WindowCollection(this);
+                    this.windows.RefreshList();
+                }
+                return this.windows;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the visiblity of the current MapinfoSession
         /// </summary>
@@ -204,16 +218,6 @@ namespace MapinfoWrapper.Mapinfo
         }
 
         /// <summary>
-        /// Gets the front window from Mapinfo.
-        /// </summary>
-        /// <returns>An instance of <see cref="MapWindow"/> containing the front window.</returns>
-        public MapWindow GetFrontWindow()
-        {
-            int windowid = Convert.ToInt32(this.Evaluate("FrontWindow()"));
-            return new MapWindow(windowid, this);
-        }
-
-        /// <summary>
         /// Returns the underlying Mapinfo instance for this session.
         /// </summary>
         /// <returns></returns>
@@ -241,6 +245,9 @@ namespace MapinfoWrapper.Mapinfo
         public void CloseMapinfo()
         {
             this.RunCommand("End Mapinfo");
+            Marshal.ReleaseComObject(this.mapinfo.GetUnderlyingMapinfoInstance());
+            GC.Collect();
+
             if (this.SessionEnded != null)
                 this.SessionEnded();
         }
