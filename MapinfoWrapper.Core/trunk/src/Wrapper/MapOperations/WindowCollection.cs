@@ -81,17 +81,29 @@ namespace MapinfoWrapper.MapOperations
             int docwindows = Convert.ToInt32(this.mapinfo.Evaluate("NumWindows()"));
             int otherwindows = Convert.ToInt32(this.mapinfo.Evaluate("NumAllWindows()"));
 
-            for (int windownumber = 1; windownumber < docwindows; windownumber++)
+            for (int windownumber = 0; windownumber < docwindows; windownumber++)
             {
                 int ID = Convert.ToInt32(this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
-                this.windows.Add(new Window(ID, this.mapinfo));
+                Window window = new Window(ID, this.mapinfo);
+                switch (window.Type)
+                {
+                    case WindowTypes.mapper:
+                        this.windows.Add(new MapWindow(ID, this.mapinfo));
+                        break;
+                    case WindowTypes.Layout:
+                        this.windows.Add(new LayoutWindow(ID, this.mapinfo));
+                        break;
+                    default:
+                        this.windows.Add(window);
+                        break;
+                }
             }
 
-            for (int windownumber = -1; windownumber < otherwindows - 1; windownumber--)
-            {
-                int ID = Convert.ToInt32(this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
-                this.windows.Add(new Window(ID, this.mapinfo));
-            }
+            //for (int windownumber = -1; windownumber < otherwindows - 1; windownumber--)
+            //{
+            //    int ID = Convert.ToInt32(this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
+            //    this.windows.Add(new Window(ID, this.mapinfo));
+            //}
         }
 
         public Window this[int index]
