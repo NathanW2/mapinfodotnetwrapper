@@ -14,23 +14,28 @@
     internal class MapbasicInvokedMapinfo : IMapinfoWrapper
     {
         private object mapinfoinstance;
+        private Type m_RuntimeMapInfoType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapbasicInvokedMapinfo"/> class.
         /// </summary>
         /// <param name="mapinfoInstance">The current running instance</param>
-        internal MapbasicInvokedMapinfo(object mapinfoInstance)
+        internal MapbasicInvokedMapinfo(object mapinfoInstance, Type mapinfotype)
         {
-           this.mapinfoinstance = mapinfoInstance;
+            this.m_RuntimeMapInfoType = mapinfotype;
+            this.mapinfoinstance = mapinfoInstance;
         }
 
-        public static MapbasicInvokedMapinfo GetMapinfoFromInstance(Object mapinfoInstance)
+        public static MapbasicInvokedMapinfo GetMapinfoFromInstance(Assembly miadmassembly)
         {
-            //Type mapinfotype = mapinfoInstance.GetType();
-            //FieldInfo imapinfofield = mapinfotype.GetField("_mapinfo", BindingFlags.Instance | BindingFlags.NonPublic);
-            //Object imapinfoinstance = imapinfofield.GetValue(mapinfoInstance);
+            Type intertype = miadmassembly.GetType("MapInfo.MiPro.Interop.InteropServices");
+            //object interobject = Activator.CreateInstance(intertype);
 
-            return new MapbasicInvokedMapinfo(mapinfoInstance);
+            PropertyInfo propery = intertype.GetProperty("MapInfoApplication", BindingFlags.Public | BindingFlags.Static);
+
+            object obj = null;
+            object value = propery.GetValue(obj, null);
+            return new MapbasicInvokedMapinfo(value, propery.PropertyType);
         }
 
         #region IMapinfoWrapper Members
@@ -45,7 +50,7 @@
                 throw new ArgumentNullException("commandString", "Command string can not be null");
 
             Object[] commandstrings = { commandString };
-            MethodInfo domethod = this.mapinfoinstance.GetType().GetMethod("Do");
+            MethodInfo domethod = this.m_RuntimeMapInfoType.GetMethod("Do");
             domethod.Invoke(this.mapinfoinstance, commandstrings);
         }
 
@@ -60,7 +65,7 @@
                 throw new ArgumentNullException("commandString", "Command string can not be null");
 
             Object[] commandstrings = { commandString };
-            MethodInfo domethod = this.mapinfoinstance.GetType().GetMethod("Eval");
+            MethodInfo domethod = this.m_RuntimeMapInfoType.GetMethod("Eval");
             return (String)domethod.Invoke(this.mapinfoinstance, commandstrings);
         }
 
@@ -88,11 +93,11 @@
 
         public bool Visible
         {
-            get 
+            get
             {
                 return ((IMapInfo)this.mapinfoinstance).Visible;
             }
-            set 
+            set
             {
                 ((IMapInfo)this.mapinfoinstance).Visible = true;
             }
@@ -105,12 +110,12 @@
 
         public int LastErrorCode
         {
-            get { throw new NotImplementedException(); }
+            get { return 0; }
         }
 
         public string LastErrorMessage
         {
-            get { throw new NotImplementedException(); }
+            get { return ""; }
         }
 
         #endregion

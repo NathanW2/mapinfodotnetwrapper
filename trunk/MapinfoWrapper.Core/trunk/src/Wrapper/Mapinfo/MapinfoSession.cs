@@ -282,7 +282,7 @@ namespace MapinfoWrapper.Mapinfo
         /// methods that need it in the MapinfoWrapper API.</para>
         /// </summary>
         /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
-        public static MapinfoSession CreateCOMInstance()
+        public static MapinfoSession CreateMapInfoInstance()
         {
 
             DMapInfo instance = CreateMapinfoInstance();
@@ -300,10 +300,19 @@ namespace MapinfoWrapper.Mapinfo
             return instance;
         }
 
-        internal static MapinfoSession GetCurrentRunningInstance()
+        public static MapinfoSession GetLoadedInstance()
         {
-            // TODO: Implement getting running instance of Mapinfo.
-            throw new NotImplementedException();
+            var asms = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var item in asms)
+            {
+                if (item.GetName().Name == "miadm")
+                {
+                    MapbasicInvokedMapinfo mapinfo = MapbasicInvokedMapinfo.GetMapinfoFromInstance(item);
+                    return new MapinfoSession(mapinfo);
+                }
+            }
+            throw new DllNotFoundException("miadm was not loaded in the current App Domain");
         }
 
         #region IMapinfoWrapper Members

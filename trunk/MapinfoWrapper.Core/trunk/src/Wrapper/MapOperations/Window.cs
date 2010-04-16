@@ -63,11 +63,31 @@ namespace MapinfoWrapper.MapOperations
         }
 
         /// <summary>
+        /// Gets or sets the name/title of the window.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(this.ID, (int)WindowInfo.name));
+            }
+            set
+            {
+                this.mapinfo.RunCommand("Set Window {0} Title {1}".FormatWith(this.ID, value.InQuotes()));
+            }
+        }
+
+        /// <summary>
         /// Closes the current Map window in Mapinfo.
         /// </summary>
         public void CloseWindow()
         {
             this.mapinfo.RunCommand("Close window {0}".FormatWith(this.ID));
+        }
+
+        public void BringToFront()
+        {
+            this.mapinfo.RunCommand("Set Window {0} Front".FormatWith(this.ID));
         }
     }
 }

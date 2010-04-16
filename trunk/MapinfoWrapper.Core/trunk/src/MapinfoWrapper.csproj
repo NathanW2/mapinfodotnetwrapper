@@ -80,6 +80,7 @@
     <Compile Include="Wrapper\Geometries\Lines\Line.cs" />
     <Compile Include="Wrapper\Geometries\Polyline.cs" />
     <Compile Include="Wrapper\MapbasicOperations\MapbasicCommand.cs" />
+    <Compile Include="Wrapper\MapOperations\LayoutWindow.cs" />
     <Compile Include="Wrapper\MapOperations\MapperInfoTypes.cs" />
     <Compile Include="Wrapper\MapOperations\Window.cs" />
     <Compile Include="Wrapper\MapOperations\WindowCollection.cs" />
