@@ -80,14 +80,39 @@ namespace MapinfoWrapper.MapOperations
         /// <summary>
         /// Closes the current Map window in Mapinfo.
         /// </summary>
-        public void CloseWindow()
+        public void Close()
         {
             this.mapinfo.RunCommand("Close window {0}".FormatWith(this.ID));
         }
 
+        /// <summary>
+        /// Brings the window to the front in MapInfo.
+        /// </summary>
         public void BringToFront()
         {
             this.mapinfo.RunCommand("Set Window {0} Front".FormatWith(this.ID));
+        }
+
+        /// <summary>
+        /// Clones the current window and returns the newly created window.
+        /// </summary>
+        /// <returns>A <see cref="Window"/> of the newly created clone.</returns>
+        public Window CloneWindow()
+        {
+            this.mapinfo.RunCommand(this.CloneWindowCommand);
+            string sid = this.mapinfo.Evaluate("WindowID(0)");
+            return new Window(Convert.ToInt32(sid), this.mapinfo);
+        }
+        
+        /// <summary>
+        /// Gets the clone window command used to clone the window.
+        /// </summary>
+        public string CloneWindowCommand
+        {
+            get
+            {
+                return this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(this.ID,(int)WindowInfo.Clonewindow));
+            }
         }
     }
 }
