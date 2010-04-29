@@ -36,7 +36,7 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                int windowid = Convert.ToInt32(this.mapinfo.Evaluate("FrontWindow()"));
+                int windowid = Convert.ToInt32(this.mapinfo.Eval("FrontWindow()"));
                 return new Window(windowid, this.mapinfo);
             }
         }
@@ -59,7 +59,7 @@ namespace MapinfoWrapper.MapOperations
                 commandbuilder.AppendFormat("{0},".FormatWith(table.Name));
             }
             string command = commandbuilder.ToString().TrimEnd(',');
-            this.mapinfo.RunCommand(command);
+            this.mapinfo.Do(command);
             return new MapWindow(this.FrontWindow.ID, this.mapinfo);
         }
 
@@ -78,12 +78,12 @@ namespace MapinfoWrapper.MapOperations
         public void RefreshList()
         {
             this.windows = new List<Window>();
-            int docwindows = Convert.ToInt32(this.mapinfo.Evaluate("NumWindows()"));
-            int otherwindows = Convert.ToInt32(this.mapinfo.Evaluate("NumAllWindows()"));
+            int docwindows = Convert.ToInt32(this.mapinfo.Eval("NumWindows()"));
+            int otherwindows = Convert.ToInt32(this.mapinfo.Eval("NumAllWindows()"));
 
             for (int windownumber = 1; windownumber < docwindows + 1; windownumber++)
             {
-                int ID = Convert.ToInt32(this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
+                int ID = Convert.ToInt32(this.mapinfo.Eval("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
                 Window window = new Window(ID, this.mapinfo);
                 switch (window.Type)
                 {

@@ -18,7 +18,7 @@ namespace MapinfoWrapper.UI
         public void Add(ButtonPad buttonPad)
         {
             string commandstring = buttonPad.ToCreateCommand();
-            this.misession.RunCommand(commandstring);
+            this.misession.Do(commandstring);
 
             buttonPad.MISession = this.misession;
 

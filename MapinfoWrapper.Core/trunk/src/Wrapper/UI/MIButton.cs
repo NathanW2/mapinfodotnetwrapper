@@ -50,7 +50,7 @@ namespace MapinfoWrapper.UI
                 throw new ArgumentNullException("misession","The button pad doesn't belong to a buttonpad that is created in Mapinfo.");
 
             // This only handles running custom menus ATM
-            this.misession.RunCommand("Run Menu Command " + this.IDFormated);
+            this.misession.Do("Run Menu Command " + this.IDFormated);
 
             if (ButtonClicked != null)
                     ButtonClicked(this);

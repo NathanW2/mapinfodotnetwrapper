@@ -50,7 +50,7 @@
             Guard.AgainstNull(MISession,"MISession");
             Guard.AgainstNullOrEmpty(tableName,"tableName");
            
-            this.MapinfoSession = MISession;
+            this.mapinfo = MISession;
             this.name = tableName;
             this.tableinfo = new TableInfoWrapper(MISession);
             this.TableManger = new TableChangeManger();
@@ -59,7 +59,7 @@
         /// <summary>
         /// Gets the <see cref="MapinfoSession"/> that this table is associated with.
         /// </summary>
-        public MapinfoSession MapinfoSession { get; private set; }
+        public MapinfoSession mapinfo { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="TableManger"/> for the current table.  Allows for access to current
@@ -173,7 +173,7 @@
                 if (this.columns == null)
                 {
                     List<Column> cols = new List<Column>();
-                    ColumnFactory colfactory = new ColumnFactory(this.MapinfoSession,this);
+                    ColumnFactory colfactory = new ColumnFactory(this.mapinfo,this);
                     // Create the row id and object column.
                     cols.Add(colfactory.CreateColumnForRowId());
                     cols.Add(colfactory.CreateColumnForObj());
@@ -210,7 +210,7 @@
             if (interactive)
                 command += " Interactive";
 
-            this.MapinfoSession.RunCommand(command);
+            this.mapinfo.Do(command);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@
         /// </summary>
         public void DiscardChanges()
         {
-            this.MapinfoSession.RunCommand("Rollback Table {0}".FormatWith(this.Name));
+            this.mapinfo.Do("Rollback Table {0}".FormatWith(this.Name));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@
         /// </summary>
         public void Close()
         {
-            this.MapinfoSession.RunCommand("Close Table {0}".FormatWith(this.Name));
+            this.mapinfo.Do("Close Table {0}".FormatWith(this.Name));
         }
 
         /// <summary>
@@ -246,7 +246,7 @@
         {
             Guard.AgainstIsZero(index, "index");
 
-            this.MapinfoSession.RunCommand("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
+            this.mapinfo.Do("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
         }
 
         /// <summary>
@@ -269,7 +269,7 @@
         /// <returns>A string containing the needed Mapbasic commands to insert the entity into the current table.</returns>
         public string GetInsertString(BaseEntity entity)
         {
-            SqlStringGenerator stringgenerator = new SqlStringGenerator();
+            SqlStringGenerator stringgenerator = new SqlStringGenerator(this.mapinfo);
             return stringgenerator.GenerateInsertString(entity, this.Name);
         }
 
@@ -291,12 +291,14 @@
         public void Insert(BaseEntity entity)
         {
             string insertstring = this.GetInsertString(entity);
-            this.MapinfoSession.RunCommand(insertstring);
+            this.mapinfo.Do(insertstring);
         }
 
         public void Update(BaseEntity entity)
         {
-            throw new NotImplementedException();
+            SqlStringGenerator stringgenerator = new SqlStringGenerator(this.mapinfo);
+            Query updatequery = stringgenerator.GenerateUpdateQuery(entity, entity.Table.Name);
+            updatequery.Excute();
         }
 
         /// <summary>
@@ -386,7 +388,7 @@
         {
             int hash = 17;
             hash = (hash * 23) + this.Name.GetHashCode();
-            hash = (hash * 23) + this.MapinfoSession.GetHashCode();
+            hash = (hash * 23) + this.mapinfo.GetHashCode();
             return hash;
         }
 
@@ -403,7 +405,7 @@
             if (other == null) 
                 return false;
 
-            return (this.MapinfoSession == other.MapinfoSession && this.name == other.Name);
+            return (this.mapinfo == other.mapinfo && this.name == other.Name);
         }
 
         public override bool Equals(object obj)
@@ -447,7 +449,7 @@
         {
             get 
             {
-                return this.MapinfoSession.MapinfoProvider;
+                return this.mapinfo.MapinfoProvider;
             }
         }
 
@@ -475,7 +477,7 @@
         public Table<TEntity> ToGenericTable<TEntity>()
             where TEntity : BaseEntity, new()
         {
-            TableFactory tabFactory = new TableFactory(this.MapinfoSession);
+            TableFactory tabFactory = new TableFactory(this.mapinfo);
 
             // We can return a new generic version of the table here,
             // because we have overriden Equals and GetHashCode, making the

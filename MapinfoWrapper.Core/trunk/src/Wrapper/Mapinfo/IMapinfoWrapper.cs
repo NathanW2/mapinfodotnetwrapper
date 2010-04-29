@@ -10,14 +10,14 @@
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        void RunCommand(string commandString);
+        void Do(string commandString);
         
         /// <summary>
         /// Runs a specified Mapinfo command string in Mapinfo and retruns the result as a string.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        string Evaluate(string commandString);
+        string Eval(string commandString);
 
         /// <summary>
         /// Returns the underlying type of Mapinfo, this can be used to access to methods exposed by 

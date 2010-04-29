@@ -19,7 +19,7 @@ namespace MapinfoWrapper.Core.InfoWrappers
         {
             int enumvalue = (int)attribute;
             string command = "TableInfo({0},{1})".FormatWith(tableName, enumvalue);
-            string value = miSession.Evaluate(command);
+            string value = miSession.Eval(command);
             return value;
         }
 

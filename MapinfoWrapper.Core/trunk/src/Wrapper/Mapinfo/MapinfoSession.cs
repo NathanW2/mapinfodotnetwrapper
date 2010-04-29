@@ -174,13 +174,13 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         /// <param name="commandString">The command string to run in Mapinfo.</param>
         /// <returns>The result of the eval command in Mapinfo.</returns>
-        public string Evaluate(string commandString)
+        public string Eval(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString, "commandString");
 
             try
             {
-                string value = this.mapinfo.Evaluate(commandString);
+                string value = this.mapinfo.Eval(commandString);
 
                 if (this.mapinfo.LastErrorCode > 0)
                 {
@@ -198,13 +198,13 @@ namespace MapinfoWrapper.Mapinfo
         /// Runs a command against the underlying Mapinfo instance.
         /// </summary>
         /// <param name="commandString">The command string to run in Mapinfo.</param>
-        public void RunCommand(string commandString)
+        public void Do(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString, "commandString");
 
             try
             {
-                this.mapinfo.RunCommand(commandString);
+                this.mapinfo.Do(commandString);
 
                 if (this.mapinfo.LastErrorCode > 0)
                 {
@@ -234,7 +234,7 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>A instance of a <see cref="Workspace"/> which can be used to get infomation about the opened workspace.</returns>
         public Workspace OpenWorkspace(string workspacePath)
         {
-            this.RunCommand("Run Application {0}".FormatWith(workspacePath.InQuotes()));
+            this.Do("Run Application {0}".FormatWith(workspacePath.InQuotes()));
             this.Tables.RefreshList();
             return new Workspace();
         }
@@ -244,7 +244,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         public void CloseMapinfo()
         {
-            this.RunCommand("End Mapinfo");
+            this.Do("End Mapinfo");
             Marshal.ReleaseComObject(this.mapinfo.GetUnderlyingMapinfoInstance());
             GC.Collect();
 

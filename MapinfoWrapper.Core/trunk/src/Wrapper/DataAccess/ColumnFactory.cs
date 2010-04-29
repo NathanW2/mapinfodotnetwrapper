@@ -47,7 +47,7 @@
         public object ColumnInfo(string columnName, ColumnAttribute attrbute)
         {
             int attributenumber = (int)attrbute;
-            return this.MapinfoSession.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.TableName.InQuotes(),
+            return this.MapinfoSession.Eval("ColumnInfo({0},{1},{2})".FormatWith(this.TableName.InQuotes(),
                                                                                      columnName.InQuotes(),
                                                                                      attributenumber));
         }

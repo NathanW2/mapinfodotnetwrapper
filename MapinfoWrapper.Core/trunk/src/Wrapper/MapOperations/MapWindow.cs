@@ -20,7 +20,7 @@
         {
             get
             {
-                string strvalue = base.mapinfo.Evaluate(String.Format("MapperInfo({0},3)", this.ID));
+                string strvalue = base.mapinfo.Eval(String.Format("MapperInfo({0},3)", this.ID));
                 double centerx;
                 if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out centerx))
                     return centerx;
@@ -40,7 +40,7 @@
         {
             get
             {
-                string strvalue = this.mapinfo.Evaluate(String.Format("MapperInfo({0},4)", this.ID));
+                string strvalue = this.mapinfo.Eval(String.Format("MapperInfo({0},4)", this.ID));
                 double centery;
                 if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out centery))
                     return centery;
@@ -60,7 +60,7 @@
         {
             get
             {
-                string strvalue = this.mapinfo.Evaluate(String.Format("MapperInfo({0},1)", this.ID));
+                string strvalue = this.mapinfo.Eval(String.Format("MapperInfo({0},1)", this.ID));
                 double zoom;
                 if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out zoom))
                     return zoom;
@@ -80,7 +80,7 @@
         {
             get
             {
-                return this.mapinfo.Evaluate(String.Format("MapperInfo({0},12)", this.ID));
+                return this.mapinfo.Eval(String.Format("MapperInfo({0},12)", this.ID));
             }
         }
 
@@ -91,7 +91,7 @@
         {
             get
             {
-                return this.mapinfo.Evaluate(String.Format("MapperInfo({0},{1})", this.ID, (int)MapperInfoTypes.Coordsys_clause_with_bounds));
+                return this.mapinfo.Eval(String.Format("MapperInfo({0},{1})", this.ID, (int)MapperInfoTypes.Coordsys_clause_with_bounds));
             }
         }
 
@@ -103,7 +103,7 @@
         public void UpdateZoom(double zoom, string unit)
         {
             string command = string.Format("Set Map Window {0} Zoom {1} Units \"{2}\"", this.ID, zoom, unit);
-            this.mapinfo.RunCommand(command);
+            this.mapinfo.Do(command);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@
         /// <param name="y"></param>
         public void UpdateCenters(double x, double y)
         {
-            this.mapinfo.RunCommand("Set Map Window " + this.ID +
+            this.mapinfo.Do("Set Map Window " + this.ID +
                                     " Center ( " + String.Format(Globals._usNumberFormat, "{0}", x) + " , " + String.Format(Globals._usNumberFormat, "{0}", y) + ")");
         }
     }

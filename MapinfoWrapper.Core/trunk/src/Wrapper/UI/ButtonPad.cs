@@ -55,7 +55,7 @@
                     {
                         titlestring = "Title " + value.InQuotes();
                     }
-                    this.misession.RunCommand("Alter ButtonPad {0} {1}".FormatWith(this.Title.InQuotes(), titlestring));
+                    this.misession.Do("Alter ButtonPad {0} {1}".FormatWith(this.Title.InQuotes(), titlestring));
                 }               
                 this.title = value;
             }
@@ -100,7 +100,7 @@
                 if (this.misession != null)
                 {
                     string command = this.visible ? "Hide" : "Show";
-                    this.misession.RunCommand("Alter ButtonPad {0} {1}".FormatWith(this.Title.InQuotes(), command));
+                    this.misession.Do("Alter ButtonPad {0} {1}".FormatWith(this.Title.InQuotes(), command));
                 }
                 this.visible = value;
             }
@@ -144,7 +144,7 @@
             if (misession != null)
             {
                 string command = item.ToButtonString();
-                this.misession.RunCommand("Alter ButtonPad {0} Add {1}".FormatWith(this.Title.InQuotes(),
+                this.misession.Do("Alter ButtonPad {0} Add {1}".FormatWith(this.Title.InQuotes(),
                                                                                    command));
                 item.MISession = this.misession;
             }
@@ -169,7 +169,7 @@
             
             if (misession != null)
             {
-                this.misession.RunCommand("Alter ButtonPad {0} Remove {1}".FormatWith(this.Title.InQuotes(), idlist));
+                this.misession.Do("Alter ButtonPad {0} Remove {1}".FormatWith(this.Title.InQuotes(), idlist));
             }
 
             this.buttons.Clear();
@@ -219,7 +219,7 @@
             if (this.misession != null)
             {
                 string command = "ID " + item.ID;
-                this.misession.RunCommand("Alter ButtonPad {0} Remove {1}".FormatWith(this.Title.InQuotes(),command));
+                this.misession.Do("Alter ButtonPad {0} Remove {1}".FormatWith(this.Title.InQuotes(),command));
             }
             return this.buttons.Remove(item);
         }

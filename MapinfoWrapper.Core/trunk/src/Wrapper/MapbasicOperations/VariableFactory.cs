@@ -28,7 +28,7 @@
             string variablename = striped.Substring(index);
 
             string typename = Enum.GetName(typeof(VariableType), type);
-            this.misession.RunCommand("Dim {0} as {1}".FormatWith(variablename, typename));
+            this.misession.Do("Dim {0} as {1}".FormatWith(variablename, typename));
             
             Variable variable = new Variable(variablename,type,this.misession);
 
@@ -40,7 +40,7 @@
             try
             {
                 string typename = Enum.GetName(typeof(VariableType), type);
-                this.misession.RunCommand("Dim {0} as {1}".FormatWith(name, typename));
+                this.misession.Do("Dim {0} as {1}".FormatWith(name, typename));
 
                 return new Variable(name, type, this.misession);
             }

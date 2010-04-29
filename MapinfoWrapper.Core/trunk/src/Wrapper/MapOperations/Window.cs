@@ -38,7 +38,7 @@ namespace MapinfoWrapper.MapOperations
             {
                 if (this.handle == IntPtr.Zero)
                 {
-                    string strwindowHWND = this.mapinfo.Evaluate(string.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Wnd));
+                    string strwindowHWND = this.mapinfo.Eval(string.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Wnd));
                     this.handle = new IntPtr(Convert.ToInt32(strwindowHWND));
                 }
                 return this.handle;
@@ -55,7 +55,7 @@ namespace MapinfoWrapper.MapOperations
             {
                 if (this.type == 0)
                 {
-                    string frontwindowtype = this.mapinfo.Evaluate(String.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Type));
+                    string frontwindowtype = this.mapinfo.Eval(String.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Type));
                     this.type = (WindowTypes)(Convert.ToInt32(frontwindowtype));
                 }
                 return this.type;
@@ -69,11 +69,11 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                return this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(this.ID, (int)WindowInfo.name));
+                return this.mapinfo.Eval("WindowInfo({0},{1})".FormatWith(this.ID, (int)WindowInfo.name));
             }
             set
             {
-                this.mapinfo.RunCommand("Set Window {0} Title {1}".FormatWith(this.ID, value.InQuotes()));
+                this.mapinfo.Do("Set Window {0} Title {1}".FormatWith(this.ID, value.InQuotes()));
             }
         }
 
@@ -82,7 +82,7 @@ namespace MapinfoWrapper.MapOperations
         /// </summary>
         public void Close()
         {
-            this.mapinfo.RunCommand("Close window {0}".FormatWith(this.ID));
+            this.mapinfo.Do("Close window {0}".FormatWith(this.ID));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace MapinfoWrapper.MapOperations
         /// </summary>
         public void BringToFront()
         {
-            this.mapinfo.RunCommand("Set Window {0} Front".FormatWith(this.ID));
+            this.mapinfo.Do("Set Window {0} Front".FormatWith(this.ID));
         }
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace MapinfoWrapper.MapOperations
         /// <returns>A <see cref="Window"/> of the newly created clone.</returns>
         public Window CloneWindow()
         {
-            this.mapinfo.RunCommand(this.CloneWindowCommand);
-            string sid = this.mapinfo.Evaluate("WindowID(0)");
+            this.mapinfo.Do(this.CloneWindowCommand);
+            string sid = this.mapinfo.Eval("WindowID(0)");
             return new Window(Convert.ToInt32(sid), this.mapinfo);
         }
         
@@ -111,7 +111,7 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                return this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(this.ID,(int)WindowInfo.Clonewindow));
+                return this.mapinfo.Eval("WindowInfo({0},{1})".FormatWith(this.ID,(int)WindowInfo.Clonewindow));
             }
         }
     }

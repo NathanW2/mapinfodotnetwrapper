@@ -44,7 +44,7 @@
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        public void RunCommand(string commandString)
+        public void Do(string commandString)
         {
             if (String.IsNullOrEmpty(commandString))
                 throw new ArgumentNullException("commandString", "Command string can not be null");
@@ -59,7 +59,7 @@
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        public string Evaluate(string commandString)
+        public string Eval(string commandString)
         {
             if (String.IsNullOrEmpty(commandString))
                 throw new ArgumentNullException("commandString", "Command string can not be null");
