@@ -16,7 +16,7 @@
         /// <param name="value">The control to which will be the parent.</param>
         public static void SetAsMapinfoApplicationWindow(this Control value,MapinfoSession MISession)
         {
-            MISession.RunCommand("Set Application Window {0}".FormatWith(value.Handle.ToString()));
+            MISession.Do("Set Application Window {0}".FormatWith(value.Handle.ToString()));
         }
 
         /// <summary>
@@ -26,7 +26,7 @@
         /// <param name="windowStyle">The style of window when opened.</param>
         public static void SetAsNextDocumentParent(this Control value,MapinfoSession MISession, NextDocumentEnum windowStyle)
         {
-            MISession.RunCommand("Set Next Document Parent {0} Style {1}".FormatWith(value.Handle.ToString(),
+            MISession.Do("Set Next Document Parent {0} Style {1}".FormatWith(value.Handle.ToString(),
                                                                                    (int)windowStyle));
         }
     }

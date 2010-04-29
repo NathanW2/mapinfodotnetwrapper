@@ -36,7 +36,7 @@
         /// Runs a specified Mapinfo command string in Mapinfo.
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
-        public void RunCommand(string commandString)
+        public void Do(string commandString)
         {
             this.mapinfoinstance.Do(commandString);
         }
@@ -46,7 +46,7 @@
         /// </summary>
         /// <param name="commandString">The Mapbasic command string to send to Mapinfo.</param>
         /// <returns>A string containing the value of the return from the command string just excuted.</returns>
-        public string Evaluate(string commandString)
+        public string Eval(string commandString)
         {
             return this.mapinfoinstance.Eval(commandString);
         }

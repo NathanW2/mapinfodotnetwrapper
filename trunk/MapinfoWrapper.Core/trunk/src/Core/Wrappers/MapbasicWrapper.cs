@@ -15,7 +15,7 @@ namespace MapinfoWrapper.DataAccess
         public int GetNumberOfOpenTables()
         {
             string command = "NumTables()";
-            string value = this.session.Evaluate(command);
+            string value = this.session.Eval(command);
             int count;
 
             if (int.TryParse(value,out count))

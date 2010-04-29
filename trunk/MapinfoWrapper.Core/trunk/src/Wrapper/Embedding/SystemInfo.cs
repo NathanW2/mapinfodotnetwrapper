@@ -51,7 +51,7 @@
         public object RunSystemInfoCommand(SystemInfoEnum systemInfoEnum)
         {
             string command = "SystemInfo({0})".FormatWith((int)systemInfoEnum);
-            return misession.Evaluate(command);
+            return misession.Eval(command);
         }
     }
 }

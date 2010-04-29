@@ -39,32 +39,32 @@
 
         public void Fetch(int recordIndex)
         {
-            this.MapinfoSession.RunCommand("Fetch Rec {0} From {1}".FormatWith(recordIndex, this.TableName));
+            this.MapinfoSession.Do("Fetch Rec {0} From {1}".FormatWith(recordIndex, this.TableName));
         }
 
         public void FetchLast()
         {
-            this.MapinfoSession.RunCommand("Fetch Last From {0}".FormatWith(this.TableName));
+            this.MapinfoSession.Do("Fetch Last From {0}".FormatWith(this.TableName));
         }
 
         public void FetchNext()
         {
-            this.MapinfoSession.RunCommand("Fetch Next From {0}".FormatWith(this.TableName));
+            this.MapinfoSession.Do("Fetch Next From {0}".FormatWith(this.TableName));
         }
 
         public void FetchFirst()
         {
-            this.MapinfoSession.RunCommand("Fetch First From {0}".FormatWith(this.TableName));
+            this.MapinfoSession.Do("Fetch First From {0}".FormatWith(this.TableName));
         }
 
         public bool EndOfTable()
         {
-            return (MapinfoSession.Evaluate("EOT({0})".FormatWith(this.TableName)) == "T");
+            return (MapinfoSession.Eval("EOT({0})".FormatWith(this.TableName)) == "T");
         }
 
         public object Get(string columnName)
         {
-            string value = this.MapinfoSession.Evaluate("{0}.{1}".FormatWith(this.TableName, columnName));
+            string value = this.MapinfoSession.Eval("{0}.{1}".FormatWith(this.TableName, columnName));
             return CastToColumnType(columnName, value);
         }
 
@@ -84,7 +84,7 @@
                 return geo;
             }
 
-            string columntypestring = this.MapinfoSession.Evaluate("ColumnInfo({0},{1},{2})".FormatWith(this.TableName, columnName, 3));
+            string columntypestring = this.MapinfoSession.Eval("ColumnInfo({0},{1},{2})".FormatWith(this.TableName, columnName, 3));
             int columntypeval = Convert.ToInt32(columntypestring);
             ColumnTypes columntype = (ColumnTypes)columntypeval;
             switch (columntype)

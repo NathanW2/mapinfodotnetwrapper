@@ -31,7 +31,7 @@
 
             if (result.SQLCommand != null)
             {
-                this.misession.RunCommand(result.SQLCommand);
+                this.misession.Do(result.SQLCommand);
             }
 
             Type elementType = TypeSystem.GetElementType(expression.Type);

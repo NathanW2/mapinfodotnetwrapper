@@ -36,7 +36,7 @@
                 try
                 {
                     // Just try and use the variable this will tell us if it is defined or not.
-                    this.misession.Evaluate(this.Name);
+                    this.misession.Eval(this.Name);
                     // If we get here and we havn't thrown an error then we can say the variable is declared.
                     return true;
                 }
@@ -65,7 +65,7 @@
                                                       Please dispose and recreate using VariableFactory".FormatWith(this.Name));
             }
         
-            this.misession.RunCommand("{0} = {1}".FormatWith(this.Name, expression));
+            this.misession.Do("{0} = {1}".FormatWith(this.Name, expression));
         }
 
         #region IDisposable Members
@@ -81,7 +81,7 @@
                 return;
             }
 
-            this.misession.RunCommand("UnDim {0}".FormatWith(this.Name));
+            this.misession.Do("UnDim {0}".FormatWith(this.Name));
         }
 
         #endregion

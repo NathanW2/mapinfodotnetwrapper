@@ -95,7 +95,7 @@ namespace MapinfoWrapper.DataAccess
         /// <returns></returns>
         private string OpenTableAndGetName(string tablePath)
         {
-            this.miSession.RunCommand("Open Table {0}".FormatWith(tablePath.InQuotes()));
+            this.miSession.Do("Open Table {0}".FormatWith(tablePath.InQuotes()));
             string name = (String)this.tableinfo.GetTableInfo(0.ToString(), TableInfo.Name);
             return name;
         }
@@ -119,7 +119,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public void CloseAll()
         {
-            this.miSession.RunCommand("Close All");
+            this.miSession.Do("Close All");
             this.RefreshList();
         }
 

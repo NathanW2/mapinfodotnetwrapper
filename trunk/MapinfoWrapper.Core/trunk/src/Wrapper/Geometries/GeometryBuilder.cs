@@ -20,7 +20,7 @@
 
         public Geometry CreateGeometry()
         {
-            string objecttype = this.MapinfoSession.Evaluate("ObjectInfo({0}.obj,1)".FormatWith(this.TableName));
+            string objecttype = this.MapinfoSession.Eval("ObjectInfo({0}.obj,1)".FormatWith(this.TableName));
             ObjectType type = (ObjectType)Convert.ToInt32(objecttype);
             switch (type)
             {
@@ -33,8 +33,8 @@
                 case ObjectType.Polyline:
                     break;
                 case ObjectType.Point:
-                    string sx = this.MapinfoSession.Evaluate("CentroidX({0}.Obj)".FormatWith(this.TableName));
-                    string sy = this.MapinfoSession.Evaluate("CentroidY({0}.Obj)".FormatWith(this.TableName));
+                    string sx = this.MapinfoSession.Eval("CentroidX({0}.Obj)".FormatWith(this.TableName));
+                    string sy = this.MapinfoSession.Eval("CentroidY({0}.Obj)".FormatWith(this.TableName));
                     double x = Convert.ToDouble(sx);
                     double y = Convert.ToDouble(sy);
                     return new Point(x, y);
