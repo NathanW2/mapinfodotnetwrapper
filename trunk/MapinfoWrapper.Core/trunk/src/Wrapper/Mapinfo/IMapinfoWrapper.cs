@@ -33,5 +33,7 @@
         int LastErrorCode { get; }
 
         string LastErrorMessage { get; }
+
+        void RegisterCallback(object obj);
     }
 }

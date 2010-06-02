@@ -145,9 +145,6 @@ namespace MapinfoWrapper.DataAccess
                     return table;
                 }
 
-                // If we have made it this far we need to call refresh then try and get the table again.
-                this.RefreshList();
-
                 return this[tableName];
             }
         }
@@ -164,8 +161,6 @@ namespace MapinfoWrapper.DataAccess
         {
             return this.GetTable(tableName).ToGenericTable<T>();
         }
-
-        #region Implementation of IEnumerable
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -190,8 +185,6 @@ namespace MapinfoWrapper.DataAccess
         {
             return this.GetEnumerator();
         }
-
-        #endregion
 
         /// <summary>
         /// Refeshss the list off tables.  This is called automaticlly from the OpenTables commands and OpenWorkspace.
