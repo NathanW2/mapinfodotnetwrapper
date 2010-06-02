@@ -101,5 +101,11 @@
         }
 
         #endregion
+
+
+        public void RegisterCallback(object obj)
+        {
+            this.mapinfoinstance.SetCallback(obj);
+        }
     }
 }

@@ -119,5 +119,11 @@
         }
 
         #endregion
+
+
+        public void RegisterCallback(object obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

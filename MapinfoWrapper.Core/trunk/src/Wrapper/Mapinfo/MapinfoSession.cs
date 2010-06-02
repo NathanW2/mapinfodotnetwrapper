@@ -110,7 +110,6 @@ namespace MapinfoWrapper.Mapinfo
                 if (this.windows == null)
                 {
                     this.windows = new WindowCollection(this);
-                    this.windows.RefreshList();
                 }
                 return this.windows;
             }
@@ -329,5 +328,10 @@ namespace MapinfoWrapper.Mapinfo
         }
 
         #endregion
+
+        public void RegisterCallback(object obj)
+        {
+            this.mapinfo.RegisterCallback(obj);
+        }
     }
 }
