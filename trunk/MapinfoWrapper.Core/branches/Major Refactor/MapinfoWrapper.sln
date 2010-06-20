@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper", "MapInfo.Wrapper\MapinfoWrapper.csproj", "{FDA41A1F-5922-493C-AD86-DDF8D447023E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapInfo.Wrapper.Wrappers", "MapInfo.Wrapper.Wrappers\MapInfo.Wrapper.Wrappers.csproj", "{EF22F4A5-0C29-4DA4-8A57-48E2F37B13AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapInfo.Wrapper.Core", "MapInfo.Wrapper.Core\MapInfo.Wrapper.Core.csproj", "{D498F30F-160B-42B6-A02D-A8760DCA48CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA41A1F-5922-493C-AD86-DDF8D447023E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF22F4A5-0C29-4DA4-8A57-48E2F37B13AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF22F4A5-0C29-4DA4-8A57-48E2F37B13AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF22F4A5-0C29-4DA4-8A57-48E2F37B13AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF22F4A5-0C29-4DA4-8A57-48E2F37B13AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D498F30F-160B-42B6-A02D-A8760DCA48CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D498F30F-160B-42B6-A02D-A8760DCA48CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D498F30F-160B-42B6-A02D-A8760DCA48CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D498F30F-160B-42B6-A02D-A8760DCA48CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
