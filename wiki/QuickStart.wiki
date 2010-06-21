@@ -1,4 +1,6 @@
 #labels Featured,Phase-Implementation,Example
+==The following code only applies to Version 1.0 of the wrapper, the code has changed Version 2.0==
+
 _Create a new Mapinfo instace_
 {{{
  COMMapinfo mapinfo = COMMapinfo.CreateInstance();
