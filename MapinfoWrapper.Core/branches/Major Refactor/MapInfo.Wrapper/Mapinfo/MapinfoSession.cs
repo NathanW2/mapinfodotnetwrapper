@@ -8,12 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mapinfo.Wrapper.Core;
+using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.COMInterfaces;
+using MapInfo.Wrapper.Core.Exceptions;
 using Mapinfo.Wrapper.Core.Extensions;
 using Mapinfo.Wrapper.DataAccess;
 using Mapinfo.Wrapper.DataAccess.LINQ;
 using Mapinfo.Wrapper.Embedding;
-using Mapinfo.Wrapper.Exceptions;
-using Mapinfo.Wrapper.Mapinfo.Internals;
 using Mapinfo.Wrapper.MapOperations;
 using Mapinfo.Wrapper.UI;
 using Microsoft.Win32;
@@ -316,10 +317,8 @@ namespace Mapinfo.Wrapper.Mapinfo
                     return new MapinfoSession(mapinfo);
                 }
             }
-            throw new DllNotFoundException("miadm was not loaded in the current App Domain");
+            throw new DllNotFoundException("MapInfo could not be found as a already MapBasic invoked instace.");
         }
-
-        #region IMapinfoWrapper Members
 
         /// <summary>
         /// Returns the last error code that was returned from MapInfo.
@@ -336,8 +335,6 @@ namespace Mapinfo.Wrapper.Mapinfo
         {
             get { return this.mapinfo.LastErrorMessage; }
         }
-
-        #endregion
 
         public void RegisterCallback(object obj)
         {

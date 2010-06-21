@@ -1,4 +1,6 @@
-﻿namespace Mapinfo.Wrapper.Mapinfo
+﻿using MapInfo.Wrapper.Core;
+
+namespace Mapinfo.Wrapper.Mapinfo
 {
     /// <summary>
     /// Contains only the basic functions

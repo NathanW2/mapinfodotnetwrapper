@@ -15,7 +15,7 @@ namespace Mapinfo.Wrapper.Core.Extensions
 
             ConstantExpression table = Expression.Constant(tableName);
             MethodInfo method = ((MethodInfo)MethodInfo.GetCurrentMethod()).MakeGenericMethod(typeof(T));
-            MethodCallExpression call = Expression.Call(null, method, new Expression[] { source.Expression, table });
+            MethodCallExpression call = Expression.Call(null, method, new[] { source.Expression, table });
             return source.Provider.CreateQuery<T>(call);
         }
 
@@ -28,7 +28,8 @@ namespace Mapinfo.Wrapper.Core.Extensions
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Source provider is not a Mapinfo Query Provider");
+                throw new ArgumentOutOfRangeException("source", source.Provider.GetType().Name, 
+                                                      "Expected MapinfoProvider but was {0}".FormatWith(source.Provider.GetType().Name));
             }
         }
     }

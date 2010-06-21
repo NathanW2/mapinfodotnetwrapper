@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using Mapinfo.Wrapper.Mapinfo.Internals;
+using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.COMInterfaces;
 
 namespace Mapinfo.Wrapper.Mapinfo
 {

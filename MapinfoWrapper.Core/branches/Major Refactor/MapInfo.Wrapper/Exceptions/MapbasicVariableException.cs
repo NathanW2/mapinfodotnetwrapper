@@ -1,4 +1,5 @@
 ﻿using System;
+using MapInfo.Wrapper.Core.Exceptions;
 
 namespace Mapinfo.Wrapper.Exceptions
 {

@@ -1,8 +1,7 @@
-﻿using Mapinfo.Wrapper.Core.Extensions;
-using Mapinfo.Wrapper.DataAccess;
-using Mapinfo.Wrapper.Mapinfo;
+﻿using Mapinfo.Wrapper.Core;
+using Mapinfo.Wrapper.Core.Extensions;
 
-namespace Mapinfo.Wrapper.Core.Wrappers
+namespace MapInfo.Wrapper.Wrappers.InfoWrappers
 {
     public class TableInfoWrapper
     {
@@ -15,7 +14,7 @@ namespace Mapinfo.Wrapper.Core.Wrappers
             miSession = MISession;
         }
 
-        public string GetTableInfo(string tableName,TableInfo attribute)
+        public string GetTableInfo(string tableName, TableInfo attribute)
         {
             int enumvalue = (int)attribute;
             string command = "TableInfo({0},{1})".FormatWith(tableName, enumvalue);

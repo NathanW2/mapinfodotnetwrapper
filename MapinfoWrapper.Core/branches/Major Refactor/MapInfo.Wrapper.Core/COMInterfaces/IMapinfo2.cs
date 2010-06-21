@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Mapinfo.Wrapper.Mapinfo.Internals
+namespace MapInfo.Wrapper.Core.COMInterfaces
 {
     [InterfaceType(1)]
-    [Guid("1D42EC62-7B28-11CE-B83D-00AA002C4F58")]
-    public interface IMapInfo
+    [Guid("D38D86C9-1A6C-4670-B8A9-868E9D74B77E")]
+    public interface IMapInfo2 : IMapInfo
     {
         [DispId(1610678272)]
         object Application { get; }
@@ -32,8 +32,11 @@ namespace Mapinfo.Wrapper.Mapinfo.Internals
         object DataObject(int windowID);
         void Do(string command);
         string Eval(string expression);
+        void RegisterCallback(object callbackobject);
         void RunCommand(string command);
         void RunMenuCommand(int id);
         void SetCallback(object callbackobject);
+        void SetCallbackEvents(object callbackobject, int eventFlags);
+        void UnregisterCallback(object callbackobject);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Mapinfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.Exceptions;
 using Mapinfo.Wrapper.Core.Extensions;
 using Mapinfo.Wrapper.Exceptions;
 using Mapinfo.Wrapper.LayerOperations;
@@ -23,7 +24,7 @@ namespace Mapinfo.Wrapper.MapOperations
             {
                 string strvalue = base.mapinfo.Eval(String.Format("MapperInfo({0},3)", this.ID));
                 double centerx;
-                if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out centerx))
+                if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, CultureGlobals.UsNumberFormat, out centerx))
                     return centerx;
                 else
                     throw new MapbasicException(string.Format("Invalid return type from MapBasic. Expected double. Return value: {0}", strvalue));
@@ -43,7 +44,7 @@ namespace Mapinfo.Wrapper.MapOperations
             {
                 string strvalue = this.mapinfo.Eval(String.Format("MapperInfo({0},4)", this.ID));
                 double centery;
-                if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out centery))
+                if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, CultureGlobals.UsNumberFormat, out centery))
                     return centery;
                 else
                     throw new MapbasicException(string.Format("Invalid return type from MapBasic. Expected double. Return value: {0}", strvalue));
@@ -63,7 +64,7 @@ namespace Mapinfo.Wrapper.MapOperations
             {
                 string strvalue = this.mapinfo.Eval(String.Format("MapperInfo({0},1)", this.ID));
                 double zoom;
-                if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out zoom))
+                if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, CultureGlobals.UsNumberFormat, out zoom))
                     return zoom;
                 else
                     throw new MapbasicException(string.Format("Invalid return type from MapBasic. Expected double. Return value: {0}", strvalue));
@@ -116,7 +117,7 @@ namespace Mapinfo.Wrapper.MapOperations
         public void UpdateCenters(double x, double y)
         {
             this.mapinfo.Do("Set Map Window " + this.ID +
-                                    " Center ( " + String.Format(Globals._usNumberFormat, "{0}", x) + " , " + String.Format(Globals._usNumberFormat, "{0}", y) + ")");
+                                    " Center ( " + String.Format(CultureGlobals.UsNumberFormat, "{0}", x) + " , " + String.Format(CultureGlobals.UsNumberFormat, "{0}", y) + ")");
         }
 
         public IList<Layer> Layers
