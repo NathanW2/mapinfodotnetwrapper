@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Mapinfo.Wrapper.Exceptions
+namespace MapInfo.Wrapper.Core.Exceptions
 {
     [Serializable]
     public class MapbasicException : Exception

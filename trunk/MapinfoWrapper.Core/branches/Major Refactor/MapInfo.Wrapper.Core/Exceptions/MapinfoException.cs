@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Mapinfo.Wrapper.Exceptions
+namespace MapInfo.Wrapper.Core.Exceptions
 {
-    [global::System.Serializable]
-    public class MapinfoException : ApplicationException
+    [Serializable]
+    public class MapinfoException : Exception
     {
         public MapinfoException() { }
         public MapinfoException(string message) : base(message) { }

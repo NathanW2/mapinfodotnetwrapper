@@ -1,6 +1,5 @@
 ﻿using Mapinfo.Wrapper.Core;
 using Mapinfo.Wrapper.Core.Extensions;
-using Mapinfo.Wrapper.Core.Wrappers;
 using Mapinfo.Wrapper.DataAccess.LINQ.SQL;
 using Mapinfo.Wrapper.DataAccess.Row.Entities;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Mapinfo.Wrapper.Mapinfo;
+using MapInfo.Wrapper.Wrappers.InfoWrappers;
 
 namespace Mapinfo.Wrapper.DataAccess
 {

@@ -1,7 +1,6 @@
 using Mapinfo.Wrapper.Core.Extensions;
-using Mapinfo.Wrapper.Mapinfo;
 
-namespace Mapinfo.Wrapper.Core.Wrappers
+namespace MapInfo.Wrapper.Wrappers.InfoWrappers
 {
     internal class MapbasicWrapper
     {

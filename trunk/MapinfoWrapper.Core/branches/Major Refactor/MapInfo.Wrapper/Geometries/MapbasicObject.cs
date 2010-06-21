@@ -1,4 +1,5 @@
-﻿using Mapinfo.Wrapper.Exceptions;
+﻿using MapInfo.Wrapper.Core.Exceptions;
+using Mapinfo.Wrapper.Exceptions;
 using Mapinfo.Wrapper.MapbasicOperations;
 using System;
 using Mapinfo.Wrapper.Mapinfo;

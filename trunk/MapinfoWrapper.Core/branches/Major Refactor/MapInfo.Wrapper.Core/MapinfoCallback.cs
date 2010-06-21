@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Mapinfo.Wrapper
+namespace MapInfo.Wrapper.Core
 {
     /// <summary>
     /// A base callback class which can be used with Mapinfo,
@@ -26,12 +27,12 @@ namespace Mapinfo.Wrapper
 
         public event Action<int> OnWindowChanged;
 
-        public virtual int WindowContentsChanged(int windowID)
+        public virtual int WindowContentsChanged(int windowId)
         {
             Action<int> windowchanged = OnWindowChanged;
             if (windowchanged != null)
             {
-                windowchanged(windowID);
+                windowchanged(windowId);
             }
             return 1;
         }

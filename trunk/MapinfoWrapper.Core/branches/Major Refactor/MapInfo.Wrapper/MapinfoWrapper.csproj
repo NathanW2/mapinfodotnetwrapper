@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mapinfo.Wrapper</RootNamespace>
     <AssemblyName>MapInfo.Wrapper</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>
@@ -21,7 +20,6 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -37,6 +35,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,9 +79,6 @@
     <Compile Include="CommandBuilders\CommandStringBuilder.cs" />
     <Compile Include="CommandBuilders\ICommandStringBuilder.cs" />
     <Compile Include="CommandBuilders\OpenTableCommandBuilder.cs" />
-    <Compile Include="Core\Globals.cs" />
-    <Compile Include="Core\Guard.cs" />
-    <Compile Include="Core\Wrappers\TableInfoWrapper.cs" />
     <Compile Include="DataAccess\Column.cs" />
     <Compile Include="DataAccess\ColumnFactory.cs" />
     <Compile Include="DataAccess\EntityFactory.cs" />
@@ -115,16 +112,14 @@
     <Compile Include="DataAccess\TableChangeManager.cs" />
     <Compile Include="DataAccess\TableCollection.cs" />
     <Compile Include="DataAccess\TableFactory.cs" />
-    <Compile Include="DataAccess\TableInfoEnum.cs" />
     <Compile Include="Embedding\MapinfoWindowHandle.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Embedding\SystemInfo.cs" />
     <Compile Include="Embedding\SystemInfoEnum.cs" />
-    <Compile Include="Exceptions\MapbasicException.cs" />
     <Compile Include="Exceptions\MapbasicVariableException.cs" />
-    <Compile Include="Exceptions\MapinfoException.cs" />
     <Compile Include="Exceptions\TableException.cs" />
+    <Compile Include="Extensions\LINQExtensions.cs" />
     <Compile Include="Geometries\Coordinate.cs" />
     <Compile Include="Geometries\Geometry.cs" />
     <Compile Include="Geometries\GeometryBuilder.cs" />
@@ -146,14 +141,6 @@
     <Compile Include="MapbasicOperations\MapbasicCommand.cs" />
     <Compile Include="MapbasicOperations\Variable.cs" />
     <Compile Include="MapbasicOperations\VariableFactory.cs" />
-    <Compile Include="Core\Extensions\LINQExtensions.cs" />
-    <Compile Include="Core\Check.cs" />
-    <Compile Include="Core\Wrappers\MapbasicWrapper.cs" />
-    <Compile Include="MapinfoCallback.cs" />
-    <Compile Include="Mapinfo\IMapinfoWrapper.cs" />
-    <Compile Include="Mapinfo\Internals\DMapinfoCOMInterface.cs" />
-    <Compile Include="Mapinfo\Internals\IMapinfo.cs" />
-    <Compile Include="Mapinfo\Internals\IMapinfo2.cs" />
     <Compile Include="Mapinfo\MapbasicInvokedMapinfo.cs" />
     <Compile Include="Mapinfo\MapinfoSession.cs" />
     <Compile Include="Mapinfo\OleMapinfo.cs" />
@@ -172,31 +159,15 @@
     <Compile Include="UI\NextDocumentEnum.cs" />
     <Compile Include="UI\PushButton.cs" />
     <Compile Include="Workspace.cs" />
-    <Compile Include="Core\Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MapinfoWrapper.snk" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -209,6 +180,9 @@
       <Project>{D498F30F-160B-42B6-A02D-A8760DCA48CA}</Project>
       <Name>MapInfo.Wrapper.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

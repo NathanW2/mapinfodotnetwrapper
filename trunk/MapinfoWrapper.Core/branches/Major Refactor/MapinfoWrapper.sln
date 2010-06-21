@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper", "MapInfo.Wrapper\MapinfoWrapper.csproj", "{FDA41A1F-5922-493C-AD86-DDF8D447023E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapInfo.Wrapper.Wrappers", "MapInfo.Wrapper.Wrappers\MapInfo.Wrapper.Wrappers.csproj", "{EF22F4A5-0C29-4DA4-8A57-48E2F37B13AE}"

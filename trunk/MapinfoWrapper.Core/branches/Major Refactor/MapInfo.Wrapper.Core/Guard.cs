@@ -1,7 +1,6 @@
 ﻿using System;
 using Mapinfo.Wrapper.Core.Extensions;
 using System.Diagnostics;
-using Mapinfo.Wrapper.DataAccess.Row.Entities;
 
 namespace Mapinfo.Wrapper.Core
 {
@@ -22,15 +21,6 @@ namespace Mapinfo.Wrapper.Core
             if (@object == null)
             {
                 throw new ArgumentNullException(name, "{0} can not be null".FormatWith(name));
-            }
-        }
-
-        [DebuggerStepThrough]
-        public static void AgainstNotInserted(BaseEntity entity, string name)
-        {
-            if (entity.RowId == 0)
-            {
-                throw new ArgumentOutOfRangeException(name, entity.RowId, "Row has not been inserted into a table");
             }
         }
 

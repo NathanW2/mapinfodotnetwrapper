@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Mapinfo.Wrapper.DataAccess.Row;
+using LINQExtensions = Mapinfo.Wrapper.Extensions.LINQExtensions;
 
 namespace Mapinfo.Wrapper.DataAccess.LINQ.SQL
 {

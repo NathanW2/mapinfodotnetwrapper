@@ -1,4 +1,4 @@
-﻿namespace Mapinfo.Wrapper.DataAccess
+﻿namespace MapInfo.Wrapper.Wrappers.InfoWrappers
 {
     public enum TableInfo
     {
@@ -13,7 +13,7 @@
         Edited = 9,
         Fastedit = 10,
         Undo = 11,
-        Mappable_Table = 12,
+        MappableTable = 12,
         Usermap = 13,
         Userbrowse = 14,
         Userclose = 15,
@@ -26,19 +26,19 @@
         Maxx = 22,
         Maxy = 23,
         Seamless = 24,
-        Coordsys_Minx = 25,
-        Coordsys_Miny = 26,
-        Coordsys_Maxx = 27,
-        Coordsys_Maxy = 28,
-        Coordsys_Clause = 29,
-        Coordsys_Name = 30,
+        CoordsysMinx = 25,
+        CoordsysMiny = 26,
+        CoordsysMaxx = 27,
+        CoordsysMaxy = 28,
+        CoordsysClause = 29,
+        CoordsysName = 30,
         Nrefs = 31,
-        Support_Mz = 32,
-        Z_Unit_Set = 33,
-        Z_Unit = 34,
-        Browser_List = 35,
-        Theme_Metadata = 36,
-        Coordsys_Clause_Without_Bounds = 37
+        SupportMz = 32,
+        ZUnitSet = 33,
+        ZUnit = 34,
+        BrowserList = 35,
+        ThemeMetadata = 36,
+        CoordsysClauseWithoutBounds = 37
     }
 }
 

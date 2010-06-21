@@ -1,12 +1,12 @@
 using Mapinfo.Wrapper.Core;
 using Mapinfo.Wrapper.Core.Extensions;
-using Mapinfo.Wrapper.Core.Wrappers;
 using Mapinfo.Wrapper.DataAccess.Row.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Mapinfo.Wrapper.Mapinfo;
+using MapInfo.Wrapper.Wrappers.InfoWrappers;
 
 namespace Mapinfo.Wrapper.DataAccess
 {
