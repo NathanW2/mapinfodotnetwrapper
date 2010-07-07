@@ -2,24 +2,24 @@
 using MapinfoWrapper.DataAccess;
 using MapinfoWrapper.Mapinfo;
 
-namespace MapinfoWrapper.Core.InfoWrappers
+namespace MapinfoWrapper.Core.Wrappers
 {
     public class TableInfoWrapper
     {
-        private readonly MapinfoSession miSession;
+        private readonly IMapinfoWrapper mapinfo;
 
-        public TableInfoWrapper(MapinfoSession MISession)
+        public TableInfoWrapper(IMapinfoWrapper miSession)
         {
-            Guard.AgainstNull(MISession,"MISession");
+            Guard.AgainstNull(miSession, "MISession");
 
-            miSession = MISession;
+            this.mapinfo = miSession;
         }
 
         public string GetTableInfo(string tableName,TableInfo attribute)
         {
             int enumvalue = (int)attribute;
             string command = "TableInfo({0},{1})".FormatWith(tableName, enumvalue);
-            string value = miSession.Eval(command);
+            string value = mapinfo.Eval(command);
             return value;
         }
 

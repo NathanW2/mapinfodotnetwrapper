@@ -1,8 +1,11 @@
-﻿namespace MapinfoWrapper.Core.Extensions
-{
-    using System;
-    using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
+namespace MapinfoWrapper.Core.Extensions
+{
+    /// <summary>
+    /// Contains a collection of exenstion methods that can be used on strings.
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>
@@ -68,6 +71,17 @@
                 throw new ArgumentNullException("Value");
 
             return "\"" + value + "\"";
+        }
+    }
+
+    public static class TypeExtensions
+    {
+        [DebuggerStepThrough]
+        public static bool IsNullableType(this Type theType)
+        {
+            return (theType.IsGenericType && theType.
+              GetGenericTypeDefinition().Equals
+              (typeof(Nullable<>)));
         }
     }
 }

@@ -9,10 +9,6 @@
 
     public static class LINQExtensions
     {
-		#region Methods (2) 
-
-		// Public Methods (2) 
-
         public static IQueryable<T> Into<T>(this IQueryable<T> source, string tableName)
         {
             Guard.AgainstNull(source, "source");
@@ -36,7 +32,5 @@
                 throw new ArgumentOutOfRangeException("Source provider is not a Mapinfo Query Provider");
             }
         }
-
-		#endregion Methods 
     }
 }

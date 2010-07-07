@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess.RowOperations;
 using System.Diagnostics;
-using System.Threading;
 using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
 namespace MapinfoWrapper.Core

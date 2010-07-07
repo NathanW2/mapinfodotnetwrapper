@@ -1,15 +1,16 @@
-namespace MapinfoWrapper.DataAccess
-{
-    using Core.Extensions;
-    using Mapinfo;
-    using MapinfoWrapper.Exceptions;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Mapinfo;
+using MapinfoWrapper.Exceptions;
 
-    internal class MapbasicWrapper
+namespace MapinfoWrapper.Core.Wrappers
+{
+    public class MapbasicWrapper
     {
         private readonly IMapinfoWrapper session;
-        public MapbasicWrapper(IMapinfoWrapper Session)
+
+        public MapbasicWrapper(IMapinfoWrapper miSession)
         {
-            this.session = Session;
+            this.session = miSession;
         }
 
         public int GetNumberOfOpenTables()

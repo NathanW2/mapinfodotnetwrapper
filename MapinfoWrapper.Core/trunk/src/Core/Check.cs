@@ -1,9 +1,10 @@
+using System;
+using System.IO;
+using MapinfoWrapper.Core.Extensions;
+
+
 namespace MapinfoWrapper.Core
 {
-    using System;
-    using System.IO;
-    using Extensions;
-
     public static class Check
     {
         public static void FileExists(string path)
