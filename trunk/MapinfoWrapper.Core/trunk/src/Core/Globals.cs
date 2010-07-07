@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace MapinfoWrapper.Core
 {
-    internal class Globals
+    public class Globals
     {
         /// <summary>
         /// The US culture info used when reading and sending information to and from Mapinfo.
