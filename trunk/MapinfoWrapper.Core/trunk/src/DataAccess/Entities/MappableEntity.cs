@@ -1,7 +1,7 @@
-﻿namespace MapinfoWrapper.DataAccess.RowOperations.Entities
-{
-    using MapinfoWrapper.Geometries;
+﻿using MapinfoWrapper.Geometries;
 
+namespace MapinfoWrapper.DataAccess.Entities
+{
     /// <summary>
     /// Represents a mappable row in a table table.
     /// <para>You will need to inherit from this type if you need object support in your entities.</para>

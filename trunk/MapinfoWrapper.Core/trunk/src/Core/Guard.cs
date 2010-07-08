@@ -1,7 +1,7 @@
 ﻿using System;
 using MapinfoWrapper.Core.Extensions;
 using System.Diagnostics;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
+using MapinfoWrapper.DataAccess.Entities;
 
 namespace MapinfoWrapper.Core
 {

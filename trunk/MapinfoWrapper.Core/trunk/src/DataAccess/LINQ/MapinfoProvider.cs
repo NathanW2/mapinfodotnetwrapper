@@ -1,17 +1,17 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-    using MapinfoWrapper.DataAccess.Row;
-    using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-    using MapinfoWrapper.Mapinfo;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
+using MapinfoWrapper.DataAccess.LINQ.SQL;
+using MapinfoWrapper.DataAccess.Row;
+using MapinfoWrapper.DataAccess.RowOperations;
+using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
+using MapinfoWrapper.Mapinfo;
 
-    class MapinfoProvider : IQueryProvider
+namespace MapinfoWrapper.DataAccess.LINQ
+{
+    public class MapinfoProvider : IQueryProvider
     {
         private readonly MapinfoSession misession;
         private readonly MaterializerFactory entityfactory;

@@ -1,4 +1,6 @@
-﻿namespace MapinfoWrapper.DataAccess
+﻿using MapinfoWrapper.DataAccess.Entities;
+
+namespace MapinfoWrapper.DataAccess
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +8,6 @@
     using System.Text;
     using MapinfoWrapper.Mapinfo;
     using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using System.Reflection;
 
     class ColumnMapping
@@ -18,7 +19,7 @@
     /// <summary>
     /// Factory used to create and populate entity objects.
     /// </summary>
-    class EntityMaterializer
+    public class EntityMaterializer
     {
         private enum BackingStoreOptions
         {
@@ -27,14 +28,14 @@
         }
 
         private readonly IDataReader datareader;
-        private readonly string TableName;
+        private readonly string table_name;
         private Dictionary<Type, PropertyInfo[]> CachedMappings = new Dictionary<Type, PropertyInfo[]>();
 
-        public EntityMaterializer(MapinfoSession MISession, string tableName, IDataReader dataReader)
+        public EntityMaterializer(MapinfoSession miSession, string tableName, IDataReader dataReader)
         {
-            this.MapifoSession = MISession;
+            this.MapifoSession = miSession;
             this.datareader = dataReader;
-            this.TableName = tableName;
+            this.table_name = tableName;
         }
 
         public MapinfoSession MapifoSession { get; private set; }
@@ -51,7 +52,7 @@
 
             TEntity entity = new TEntity();
             //TODO We might need to look into getting the table a little better.
-            this.Table = this.MapifoSession.Tables.GetTable<TEntity>(this.TableName);
+            this.Table = this.MapifoSession.Tables.GetTable<TEntity>(this.table_name);
             entity.Table = this.Table;
 
             BackingStoreOptions options = BackingStoreOptions.Load;

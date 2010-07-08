@@ -1,44 +1,42 @@
+using System.Linq;
 using MapinfoWrapper.Core.Wrappers;
+using MapinfoWrapper.DataAccess.Entities;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using MapinfoWrapper.Core;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Mapinfo;
 
 namespace MapinfoWrapper.DataAccess
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.DataAccess.LINQ;
-    using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.DataAccess.Row;
-
     /// <summary>
-    /// Represents a collection of tables for a MapinfoSession.
+    /// Represents a collection of tables from a MapinfoSession.
     /// </summary>
     public class TableCollection : IEnumerable<Table>
     {
-        private readonly MapinfoSession miSession;
+        private readonly MapinfoSession mi_session;
         private readonly TableInfoWrapper tableinfo;
         private readonly MapbasicWrapper mapbasic;
-        private readonly List<Table> innertablelist;
         private readonly TableFactory tablefactory;
-
-        public delegate void TableEvent(ITable table);
 
         /// <summary>
         /// The event fired when a new table is opened in Mapinfo.
         /// </summary>
-        public event TableEvent TableOpened;
+        public event EventHandler<EventArgs<ITable>> TableOpened;
 
-        internal TableCollection(MapinfoSession MISession)
+        public TableCollection(MapinfoSession miSession)
         {
-            this.miSession = MISession;
-            this.tableinfo = new TableInfoWrapper(MISession);
-            this.innertablelist = new List<Table>();
-            this.mapbasic = new MapbasicWrapper(MISession);
+            this.mi_session = miSession;
+            this.tableinfo = new TableInfoWrapper(miSession);
+            this.mapbasic = new MapbasicWrapper(miSession);
             this.tablefactory = new TableFactory(miSession);
+        }
+
+        private void OnTableOpened(ITable table)
+        {
+            if (TableOpened != null)
+                TableOpened(this, new EventArgs<ITable>(table));
         }
 
         /// <summary>
@@ -49,17 +47,12 @@ namespace MapinfoWrapper.DataAccess
         public Table OpenTable(string tablePath)
         {
             Guard.AgainstNull(tablePath, "tablePath");
-
             Check.CorrectExtension(tablePath, ".tab");
             Check.FileExists(tablePath);
 
             string name = this.OpenTableAndGetName(tablePath);
             Table tab = this.tablefactory.GetTableFor(name);
-            this.RefreshList();
-            if (TableOpened != null)
-            {
-                TableOpened(tab);
-            }
+            this.OnTableOpened(tab);
             return tab;
         }
 
@@ -81,11 +74,7 @@ namespace MapinfoWrapper.DataAccess
 
         	string name = this.OpenTableAndGetName(tablePath);
             Table<TEntity> tab = this.tablefactory.GetTableFor<TEntity>(name);
-            this.RefreshList();
-            if (TableOpened != null)
-            {
-                TableOpened(tab);
-            }
+            this.OnTableOpened(tab);
             return tab;
         }
 
@@ -96,7 +85,7 @@ namespace MapinfoWrapper.DataAccess
         /// <returns></returns>
         private string OpenTableAndGetName(string tablePath)
         {
-            this.miSession.Do("Open Table {0}".FormatWith(tablePath.InQuotes()));
+            this.mi_session.Do("Open Table {0}".FormatWith(tablePath.InQuotes()));
             string name = (String)this.tableinfo.GetTableInfo(0.ToString(), TableInfo.Name);
             return name;
         }
@@ -120,8 +109,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public void CloseAll()
         {
-            this.miSession.Do("Close All");
-            this.RefreshList();
+            this.mi_session.Do("Close All");
         }
 
         /// <summary>
@@ -137,7 +125,7 @@ namespace MapinfoWrapper.DataAccess
                 if (tableName.ToUpper() == "SELECTION")
                     return this.tablefactory.GetTableFor("Selection");
 
-                Table table = this.innertablelist.Where(tab => tab.Name == tableName)
+                Table table = this.Where(tab => tab.Name == tableName)
                                                  .FirstOrDefault();
 
                 // If we found the table on our first pass through then just return the table.
@@ -167,46 +155,31 @@ namespace MapinfoWrapper.DataAccess
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
         /// </returns>
-        /// <filterpriority>1</filterpriority>
         public IEnumerator<Table> GetEnumerator()
         {
-            return this.innertablelist.GetEnumerator();
+            // Get the number of tables.
+            // Loop open tables and add to list.
+            int numtables = mapbasic.GetNumberOfOpenTables();
+
+            for (int i = 1; i <= numtables; i++)
+            {
+                string tableName = tableinfo.GetName(i);
+                Table tab = this.tablefactory.GetTableFor(tableName);
+                yield return tab;
+            }
         }
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+        /// An <see cref="IEnumerator{T}"/> object that can be used to iterate through the collection.
         /// </returns>
-        /// <filterpriority>2</filterpriority>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Refeshss the list off tables.  This is called automaticlly from the OpenTables commands and OpenWorkspace.
-        /// You should call this if the number of tables has changed from outside of the Mapinfo OLE Wrapper.
-        /// </summary>
-        public void RefreshList()
-        {
-            this.innertablelist.Clear();
-
-            // Get the number of tables.
-            // Loop open tables and add to list.
-            int numtables = mapbasic.GetNumberOfOpenTables();
-
-            if (numtables == 0) return;
-
-            for (int i = 1; i <= numtables; i++)
-            {
-                string tableName = tableinfo.GetName(i);
-                Table tab = this.tablefactory.GetTableFor(tableName);
-                this.innertablelist.Add(tab);
-            }
         }
     }
 }

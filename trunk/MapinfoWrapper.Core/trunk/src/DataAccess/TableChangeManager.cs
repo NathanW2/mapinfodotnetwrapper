@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
-using MapinfoWrapper.DataAccess.RowOperations.Entities;
+using MapinfoWrapper.DataAccess.Entities;
 
 namespace MapinfoWrapper.DataAccess
 {

@@ -1,9 +1,9 @@
-﻿namespace MapinfoWrapper.DataAccess.RowOperations.Entities
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace MapinfoWrapper.DataAccess.Entities
+{
     /// <summary>
     /// Represents a basic row in a Mapinfo table.
     /// <para>When creating strong typed entities you will need to inherit from this class or 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MapinfoWrapper.Wrapper.DataAccess.LINQ.SQL_Builders
+﻿namespace MapinfoWrapper.DataAccess.LINQ.SQL
 {
     class UpdateExpression
     {

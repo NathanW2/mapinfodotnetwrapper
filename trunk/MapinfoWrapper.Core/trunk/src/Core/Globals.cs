@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace MapinfoWrapper.Core
 {
@@ -13,5 +14,7 @@ namespace MapinfoWrapper.Core
         /// The US number format used to parse decimals from Mapinfo.
         /// </summary>
         public static NumberFormatInfo _usNumberFormat = uscultureInfo.NumberFormat;
+
+        public delegate void EventHandler<TSender, TUArgs>(TSender sender, TUArgs u) where TUArgs : EventArgs;
     }
 }

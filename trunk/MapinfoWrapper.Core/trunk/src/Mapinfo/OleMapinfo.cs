@@ -1,31 +1,46 @@
-﻿namespace MapinfoWrapper.Mapinfo
+﻿using System;
+using MapinfoWrapper.Mapinfo.Internals;
+namespace MapinfoWrapper.Mapinfo
 {
-    using System.Runtime.InteropServices;
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.Exceptions;
-    using MapinfoWrapper.Mapinfo.Internals;
-
     /// <summary>
     /// Contains a running instance of Mapinfo COM object.  This is the lowest object
     /// in the MapinfoWrapper API, all objects in the MapinfoWrapper API take and 
     /// make calls through this object. 
     /// </summary>
-    internal class COMMapinfo : IMapinfoWrapper
+    public class COMMapinfo : IMapinfoWrapper
     {
         private DMapInfo mapinfoinstance;
 
         /// <summary>
-        /// <b>NOTE!</b> This is only provided to allow for testing and should not be used outside of a test, if you need to
+        /// Creates a new instance of Mapinfo and returns a <see cref="MapinfoSession"/>
+        /// which contains the instance. 
+        /// <para>The returned objet can be passed into objects and
+        /// methods that need it in the MapinfoWrapper API.</para>
+        /// </summary>
+        /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
+        public static IMapinfoWrapper CreateMapInfoInstance()
+        {
+            DMapInfo instance = CreateMapinfoInstance();
+            COMMapinfo mapinfo = new COMMapinfo(instance);
+            return mapinfo;
+        }
+
+        private static DMapInfo CreateMapinfoInstance()
+        {
+            Type mapinfotype = Type.GetTypeFromProgID("Mapinfo.Application");
+            DMapInfo instance = (DMapInfo)Activator.CreateInstance(mapinfotype);
+            return instance;
+        }
+
+
+        /// <summary>
+        /// <b>This is only provided to allow for testing and should not be used outside of a test, if you need to
         /// create a new instance of Mapinfo please use <see cref="MapinfoSessionManager"/>
         /// 
         /// <para>Initializes a new instance of the <see cref="COMMapinfo"/> class, which holds 
         /// an instance of a currently running instance of Mapinfo's COM object.</para>
-        /// <para>If you use this method you must wire up the needed dependencies, see example section:</para>
-        /// <para><b>IT IS HIGHLY RECOMMANDED TO USE THE <see cref="MapinfoSessionManager"/> TO CREATE
-        /// AN INSTANCE OF MAPINFO.</b></para>
-        /// </summary>
         /// <param name="mapinfoInstance">A currently running instance of Mapinfo's COM object.</param>
-        internal COMMapinfo(DMapInfo mapinfoInstance)
+        public COMMapinfo(DMapInfo mapinfoInstance)
         {
             this.mapinfoinstance = mapinfoInstance;
         }
@@ -101,7 +116,6 @@
         }
 
         #endregion
-
 
         public void RegisterCallback(object obj)
         {

@@ -1,33 +1,33 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
-{
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Text;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.Geometries;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.DataAccess.RowOperations;
+using MapinfoWrapper.Geometries;
 
+namespace MapinfoWrapper.DataAccess.LINQ.SQL
+{
     /// <summary>
     /// The result object that is returned from parsing an expression tree.
     /// </summary>
-    internal class TranslateResult
+    public class TranslateResult
     {
         /// <summary>
         /// The SQL command that needs to run in Mapinfo to get the results.
         /// <para>If this is null, check the <c>TableName</c> because we might just want all the records from that table.</para>
         /// </summary>
-        internal string SQLCommand;
+        public string SQLCommand;
         /// <summary>
         /// The resulting table we the results are held.
         /// </summary>
-        internal string TableName;
+        public string TableName;
 
-        internal LambdaExpression Projector;
+        public LambdaExpression Projector;
     }
     
     // HACK This class works but is really ugly and hard to work on. Really needs to be refactored.
-    internal class QueryTranslator : ExpressionVisitor
+    public class QueryTranslator : ExpressionVisitor
     {
         StringBuilder sb;
         StringBuilder selectbuilder;
@@ -36,11 +36,7 @@
         ColumnProjection projection;
         ParameterExpression datareader;
 
-        internal QueryTranslator()
-        {
-        }
-
-        internal TranslateResult Translate(Expression expression)
+        public TranslateResult Translate(Expression expression)
         {
             this.sb = new StringBuilder();
             this.selectbuilder = new StringBuilder();
@@ -50,12 +46,7 @@
             // HACK This really should be done better.
             if (expression.NodeType == ExpressionType.Constant && ((ConstantExpression)expression).Value is ITable)
             {
-                ITable table = ((ConstantExpression)expression).Value as ITable;
-
-                if (table == null)
-                {
-                    throw new ArgumentNullException("Could not translate contanst to type ITable");
-                }
+                ITable table = (ITable) ((ConstantExpression) expression).Value;
 
                 return new TranslateResult
                 {

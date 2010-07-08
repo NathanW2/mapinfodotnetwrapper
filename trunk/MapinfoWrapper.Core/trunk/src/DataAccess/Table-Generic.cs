@@ -1,4 +1,6 @@
 ﻿using MapinfoWrapper.Core.Wrappers;
+using MapinfoWrapper.DataAccess.Entities;
+using MapinfoWrapper.Geometries;
 
 namespace MapinfoWrapper.DataAccess
 {
@@ -7,11 +9,9 @@ namespace MapinfoWrapper.DataAccess
     using MapinfoWrapper.Core;
     using MapinfoWrapper.Core.Extensions;
     using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
     using MapinfoWrapper.Mapinfo;
     using System.Collections.ObjectModel;
-    using MapinfoWrapper.DataAccess.LINQ.SQLBuilders;
     using MapinfoWrapper.Exceptions;
     using System.Linq;
     using MapinfoWrapper.DataAccess.LINQ;
@@ -493,30 +493,5 @@ namespace MapinfoWrapper.DataAccess
             // new table and this one equal.
             return tabFactory.GetTableFor<TEntity>(this.Name);
         }
-
-        /// <summary>
-        /// Returns a new <see cref="Table{TEntity}"/> using the <typeparamref name="TEntity"/> as the
-        /// tables row entity.
-        /// 
-        /// <para>This function is usful if you have retrived an table from a <see cref="MapinfoSession"/>'s  <see cref="TableCollection"/> 
-        /// which are stored as <see cref="Table"/> but you know the entity type for it.</para>
-        /// </summary>
-        /// <returns>A new <see cref="Table{TEntity}"/> for the same table as this <see cref="Table"/>.</returns>
-        public Table<TEntity> ToGenericTable(Type entityType)
-        {
-            throw new NotImplementedException();
-            TableFactory tabFactory = new TableFactory(this.mapinfo);
-
-            MethodInfo method = tabFactory.GetType().GetMethods()
-                                                    .Where(m => m.Name == "GetTableFor" && m.IsGenericMethod)
-                                                    .First();
-
-            MethodInfo generic = method.MakeGenericMethod(entityType);
-            object table = generic.Invoke(tabFactory, new object[] { this.Name });
-
-            //return table;
-        }
-
-
     }   
 }

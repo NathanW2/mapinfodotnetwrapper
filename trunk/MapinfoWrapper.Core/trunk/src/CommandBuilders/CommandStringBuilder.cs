@@ -11,8 +11,6 @@
         /// <example>Open Table {TableName}
         /// <para>Where {TableName} is the token that will be replaced.</para></example>
         public abstract string Template { get; protected set; }
-     
-        #region ICommandStringBuilder Members
 
         /// <summary>
         /// Creates a correctly formatted Mapbasic command string from the Template property which can be used to send to MapInfo.
@@ -26,8 +24,6 @@
             return returnstring;
         }
 
-        #endregion
-
         protected string ReplaceTokenWithValue(string token, string replaceWith)
         {
             if (this.Template.Contains(token))
@@ -36,6 +32,11 @@
                 return returnstring;
             }
             return this.Template;
+        }
+
+        public override string ToString()
+        {
+            return this.BuildCommandString();
         }
     }
 }

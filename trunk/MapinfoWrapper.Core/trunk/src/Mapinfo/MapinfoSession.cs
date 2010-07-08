@@ -1,26 +1,20 @@
-﻿// --------------------------------
-// <copyright file="MapinfoSession.cs" company="Nathan Woodrow">
-//     Copyright (c) 2009 Nathan Woodrow All rights reserved.
-// </copyright>
-// <author>Nathan Woodrow</author>
-// ---------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.DataAccess;
+using MapinfoWrapper.Embedding;
+using MapinfoWrapper.Mapinfo.Internals;
+using MapinfoWrapper.MapOperations;
+using MapinfoWrapper.UI;
+using Microsoft.Win32;
+using MapinfoWrapper.DataAccess.LINQ;
+using MapinfoWrapper.Core;
+using MapinfoWrapper.Exceptions;
+using System.Runtime.InteropServices;
+
 namespace MapinfoWrapper.Mapinfo
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Internals;
-    using Core.Extensions;
-    using MapinfoWrapper.DataAccess;
-    using MapinfoWrapper.Embedding;
-    using MapinfoWrapper.MapOperations;
-    using MapinfoWrapper.UI;
-    using Microsoft.Win32;
-    using MapinfoWrapper.DataAccess.LINQ;
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.Exceptions;
-    using System.Runtime.InteropServices;
-
     public class MapinfoSession : IMapinfoWrapper
     {
         private ButtonPadCollection buttonpads;
@@ -28,9 +22,20 @@ namespace MapinfoWrapper.Mapinfo
         private SystemInfo systeminfo;
         private TableCollection tables;
 
-        public MapinfoSession(IMapinfoWrapper mapinfoAPI)
+        /// <summary>
+        /// A static event that gets fired when a Mapinfo session is created using the wrapper.
+        /// </summary>
+        public static event EventHandler SessionCreated;
+
+        /// <summary>
+        /// Event that is fired when the session has be closed.
+        /// </summary>
+        public event EventHandler SessionEnded;
+
+
+        public MapinfoSession(IMapinfoWrapper wrapedInstance)
         {
-            this.mapinfo = mapinfoAPI;
+            this.mapinfo = wrapedInstance;
             this.LoadOptions = null;
         }
 
@@ -48,21 +53,6 @@ namespace MapinfoWrapper.Mapinfo
                     this.buttonpads = new ButtonPadCollection(this);
                 }
                 return this.buttonpads;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the underlying Mapinfo callback object
-        /// </summary>
-        public MapinfoCallback Callback
-        {
-            get
-            {
-                return this.mapinfo.Callback;
-            }
-            set
-            {
-                this.mapinfo.Callback = value;
             }
         }
 
@@ -93,13 +83,13 @@ namespace MapinfoWrapper.Mapinfo
                 if (this.tables == null)
                 {
                     this.tables = new TableCollection(this);
-                    this.tables.RefreshList();
                 }
                 return this.tables;
             }
         }
 
         private WindowCollection windows;
+
         public WindowCollection Windows
         {
             get
@@ -113,7 +103,9 @@ namespace MapinfoWrapper.Mapinfo
         }
 
         /// <summary>
-        /// Gets or sets the visiblity of the current MapinfoSession
+        /// Gets or sets the visiblity of the current MapInfo instance,
+        /// if you are using a instance of MapInfo that is loaded when calling from MapBasic into .Net
+        /// this property will throw a NotSupportedException.
         /// </summary>
         public bool Visible
         {
@@ -157,23 +149,40 @@ namespace MapinfoWrapper.Mapinfo
             }
         }
 
-        public delegate void MapinfoSessionHandler(MapinfoSession session);
-
         /// <summary>
-        /// A static event that gets fired when a Mapinfo session is created using the wrapper.
+        /// Evaluates a command string in MapInfo.
         /// </summary>
-        public static event MapinfoSessionHandler SessionCreated;
-        public event Action SessionEnded;
-
-        /// <summary>
-        /// Runs and evaluates a command string in mapinfo.
-        /// </summary>
+        /// <para>This method will never throw a <see cref="COMException"/> if MapInfo hits a error but rather return String.Empty.  This desgin decision was made
+        /// because the MapInfo instance that is returned from MapInfo.InteropServices.MapInfoApplication does not thorw exceptions, you have to check
+        /// the LastErrorMessage if you want to find the last error.  In order to reduce overhead of calling Eval, this method does not check for LastErrorMessage or 
+        /// throw exceptions.  This is so that both a COM invoked MapInfo and one that is used from the MapInfo.InteropServices.MapInfoApplication have the same side effects
+        /// through this method.</para>
+        /// <para>If you need to catch exceptions, you can use the TryDo method which will throw on exceptions and errors.</para>
         /// <param name="commandString">The command string to run in Mapinfo.</param>
-        /// <returns>The result of the eval command in Mapinfo.</returns>
+        /// <returns>The result of the command string, or String.Empty if an error was throw.</returns>
         public string Eval(string commandString)
         {
             Guard.AgainstNullOrEmpty(commandString, "commandString");
 
+            try
+            {
+                string value = this.mapinfo.Eval(commandString);
+                return value;
+            }
+            catch (COMException comex)
+            {
+                return String.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Evaluates a command string in MapInfo.
+        /// <para>This method will throw a <see cref="MapinfoException"/> if any errors are found when calling LastErrorCode or COMExceptions,
+        /// this method will have a slight overhead because it checks LastErrorCode on every pass.</para>
+        /// </summary>
+        /// <param name="commandString">The result of the command string.</param>
+        public string TryEval(string commandString)
+        {
             try
             {
                 string value = this.mapinfo.Eval(commandString);
@@ -191,40 +200,12 @@ namespace MapinfoWrapper.Mapinfo
         }
 
         /// <summary>
-        /// Trys to evaluate a command string in MapInfo, this method will not throw exceptions but return true if the
-        /// command was successful.
-        /// </summary>
-        /// <param name="commandString">The command string to run in Mapinfo.</param>
-        /// <param name="value"></param>
-        /// <returns> When this method returns, <paramref name="value"/> contains the string value returned from MapInfo.
-        /// If the method fails <paramref name="value"/> will be null and the return value is false.</returns>
-        public bool TryEval(string commandString, out string value)
-        {
-            try
-            {
-                value = this.Eval(commandString);
-                return true;
-            }
-            catch (COMException)
-            {
-                value = string.Empty;
-                return false;
-            }
-            catch (MapinfoException)
-            {
-                value = string.Empty;
-                return false;
-            }
-                
-        }
-
-        /// <summary>
         /// Runs a command against the underlying Mapinfo instance.
         /// <para>This method will never throw a <see cref="COMException"/> if MapInfo hits a error.  This desgin decision was made
-        /// because the MapInfo instance that is returned from MapInfo.InteropServices.MapInfoApplication does not thorw exception, you have to check
+        /// because the MapInfo instance that is returned from MapInfo.InteropServices.MapInfoApplication does not thorw exceptions, you have to check
         /// the LastErrorMessage if you want to find the last error.  In order to reduce overhead of calling Do, this method does not check for LastErrorMessage or 
-        /// throw exceptions.  This is so that both a COM invoked MapInfo and one that is used from the MapInfo.InteropServices.MapInfoApplication have the same result through
-        /// this method.</para>
+        /// throw exceptions.  This is so that both a COM invoked MapInfo and one that is used from the MapInfo.InteropServices.MapInfoApplication have the same side effects
+        /// through this method.</para>
         /// <para>If you need to catch exceptions, you can use the TryDo method which will throw on exceptions and errors.</para>
         /// </summary>
         /// <param name="commandString">The command string to run in Mapinfo.</param>
@@ -287,7 +268,6 @@ namespace MapinfoWrapper.Mapinfo
         public Workspace OpenWorkspace(string workspacePath)
         {
             this.Do("Run Application {0}".FormatWith(workspacePath.InQuotes()));
-            this.Tables.RefreshList();
             return new Workspace();
         }
 
@@ -301,19 +281,19 @@ namespace MapinfoWrapper.Mapinfo
             GC.Collect();
 
             if (this.SessionEnded != null)
-                this.SessionEnded();
+                this.SessionEnded(this,EventArgs.Empty);
         }
 
         /// <summary>
         /// Returns a <see cref="IEnumerable{T}"/> containing a list of all installed versions
         /// of Mapinfo.
         /// </summary>
-        /// <returns>A collection of int matching the versions of Mapinfo installed.</returns>
+        /// <returns>A IEnumerable of ints matching the versions of Mapinfo installed.</returns>
         public static IEnumerable<int> GetInstalledMapinfoVersions()
         {
-            string registryKey = @"SOFTWARE\MapInfo\MapInfo\Professional";
+            const string registryKey = @"SOFTWARE\MapInfo\MapInfo\Professional";
 
-            Microsoft.Win32.RegistryKey prokey = Registry.LocalMachine.OpenSubKey(registryKey);
+            RegistryKey prokey = Registry.LocalMachine.OpenSubKey(registryKey);
 
             if (prokey == null)
                 return null;
@@ -336,42 +316,45 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
         public static MapinfoSession CreateMapInfoInstance()
         {
-
-            DMapInfo instance = CreateMapinfoInstance();
-            COMMapinfo mapinfo = new COMMapinfo(instance);
+            IMapinfoWrapper mapinfo = COMMapinfo.CreateMapInfoInstance();
             MapinfoSession session = new MapinfoSession(mapinfo);
             if (SessionCreated != null)
-                SessionCreated(session);
+                SessionCreated(session,EventArgs.Empty);
             return session;
         }
 
-        private static DMapInfo CreateMapinfoInstance()
-        {
-            Type mapinfotype = Type.GetTypeFromProgID("Mapinfo.Application");
-            DMapInfo instance = (DMapInfo)Activator.CreateInstance(mapinfotype);
-            return instance;
-        }
-
+        /// <summary>
+        /// Returns the instance of MapInfo that was loaded if .NET was called from MapBasic,
+        /// this method returns the same instance that MapInfo.MiPro.Interop.InteropServices.MapInfoApplication in
+        /// the miadm.dll would.
+        /// </summary>
+        /// <returns></returns>
         public static MapinfoSession GetLoadedInstance()
         {
             return new MapinfoSession(MapBasicInvokedMapInfo.CreateMapInfoFromInstance());
         }
 
-        #region IMapinfoWrapper Members
-
-
+        /// <summary>
+        /// Returns the last error code that was throw from MapInfo.
+        /// </summary>
         public int LastErrorCode
         {
             get { return this.mapinfo.LastErrorCode; }
         }
 
+        /// <summary>
+        /// Returns the last error message that was throw from MapInfo.
+        /// </summary>
         public string LastErrorMessage
         {
             get { return this.mapinfo.LastErrorMessage; }
         }
 
-        #endregion
-
+        /// <summary>
+        /// Registers a object as a callback object for MapInfo.
+        /// </summary>
+        /// <param name="obj">The object to set as the MapInfo callback object, the object must use the <see cref="ComVisibleAttribute"/> in order to recive updates from
+        /// MapInfo.  The base class <see cref=""/>is included with the wrapper that provides basic events from Map</param>
         public void RegisterCallback(object obj)
         {
             this.mapinfo.RegisterCallback(obj);

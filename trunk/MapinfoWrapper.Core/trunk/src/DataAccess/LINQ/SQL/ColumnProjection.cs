@@ -1,7 +1,7 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
-{
-    using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
+namespace MapinfoWrapper.DataAccess.LINQ.SQL
+{
     internal class ColumnProjection
     {
         internal string Columns;
