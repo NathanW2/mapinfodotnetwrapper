@@ -1,19 +1,15 @@
-﻿namespace MapinfoWrapper.DataAccess
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.DataAccess.RowOperations;
+﻿using MapinfoWrapper.Mapinfo;
+using MapinfoWrapper.DataAccess.RowOperations;
 
-    internal class MaterializerFactory
+namespace MapinfoWrapper.DataAccess
+{
+    public class MaterializerFactory
     {
         private MapinfoSession misession;
 
-        public MaterializerFactory(MapinfoSession MISession)
+        public MaterializerFactory(MapinfoSession miSession)
         {
-            this.misession = MISession;
+            this.misession = miSession;
         }
 
         public EntityMaterializer CreateMaterializerFor(string tableName, IDataReader reader)

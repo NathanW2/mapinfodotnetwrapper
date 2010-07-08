@@ -1,19 +1,17 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Text;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.Geometries;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.Mapinfo;
-    using System.Linq;
-    using MapinfoWrapper.DataAccess.Row.Entities;
-    using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.DataAccess.LINQ.SQL;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.DataAccess.Entities;
+using MapinfoWrapper.Geometries;
+using MapinfoWrapper.Core;
+using MapinfoWrapper.Mapinfo;
+using System.Linq;
+using MapinfoWrapper.DataAccess.RowOperations;
 
+namespace MapinfoWrapper.DataAccess.LINQ.SQL
+{
     public class SqlStringGenerator
     {
         private MapinfoSession mapinfo;

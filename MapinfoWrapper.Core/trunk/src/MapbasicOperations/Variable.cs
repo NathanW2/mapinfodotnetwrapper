@@ -1,10 +1,10 @@
-﻿namespace MapinfoWrapper.MapbasicOperations
-{
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.Mapinfo;
-    using System;
-    using MapinfoWrapper.Exceptions;
+﻿using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Mapinfo;
+using System;
+using MapinfoWrapper.Exceptions;
 
+namespace MapinfoWrapper.MapbasicOperations
+{
     /// <summary>
     /// Represents a Mapbasic variable.
     /// To declare a new variable use VariableFactory.
@@ -14,11 +14,11 @@
         private readonly MapinfoSession mapinfo;
         private readonly VariableType type;
 
-        internal Variable(string name, VariableType declareAs,MapinfoSession MISession)
+        internal Variable(string name, VariableType declareAs,MapinfoSession miSession)
         {
             this.Name = name;
             this.type = declareAs;
-            this.mapinfo = MISession;
+            this.mapinfo = miSession;
         }
 
         /// <summary>
@@ -33,8 +33,7 @@
         {
             get
             {
-                string outvalue;
-                return this.mapinfo.TryEval(this.Name, out outvalue);
+                throw new NotImplementedException();
             }
         }
 

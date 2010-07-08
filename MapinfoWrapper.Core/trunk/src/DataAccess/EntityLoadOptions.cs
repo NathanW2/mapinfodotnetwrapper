@@ -1,10 +1,10 @@
-﻿namespace MapinfoWrapper.DataAccess
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
+namespace MapinfoWrapper.DataAccess
+{
     /// <summary>
     /// Represents the entity loading options for the supplied types.
     /// <para>This object should be used if you don't need to use weak typed column names with a entity as it will speed up
@@ -13,13 +13,14 @@
     public class EntityLoadOptions
     {
         List<Type> nobackingtypes = new List<Type>();
+
         public List<Type> HasNoBackingStore
         {
             get { return this.nobackingtypes; }
         }
 
         /// <summary>
-        /// Adds the supplied <see cref="{T}"/> to the list objects to ignore loading the backing store for.
+        /// Adds the supplied <typeparamref name="TEntity"/> to the list objects to ignore loading the backing store for.
         /// 
         /// <para>Not loading the backing store will dramatically increase the time it takes for the wrapper to fill entities 
         /// with data from the row in the table. Only the properties in entity that represent columns in the table will be loaded.</para>
@@ -32,9 +33,8 @@
         ///     myentity["ColumnName"]
         /// </code>
         /// </para>
-        /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         public EntityLoadOptions NoBackingStore<TEntity>()
         {

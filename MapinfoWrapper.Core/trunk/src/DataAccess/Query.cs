@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
 
     public sealed class LinqQuery<T> : IQueryResult<T>, IQueryable<T>
     {

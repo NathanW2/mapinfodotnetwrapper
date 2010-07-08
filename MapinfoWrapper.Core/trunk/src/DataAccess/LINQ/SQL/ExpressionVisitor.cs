@@ -1,16 +1,12 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+
+namespace MapinfoWrapper.DataAccess.LINQ.SQL
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq.Expressions;
-
-    internal abstract class ExpressionVisitor
+    public abstract class ExpressionVisitor
     {
-        protected ExpressionVisitor()
-        {
-        }
-
         protected virtual Expression Visit(Expression exp)
         {
             if (exp == null)

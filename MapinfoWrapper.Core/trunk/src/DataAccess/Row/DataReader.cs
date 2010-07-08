@@ -5,7 +5,6 @@
     using System.Reflection;
     using MapinfoWrapper.Core;
     using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using MapinfoWrapper.Geometries;
     using MapinfoWrapper.MapbasicOperations;
     using MapinfoWrapper.Mapinfo;

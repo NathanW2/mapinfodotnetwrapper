@@ -75,13 +75,13 @@ namespace MapinfoWrapper.MapOperations
         /// <summary>
         /// Gets the window from Mapinfo using the window ID.
         /// </summary>
-        /// <param name="name">The ID of the window to return from MapInfo.</param>
+        /// <param name="windowId">The ID of the window to return from MapInfo.</param>
         /// <returns>A new <see cref="Window"/> where the ID equals the ID supplied.</returns>
-        public Window this[int windowID]
+        public Window this[int windowId]
         {
             get
             {
-                return new Window(windowID, this.mapinfo);
+                return new Window(windowId, this.mapinfo);
             }
         }
 

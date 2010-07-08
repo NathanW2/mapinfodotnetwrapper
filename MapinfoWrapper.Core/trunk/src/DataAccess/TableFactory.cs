@@ -1,10 +1,11 @@
+using MapinfoWrapper.DataAccess.Entities;
+using MapinfoWrapper.Mapinfo;
+using System.Linq;
+using MapinfoWrapper.DataAccess.Row;
+using MapinfoWrapper.DataAccess.LINQ;
+
 namespace MapinfoWrapper.DataAccess
 {
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
-    using MapinfoWrapper.Mapinfo;
-    using System.Linq;
-    using MapinfoWrapper.DataAccess.Row;
-    using MapinfoWrapper.DataAccess.LINQ;
 
     /// <summary>
     /// A factory used to create new <see cref="Table"/> objects.
@@ -13,9 +14,9 @@ namespace MapinfoWrapper.DataAccess
     {
         private readonly MapinfoSession misession;
 
-        public TableFactory(MapinfoSession MISession)
+        public TableFactory(MapinfoSession miSession)
         {
-            this.misession = MISession;
+            this.misession = miSession;
         }
 
         public Table<TEntity> GetTableFor<TEntity>(string tableName)

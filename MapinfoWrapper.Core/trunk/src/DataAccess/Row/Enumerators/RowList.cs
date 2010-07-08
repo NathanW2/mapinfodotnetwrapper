@@ -1,8 +1,9 @@
-﻿namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
+﻿using MapinfoWrapper.DataAccess.Entities;
+
+namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
 {
     using System.Collections;
     using System.Collections.Generic;
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using MapinfoWrapper.Mapinfo;
 
     internal class RowList<TTabeDef> : IEnumerable<TTabeDef>

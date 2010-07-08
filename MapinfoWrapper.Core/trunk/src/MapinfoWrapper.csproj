@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\EventArg.cs" />
     <Compile Include="Core\Globals.cs" />
     <Compile Include="Core\Guard.cs" />
     <Compile Include="Core\Wrappers\MapperInfoWrapper.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="DataAccess\LINQ\SQL\ColumnWithData.cs" />
     <Compile Include="DataAccess\LINQ\SQL\Query.cs" />
     <Compile Include="DataAccess\LINQ\SQL\UpdateQuery.cs" />
-    <Compile Include="DataAccess\Row\Entities\MapInfoColumnAttribute.cs" />
+    <Compile Include="DataAccess\Entities\MapInfoColumnAttribute.cs" />
     <Compile Include="Exceptions\MapbasicVariableException.cs" />
     <Compile Include="MapbasicOperations\IVariableFactory.cs" />
     <Compile Include="MapbasicOperations\VariableFactory.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="DataAccess\LINQ\SQL\UpdateExpression.cs" />
     <Compile Include="DataAccess\MaterializerFactory.cs" />
     <Compile Include="DataAccess\Row\DataReaderFactory.cs" />
-    <Compile Include="DataAccess\Row\Entities\EntityChangeSet.cs" />
+    <Compile Include="DataAccess\Entities\EntityChangeSet.cs" />
     <Compile Include="DataAccess\TableChangeManager.cs" />
     <Compile Include="DataAccess\TableFactory.cs" />
     <Compile Include="Exceptions\MapbasicException.cs" />
@@ -113,8 +114,8 @@
     <Compile Include="DataAccess\LINQ\SQL\Evaluator.cs" />
     <Compile Include="DataAccess\LINQ\SQL\ExpressionVisitor.cs" />
     <Compile Include="DataAccess\LINQ\SQL\SqlStringGenerator.cs" />
-    <Compile Include="DataAccess\Row\Entities\BaseEntity.cs" />
-    <Compile Include="DataAccess\Row\Entities\MappableEntity.cs" />
+    <Compile Include="DataAccess\Entities\BaseEntity.cs" />
+    <Compile Include="DataAccess\Entities\MappableEntity.cs" />
     <Compile Include="DataAccess\Row\Enumerators\ProjectionReader.cs" />
     <Compile Include="DataAccess\Query.cs" />
     <Compile Include="DataAccess\LINQ\SQL\QueryTranslator.cs" />
@@ -134,8 +135,6 @@
     <Compile Include="Mapinfo\IMapinfoWrapper.cs" />
     <Compile Include="LayerOperations\Layer.cs" />
     <Compile Include="Mapinfo\Internals\DMapinfoCOMInterface.cs" />
-    <Compile Include="Mapinfo\Internals\IMapinfo.cs" />
-    <Compile Include="Mapinfo\Internals\IMapinfo2.cs" />
     <Compile Include="Mapinfo\MapbasicInvokedMapinfo.cs" />
     <Compile Include="Mapinfo\OleMapinfo.cs" />
     <Compile Include="MapOperations\MapWindow.cs" />

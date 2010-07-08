@@ -1,15 +1,14 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ.SQLBuilders
-{
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Text;
-    using MapinfoWrapper.DataAccess.RowOperations;
+﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Text;
+using MapinfoWrapper.DataAccess.RowOperations;
 
+namespace MapinfoWrapper.DataAccess.LINQ.SQL
+{
     internal class ColumnProjector : ExpressionVisitor
     {
         StringBuilder sb;
-        int iColumn;
         ParameterExpression datareader;
         static MethodInfo getvaluemethodinfo;
 

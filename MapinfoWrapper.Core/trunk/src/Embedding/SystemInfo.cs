@@ -1,9 +1,10 @@
-﻿namespace MapinfoWrapper.Embedding
-{
-    using System;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.Mapinfo;
+﻿using System;
+using MapinfoWrapper.Core.Extensions;
+using MapinfoWrapper.Mapinfo;
 
+
+namespace MapinfoWrapper.Embedding
+{
     /// <summary>
     /// Contains methods for retiving application information about
     /// the current running instance of Mapinfo.
@@ -16,10 +17,10 @@
         /// Creates a new SystemInfo object used to retive information
         /// about the current instace of mapinfo.
         /// </summary>
-        /// <param name="mapinfoWrapper">A wrapper object containing the running instace of mapinfo.</param>
-        public SystemInfo(MapinfoSession MISession)
+        /// <param name="miSession">A wrapper object containing the running instace of mapinfo.</param>
+        public SystemInfo(MapinfoSession miSession)
         {
-            this.misession = MISession;
+            this.misession = miSession;
         }
 
         /// <summary>

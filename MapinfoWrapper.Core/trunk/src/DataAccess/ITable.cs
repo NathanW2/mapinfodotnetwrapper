@@ -1,6 +1,7 @@
-﻿namespace MapinfoWrapper.DataAccess
+﻿using MapinfoWrapper.DataAccess.Entities;
+
+namespace MapinfoWrapper.DataAccess
 {
-    using MapinfoWrapper.DataAccess.RowOperations.Entities;
     using System.Collections.Generic;
 
     public interface ITable
