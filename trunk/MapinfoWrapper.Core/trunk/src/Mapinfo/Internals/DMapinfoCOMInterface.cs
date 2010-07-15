@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace MapinfoWrapper.Mapinfo.Internals
+namespace MapInfo.Wrapper.Mapinfo.Internals
 {
     [TypeLibType(4096)]
     [InterfaceType(2)]

@@ -1,14 +1,15 @@
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.Exceptions;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Exceptions;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.Core.Wrappers
+
+namespace MapInfo.Wrapper.Core.Wrappers
 {
     public class MapbasicWrapper
     {
-        private readonly IMapinfoWrapper session;
+        private readonly IMapInfoWrapper session;
 
-        public MapbasicWrapper(IMapinfoWrapper miSession)
+        public MapbasicWrapper(IMapInfoWrapper miSession)
         {
             this.session = miSession;
         }

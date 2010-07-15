@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace MapinfoWrapper.Exceptions
+namespace MapInfo.Wrapper.Exceptions
 {
     public class MapbasicVariableException : MapbasicException
     {

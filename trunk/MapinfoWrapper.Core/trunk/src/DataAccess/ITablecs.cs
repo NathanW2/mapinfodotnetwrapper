@@ -1,8 +1,7 @@
-﻿namespace MapinfoWrapper.DataAccess
-{
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System.Collections.Generic;
 
+namespace MapInfo.Wrapper.DataAccess
+{
     public interface ITable<TTableDef> : ITable, IEnumerable<TTableDef>
         where TTableDef : new()
     {

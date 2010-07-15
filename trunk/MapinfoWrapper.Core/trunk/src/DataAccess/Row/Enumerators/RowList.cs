@@ -1,18 +1,17 @@
-﻿using MapinfoWrapper.DataAccess.Entities;
+﻿using MapInfo.Wrapper.DataAccess;
+using MapInfo.Wrapper.DataAccess.Entities;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
+namespace MapInfo.Wrapper.DataAccess.Row.Enumerators
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using MapinfoWrapper.Mapinfo;
-
     internal class RowList<TTabeDef> : IEnumerable<TTabeDef>
         where TTabeDef : BaseEntity, new()
     {
-        private readonly IDataReader reader;
+        private readonly IMapInfoDataReader reader;
         private readonly EntityMaterializer entityfactory;
 
-        public RowList(IDataReader reader, EntityMaterializer factory)
+        public RowList(IMapInfoDataReader reader, EntityMaterializer factory)
         {
             this.reader = reader;
             this.entityfactory = factory;

@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.Embedding
+﻿namespace MapInfo.Wrapper.Embedding
 {
     public enum SystemInfoEnum
     {

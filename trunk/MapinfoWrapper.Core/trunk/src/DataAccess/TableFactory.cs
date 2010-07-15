@@ -1,10 +1,8 @@
-using MapinfoWrapper.DataAccess.Entities;
-using MapinfoWrapper.Mapinfo;
-using System.Linq;
-using MapinfoWrapper.DataAccess.Row;
-using MapinfoWrapper.DataAccess.LINQ;
+using MapInfo.Wrapper.DataAccess.Entities;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.DataAccess
+
+namespace MapInfo.Wrapper.DataAccess
 {
 
     /// <summary>
@@ -12,9 +10,9 @@ namespace MapinfoWrapper.DataAccess
     /// </summary>
     internal class TableFactory
     {
-        private readonly MapinfoSession misession;
+        private readonly MapInfoSession misession;
 
-        public TableFactory(MapinfoSession miSession)
+        public TableFactory(MapInfoSession miSession)
         {
             this.misession = miSession;
         }

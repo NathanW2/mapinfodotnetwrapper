@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using MapinfoWrapper.DataAccess.LINQ.SQL;
-using MapinfoWrapper.DataAccess.Row;
-using MapinfoWrapper.DataAccess.RowOperations;
-using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-using MapinfoWrapper.Mapinfo;
+using MapInfo.Wrapper.DataAccess.LINQ.SQL;
+using MapInfo.Wrapper.DataAccess.Row;
+using MapInfo.Wrapper.DataAccess.Row.Enumerators;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.DataAccess.LINQ
+
+namespace MapInfo.Wrapper.DataAccess.LINQ
 {
     public class MapinfoProvider : IQueryProvider
     {
-        private readonly MapinfoSession misession;
+        private readonly MapInfoSession misession;
         private readonly MaterializerFactory entityfactory;
         private readonly DataReaderFactory readerfactory;
 
-        public MapinfoProvider(MapinfoSession MISession, MaterializerFactory factory)
+        public MapinfoProvider(MapInfoSession miSession, MaterializerFactory factory)
         {
-            this.misession = MISession;
+            this.misession = miSession;
             this.entityfactory = factory;
-            this.readerfactory = new DataReaderFactory(MISession);
+            this.readerfactory = new DataReaderFactory(miSession);
         }
 
         public object Execute(Expression expression)
@@ -35,8 +35,11 @@ namespace MapinfoWrapper.DataAccess.LINQ
 
             Type elementType = TypeSystem.GetElementType(expression.Type);
 
-            IDataReader reader = this.readerfactory.GetReaderFor(result.TableName);
-            EntityMaterializer materializer = this.entityfactory.CreateMaterializerFor(result.TableName, reader);
+
+            IMapInfoDataReader reader = this.readerfactory.GetReaderFor(result.TableName);
+            ITable table = this.misession.Tables.GetTable(result.TableName);
+
+            EntityMaterializer materializer = this.entityfactory.CreateMaterializerFor(table, reader);
 
             if (result.Projector != null)
             {
@@ -45,14 +48,12 @@ namespace MapinfoWrapper.DataAccess.LINQ
                 return Activator.CreateInstance(typeof(ProjectionReader<>).MakeGenericType(elementType),
                                                 new object[] { reader, projector });
             }
-            else
-            {
-                return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
-                                                new object[] { reader, materializer });
-            }
+
+            return Activator.CreateInstance(typeof(RowList<>).MakeGenericType(elementType),
+                                            new object[] { reader, materializer });
         }
 
-        public string GetQueryString(System.Linq.Expressions.Expression expression)
+        public string GetQueryString(Expression expression)
         {
             return this.Translate(expression).SQLCommand;
         }

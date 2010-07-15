@@ -1,7 +1,7 @@
-﻿namespace MapinfoWrapper.LayerOperations
-{
-    using MapinfoWrapper.Mapinfo;
+﻿using MapInfo.Wrapper.Mapinfo;
 
+namespace MapInfo.Wrapper.LayerOperations
+{
     /// <summary>
     /// A Layer object that gives you access to methods and properties for a single Mapinfo layer.
     /// 
@@ -12,18 +12,18 @@
     {
         private readonly int layernumber;
         private readonly string layername;
-        private readonly MapinfoSession wrapper;
+        private readonly MapInfoSession wrapper;
 
-        public Layer(MapinfoSession mapinfoInstance, int layerNumber)
+        public Layer(MapInfoSession mapInfoInstance, int layerNumber)
         {
             this.layernumber = layerNumber;
-            this.wrapper = mapinfoInstance;
+            this.wrapper = mapInfoInstance;
         }
 
-        public Layer(MapinfoSession mapinfoInstance, string layerName)
+        public Layer(MapInfoSession mapInfoInstance, string layerName)
         {
             this.layername = layerName;
-            this.wrapper = mapinfoInstance;
+            this.wrapper = mapInfoInstance;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.Geometries
+﻿namespace MapInfo.Wrapper.Geometries
 {
     public enum ObjectInfoEnum
     {

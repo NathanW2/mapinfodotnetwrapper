@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MapinfoWrapper.DataAccess
+namespace MapInfo.Wrapper.DataAccess
 {
     public interface IQueryResult<T> : IEnumerable<T>
     {

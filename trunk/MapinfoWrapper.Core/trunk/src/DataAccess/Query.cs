@@ -1,57 +1,43 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ
+﻿using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.DataAccess.Entities;
+using MapInfo.Wrapper.Mapinfo;
+
+namespace MapInfo.Wrapper.DataAccess
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-
-    public sealed class LinqQuery<T> : IQueryResult<T>, IQueryable<T>
+    public class Query
     {
-        public LinqQuery(IQueryProvider provider, Expression expression)
+        private readonly string querystring;
+
+        public Query(IMapInfoWrapper miSession,string queryString)
         {
-            this.provider = provider;
-            this.expression = expression;
+            Guard.AgainstNull(miSession, "session");
+            this.MapInfoSession = miSession;
+            this.querystring = queryString;
         }
 
-        public IEnumerator<T> GetEnumerator()
+        /// <summary>
+        /// Executes a query with no return result, eg INSERT and UPDATE statments.
+        /// </summary>
+        public virtual void ExecuteNonQuery()
         {
-            IQueryable<T> query = (IQueryable<T>)this;
-            return ((IEnumerable<T>)query.Provider.Execute(query.Expression))
-                                                 .GetEnumerator();
+            this.MapInfoSession.Do(querystring);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        /// <summary>
+        /// Returns the query string that will be executed when this query is run.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetQueryString()
         {
-            return this.GetEnumerator();
+            return this.querystring;
         }
 
-        Type IQueryable.ElementType
-        {
-            get { return typeof(T); }
-        }
+        public IMapInfoWrapper MapInfoSession { get; protected set; }
 
-        private Expression expression;
-        Expression IQueryable.Expression
+        public SelectQuery<TEntity> ToSelect<TEntity>()
+            where TEntity : BaseEntity, new()
         {
-            get { return this.expression; }
+            return new SelectQuery<TEntity>(this.MapInfoSession,this.GetQueryString());
         }
-
-        private IQueryProvider provider;
-        IQueryProvider IQueryable.Provider 
-        {
-            get { return this.provider; }
-        }
-
-        public string GetQueryString()
-        {
-            IQueryable<T> query = (IQueryable<T>)this;
-            return ((MapinfoProvider)query.Provider).GetQueryString(query.Expression);
-        }
-
-        public override string ToString()
-        {
-            return this.GetQueryString();
-        }
-
     }
 }

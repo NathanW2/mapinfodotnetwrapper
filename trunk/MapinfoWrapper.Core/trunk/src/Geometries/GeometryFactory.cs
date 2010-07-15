@@ -1,27 +1,27 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.DataAccess;
-    using MapinfoWrapper.MapbasicOperations;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.Wrapper.Geometries;
+﻿using MapInfo.Wrapper.DataAccess;
+using MapInfo.Wrapper.Geometries.Lines;
+using MapInfo.Wrapper.Geometries.Points;
+using MapInfo.Wrapper.MapbasicOperations;
+using MapInfo.Wrapper.Mapinfo;
 
-	/// <summary>
+
+namespace MapInfo.Wrapper.Geometries
+{
+    /// <summary>
 	/// A geometry factory that can be used to create new geometry objects.
 	/// </summary>
     internal class GeometryFactory : IGeometryFactory
     {
-        private readonly MapinfoSession misession;
+        private readonly MapInfoSession misession;
         private readonly VariableFactory variablefactory;
 
-	    public GeometryFactory(MapinfoSession MISession)
+	    public GeometryFactory(MapInfoSession MISession)
 	    {
 	        this.misession = MISession;
             this.variablefactory = new VariableFactory(MISession);
 	    }
 
-        internal GeometryFactory(MapinfoSession MISession, VariableFactory variableFactory)
+        internal GeometryFactory(MapInfoSession MISession, VariableFactory variableFactory)
         {
             this.misession = MISession;
             this.variablefactory = variableFactory;

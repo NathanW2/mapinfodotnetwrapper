@@ -67,32 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreTests\InternalsTests\VariableFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WrapperTest\DataAccess\SqlStringGeneratorTests.cs" />
-    <Compile Include="WrapperTest\DataAccess\TableEqualityTests.cs" />
-    <Compile Include="WrapperTest\Embedding\ButtonPadTests.cs" />
-    <Compile Include="WrapperTest\Embedding\ControlExtensionTests.cs" />
-    <Compile Include="WrapperTest\Embedding\MapinfoWindowHandleTests.cs" />
-    <Compile Include="WrapperTest\Embedding\SystemInfoTests.cs" />
-    <Compile Include="WrapperTest\LayerOperations\LayerTest.cs" />
-    <Compile Include="WrapperTest\MapbasicOperations\MapbasicObjectVariableTests.cs" />
-    <Compile Include="WrapperTest\MapinfoFactoryTest\COMMapinfo.cs" />
-    <Compile Include="WrapperTest\MapinfoFactoryTest\MapbasicInvokedMapinfoTest.cs" />
-    <Compile Include="WrapperTest\MapinfoFactoryTest\MapinfoFactoryTests.cs" />
-    <Compile Include="WrapperTest\MapOperations\MapTests.cs" />
-    <Compile Include="WrapperTest\ObjectOperations\GeometryTests.cs" />
-    <Compile Include="WrapperTest\ObjectOperations\LineTests.cs" />
-    <Compile Include="WrapperTest\ObjectOperations\Points\PointTests.cs" />
-    <Compile Include="WrapperTest\DataAccess\GenericTableTests.cs" />
-    <Compile Include="WrapperTest\DataAccess\OpenTableCommandBuilderTests.cs" />
-    <Compile Include="WrapperTest\DataAccess\Row\DataReaderTests.cs" />
-    <Compile Include="WrapperTest\DataAccess\Row\RowCollectionTests.cs" />
-    <Compile Include="WrapperTest\DataAccess\Row\RowEnumeratorTest.cs" />
-    <Compile Include="WrapperTest\DataAccess\SqlUpdateGeneratorTests .cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\MapinfoWrapper.csproj">
+    <ProjectReference Include="..\src\MapInfo.Wrapper.csproj">
       <Project>{FDA41A1F-5922-493C-AD86-DDF8D447023E}</Project>
       <Name>MapinfoWrapper</Name>
     </ProjectReference>
@@ -102,9 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MapinfoWrapper.Test.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WrapperTest\ExtensionTest\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

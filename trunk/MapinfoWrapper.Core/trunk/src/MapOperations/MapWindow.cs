@@ -1,21 +1,19 @@
-﻿namespace MapinfoWrapper.MapOperations
-{
-    using System;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.MapOperations;
-    using MapinfoWrapper.Exceptions;
-    using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Wrappers;
+﻿using System;
+using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.Wrappers;
+using MapInfo.Wrapper.Exceptions;
+using MapInfo.Wrapper.Mapinfo;
 
+namespace MapInfo.Wrapper.MapOperations
+{
     public class MapWindow : Window
     {
         private MapperInfoWrapper infowrapper;
 
-        public MapWindow(int windowID, MapinfoSession mapinfo)
-            : base(windowID, mapinfo)
+        public MapWindow(int windowID, MapInfoSession map_info)
+            : base(windowID, map_info)
         {
-            this.infowrapper = new MapperInfoWrapper(mapinfo);
+            this.infowrapper = new MapperInfoWrapper(map_info);
         }
 
         /// <summary>
@@ -25,7 +23,7 @@ using MapinfoWrapper.Core.Wrappers;
         {
             get
             {
-                string strvalue = base.mapinfo.Eval(String.Format("MapperInfo({0},3)", this.ID));
+                string strvalue = base.map_info.Eval(String.Format("MapperInfo({0},3)", this.ID));
                 double centerx;
                 if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out centerx))
                     return centerx;
@@ -45,7 +43,7 @@ using MapinfoWrapper.Core.Wrappers;
         {
             get
             {
-                string strvalue = this.mapinfo.Eval(String.Format("MapperInfo({0},4)", this.ID));
+                string strvalue = this.map_info.Eval(String.Format("MapperInfo({0},4)", this.ID));
                 double centery;
                 if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out centery))
                     return centery;
@@ -65,7 +63,7 @@ using MapinfoWrapper.Core.Wrappers;
         {
             get
             {
-                string strvalue = this.mapinfo.Eval(String.Format("MapperInfo({0},1)", this.ID));
+                string strvalue = this.map_info.Eval(String.Format("MapperInfo({0},1)", this.ID));
                 double zoom;
                 if (double.TryParse(strvalue, System.Globalization.NumberStyles.Number, Globals._usNumberFormat, out zoom))
                     return zoom;
@@ -108,7 +106,7 @@ using MapinfoWrapper.Core.Wrappers;
         public void UpdateZoom(double zoom, string unit)
         {
             string command = string.Format("Set Map Window {0} Zoom {1} Units \"{2}\"", this.ID, zoom, unit);
-            this.mapinfo.Do(command);
+            this.map_info.Do(command);
         }
 
         /// <summary>
@@ -119,7 +117,7 @@ using MapinfoWrapper.Core.Wrappers;
         /// <param name="y"></param>
         public void UpdateCenters(double x, double y)
         {
-            this.mapinfo.Do("Set Map Window " + this.ID +
+            this.map_info.Do("Set Map Window " + this.ID +
                                     " Center ( " + String.Format(Globals._usNumberFormat, "{0}", x) + " , " + String.Format(Globals._usNumberFormat, "{0}", y) + ")");
         }
     }

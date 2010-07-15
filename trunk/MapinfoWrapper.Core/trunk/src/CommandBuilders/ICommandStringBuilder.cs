@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.CommandBuilders
+﻿namespace MapInfo.Wrapper.CommandBuilders
 {
     /// <summary>
     /// An interface for objects needing to build a command string to send to mapinfo.

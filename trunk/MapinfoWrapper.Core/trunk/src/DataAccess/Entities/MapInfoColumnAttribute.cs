@@ -1,7 +1,8 @@
 ﻿using System;
-using MapinfoWrapper.DataAccess.RowOperations;
+using MapInfo.Wrapper.DataAccess.Row;
 
-namespace MapinfoWrapper.DataAccess.Entities
+
+namespace MapInfo.Wrapper.DataAccess.Entities
 {
     public class MapInfoColumnAttribute : Attribute
     {

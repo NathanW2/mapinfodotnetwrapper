@@ -1,28 +1,30 @@
 ﻿using System;
-using MapinfoWrapper.Mapinfo.Internals;
-namespace MapinfoWrapper.Mapinfo
+using MapInfo.Wrapper;
+using MapInfo.Wrapper.Mapinfo.Internals;
+
+namespace MapInfo.Wrapper.Mapinfo
 {
     /// <summary>
     /// Contains a running instance of Mapinfo COM object.  This is the lowest object
     /// in the MapinfoWrapper API, all objects in the MapinfoWrapper API take and 
     /// make calls through this object. 
     /// </summary>
-    public class COMMapinfo : IMapinfoWrapper
+    public class ComMapInfo : IMapInfoWrapper
     {
         private DMapInfo mapinfoinstance;
 
         /// <summary>
-        /// Creates a new instance of Mapinfo and returns a <see cref="MapinfoSession"/>
+        /// Creates a new instance of Mapinfo and returns a <see cref="MapInfoSession"/>
         /// which contains the instance. 
         /// <para>The returned objet can be passed into objects and
         /// methods that need it in the MapinfoWrapper API.</para>
         /// </summary>
-        /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
-        public static IMapinfoWrapper CreateMapInfoInstance()
+        /// <returns>A new <see cref="ComMapInfo"/> containing the running instance of Mapinfo.</returns>
+        public static IMapInfoWrapper CreateMapInfoInstance()
         {
             DMapInfo instance = CreateMapinfoInstance();
-            COMMapinfo mapinfo = new COMMapinfo(instance);
-            return mapinfo;
+            ComMapInfo map_info = new ComMapInfo(instance);
+            return map_info;
         }
 
         private static DMapInfo CreateMapinfoInstance()
@@ -37,15 +39,15 @@ namespace MapinfoWrapper.Mapinfo
         /// <b>This is only provided to allow for testing and should not be used outside of a test, if you need to
         /// create a new instance of Mapinfo please use <see cref="MapinfoSessionManager"/>
         /// 
-        /// <para>Initializes a new instance of the <see cref="COMMapinfo"/> class, which holds 
+        /// <para>Initializes a new instance of the <see cref="ComMapInfo"/> class, which holds 
         /// an instance of a currently running instance of Mapinfo's COM object.</para>
         /// <param name="mapinfoInstance">A currently running instance of Mapinfo's COM object.</param>
-        public COMMapinfo(DMapInfo mapinfoInstance)
+        public ComMapInfo(DMapInfo mapinfoInstance)
         {
             this.mapinfoinstance = mapinfoInstance;
         }
       
-        #region IMapinfoWrapper Members
+        #region IMapInfoWrapper Members
 
         /// <summary>
         /// Runs a specified Mapinfo command string in Mapinfo.
@@ -68,7 +70,7 @@ namespace MapinfoWrapper.Mapinfo
 
         /// <summary>
         /// Returns the underlying type of Mapinfo, this can be used to access to methods exposed by 
-        /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapinfoWrapper"/> interface.
+        /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapInfoWrapper"/> interface.
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
         public object GetUnderlyingMapinfoInstance()
@@ -78,8 +80,8 @@ namespace MapinfoWrapper.Mapinfo
 
         #endregion
 
-        private MapinfoCallback callback;
-        public MapinfoCallback Callback {
+        private MapInfoCallback callback;
+        public MapInfoCallback Callback {
             get 
             {
                 return this.callback;
@@ -103,7 +105,7 @@ namespace MapinfoWrapper.Mapinfo
             }
         }
 
-        #region IMapinfoWrapper Members
+        #region IMapInfoWrapper Members
 
         public int LastErrorCode
         {

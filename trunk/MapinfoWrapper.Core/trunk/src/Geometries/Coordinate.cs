@@ -1,8 +1,8 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using System;
-    using MapinfoWrapper.Core.Extensions;
+﻿using MapInfo.Wrapper.Core.Extensions;
+using System;
 
+namespace MapInfo.Wrapper.Geometries
+{
     /// <summary>
     /// A structure for holding X and Y pair.
     /// </summary>

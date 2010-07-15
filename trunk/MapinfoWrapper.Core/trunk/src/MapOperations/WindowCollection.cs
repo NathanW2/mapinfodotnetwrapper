@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.DataAccess;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.MapOperations
+namespace MapInfo.Wrapper.MapOperations
 {
     public class WindowCollection : IEnumerable<Window>
     {
         private List<Window> windows;
-        private readonly MapinfoSession mapinfo;
+        private readonly MapInfoSession map_info;
 
-        public WindowCollection(MapinfoSession session)
+        public WindowCollection(MapInfoSession session)
         {
-            this.mapinfo = session;
+            this.map_info = session;
             this.windows = new List<Window>();
         }
 
@@ -26,8 +26,8 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                int windowid = Convert.ToInt32(this.mapinfo.Eval("FrontWindow()"));
-                return new Window(windowid, this.mapinfo);
+                int windowid = Convert.ToInt32(this.map_info.Eval("FrontWindow()"));
+                return new Window(windowid, this.map_info);
             }
         }
 
@@ -37,19 +37,19 @@ namespace MapinfoWrapper.MapOperations
         /// <returns>s</returns>
         public IEnumerator<Window> GetEnumerator()
         {
-            int docwindows = Convert.ToInt32(this.mapinfo.Eval("NumWindows()"));
+            int docwindows = Convert.ToInt32(this.map_info.Eval("NumWindows()"));
             
             for (int windownumber = 1; windownumber < docwindows + 1; windownumber++)
             {
-                int ID = Convert.ToInt32(this.mapinfo.Eval("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
-                Window window = new Window(ID, this.mapinfo);
+                int ID = Convert.ToInt32(this.map_info.Eval("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
+                Window window = new Window(ID, this.map_info);
                 switch (window.Type)
                 {
                     case WindowTypes.mapper:
-                        yield return new MapWindow(ID, this.mapinfo);
+                        yield return new MapWindow(ID, this.map_info);
                         break;
                     case WindowTypes.Layout:
-                        yield return new LayoutWindow(ID, this.mapinfo);
+                        yield return new LayoutWindow(ID, this.map_info);
                         break;
                     default:
                         yield return window;
@@ -59,11 +59,11 @@ namespace MapinfoWrapper.MapOperations
 
             // TODO: Special windows eg toolbars, info etc are not handle correctly yet. Not sure if they need to be implemented here.
 
-            //int otherwindows = Convert.ToInt32(this.mapinfo.Eval("NumAllWindows()"));
+            //int otherwindows = Convert.ToInt32(this.map_info.Eval("NumAllWindows()"));
             //for (int windownumber = -1; windownumber < otherwindows - 1; windownumber--)
             //{
-            //    int ID = Convert.ToInt32(this.mapinfo.Evaluate("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
-            //    this.windows.Add(new Window(ID, this.mapinfo));
+            //    int ID = Convert.ToInt32(this.map_info.Evaluate("WindowInfo({0},{1})".FormatWith(windownumber, (int)WindowInfo.Windowid)));
+            //    this.windows.Add(new Window(ID, this.map_info));
             //}
         }
 
@@ -81,7 +81,7 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                return new Window(windowId, this.mapinfo);
+                return new Window(windowId, this.map_info);
             }
         }
 
@@ -116,8 +116,8 @@ namespace MapinfoWrapper.MapOperations
                 commandbuilder.AppendFormat("{0},".FormatWith(table.Name));
             }
             string command = commandbuilder.ToString().TrimEnd(',');
-            this.mapinfo.Do(command);
-            return new MapWindow(this.FrontWindow.ID, this.mapinfo);
+            this.map_info.Do(command);
+            return new MapWindow(this.FrontWindow.ID, this.map_info);
         }
 
         /// <summary>

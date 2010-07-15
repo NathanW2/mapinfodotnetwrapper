@@ -1,9 +1,9 @@
-﻿namespace MapinfoWrapper.UI
-{
-    using System.Windows.Forms;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.Mapinfo;
+﻿using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Mapinfo;
+using System.Windows.Forms;
 
+namespace MapInfo.Wrapper.UI
+{
     /// <summary>
     /// A collection of Mapinfo control based extensions.
     /// </summary>
@@ -14,7 +14,7 @@
         /// If you need to re-parent a document window use <see cref="SetAsNextDocumentParent"/> instead.
         /// </summary>
         /// <param name="value">The control to which will be the parent.</param>
-        public static void SetAsMapinfoApplicationWindow(this Control value,MapinfoSession MISession)
+        public static void SetAsMapinfoApplicationWindow(this Control value,MapInfoSession MISession)
         {
             MISession.Do("Set Application Window {0}".FormatWith(value.Handle.ToString()));
         }
@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="value">The control to which the next document will be the parent.</param>
         /// <param name="windowStyle">The style of window when opened.</param>
-        public static void SetAsNextDocumentParent(this Control value,MapinfoSession MISession, NextDocumentEnum windowStyle)
+        public static void SetAsNextDocumentParent(this Control value,MapInfoSession MISession, NextDocumentEnum windowStyle)
         {
             MISession.Do("Set Next Document Parent {0} Style {1}".FormatWith(value.Handle.ToString(),
                                                                                    (int)windowStyle));

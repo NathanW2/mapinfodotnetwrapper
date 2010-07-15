@@ -1,9 +1,9 @@
 ﻿using System;
-using MapinfoWrapper.Core.Extensions;
 using System.Diagnostics;
-using MapinfoWrapper.DataAccess.Entities;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.DataAccess.Entities;
 
-namespace MapinfoWrapper.Core
+namespace MapInfo.Wrapper.Core
 {
     public static class Guard
     {

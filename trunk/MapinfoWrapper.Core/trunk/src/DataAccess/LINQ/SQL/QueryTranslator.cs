@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess.RowOperations;
-using MapinfoWrapper.Geometries;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.DataAccess.Row;
+using MapInfo.Wrapper.Geometries;
 
-namespace MapinfoWrapper.DataAccess.LINQ.SQL
+
+namespace MapInfo.Wrapper.DataAccess.LINQ.SQL
 {
     /// <summary>
     /// The result object that is returned from parsing an expression tree.
@@ -40,7 +41,7 @@ namespace MapinfoWrapper.DataAccess.LINQ.SQL
         {
             this.sb = new StringBuilder();
             this.selectbuilder = new StringBuilder();
-            this.datareader = Expression.Parameter(typeof(IDataReader), "datareader");
+            this.datareader = Expression.Parameter(typeof(IMapInfoDataReader), "datareader");
             
             // If the expression is just a constant and is a table. Then we select all from that table.
             // HACK This really should be done better.

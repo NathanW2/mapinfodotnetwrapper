@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper
+﻿namespace MapInfo.Wrapper
 {
     /// <summary>
     /// Contains methods for working with workspaces.

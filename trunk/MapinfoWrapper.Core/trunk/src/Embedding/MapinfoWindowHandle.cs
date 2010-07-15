@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MapinfoWrapper.Embedding
+namespace MapInfo.Wrapper.Embedding
 {
     /// <summary>
     /// A container to hold the handle for a mapinfo window.

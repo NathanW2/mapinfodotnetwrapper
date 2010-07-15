@@ -1,8 +1,8 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using MapinfoWrapper.MapbasicOperations;
-    using MapinfoWrapper.Wrapper.Geometries;
+﻿using MapInfo.Wrapper.Geometries.Lines;
+using MapInfo.Wrapper.Geometries.Points;
 
+namespace MapInfo.Wrapper.Geometries
+{
     internal interface IGeometryFactory
     {
         Line CreateLine(Coordinate start, Coordinate end);

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.Exceptions;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Extensions;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.MapOperations
+namespace MapInfo.Wrapper.MapOperations
 {
 /// <summary>
 	/// Repersents a Mapinfo Window object. 
@@ -15,12 +10,12 @@ namespace MapinfoWrapper.MapOperations
 	/// </summary>
     public class Window
     {
-        protected readonly MapinfoSession mapinfo;
+        protected readonly MapInfoSession map_info;
 
-        public Window(int windowID, MapinfoSession mapinfo)
+        public Window(int windowID, MapInfoSession map_info)
         {
             this.ID = windowID;
-            this.mapinfo = mapinfo;
+            this.map_info = map_info;
         }
 
         /// <summary>
@@ -38,7 +33,7 @@ namespace MapinfoWrapper.MapOperations
             {
                 if (this.handle == IntPtr.Zero)
                 {
-                    string strwindowHWND = this.mapinfo.Eval(string.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Wnd));
+                    string strwindowHWND = this.map_info.Eval(string.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Wnd));
                     this.handle = new IntPtr(Convert.ToInt32(strwindowHWND));
                 }
                 return this.handle;
@@ -55,7 +50,7 @@ namespace MapinfoWrapper.MapOperations
             {
                 if (this.type == 0)
                 {
-                    string frontwindowtype = this.mapinfo.Eval(String.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Type));
+                    string frontwindowtype = this.map_info.Eval(String.Format("WindowInfo({0},{1})", this.ID, (int)WindowInfo.Type));
                     this.type = (WindowTypes)(Convert.ToInt32(frontwindowtype));
                 }
                 return this.type;
@@ -69,11 +64,11 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                return this.mapinfo.Eval("WindowInfo({0},{1})".FormatWith(this.ID, (int)WindowInfo.name));
+                return this.map_info.Eval("WindowInfo({0},{1})".FormatWith(this.ID, (int)WindowInfo.name));
             }
             set
             {
-                this.mapinfo.Do("Set Window {0} Title {1}".FormatWith(this.ID, value.InQuotes()));
+                this.map_info.Do("Set Window {0} Title {1}".FormatWith(this.ID, value.InQuotes()));
             }
         }
 
@@ -82,7 +77,7 @@ namespace MapinfoWrapper.MapOperations
         /// </summary>
         public void Close()
         {
-            this.mapinfo.Do("Close window {0}".FormatWith(this.ID));
+            this.map_info.Do("Close window {0}".FormatWith(this.ID));
         }
 
         /// <summary>
@@ -90,7 +85,7 @@ namespace MapinfoWrapper.MapOperations
         /// </summary>
         public void BringToFront()
         {
-            this.mapinfo.Do("Set Window {0} Front".FormatWith(this.ID));
+            this.map_info.Do("Set Window {0} Front".FormatWith(this.ID));
         }
 
         /// <summary>
@@ -99,9 +94,9 @@ namespace MapinfoWrapper.MapOperations
         /// <returns>A <see cref="Window"/> of the newly created clone.</returns>
         public Window CloneWindow()
         {
-            this.mapinfo.Do(this.CloneWindowCommand);
-            string sid = this.mapinfo.Eval("WindowID(0)");
-            return new Window(Convert.ToInt32(sid), this.mapinfo);
+            this.map_info.Do(this.CloneWindowCommand);
+            string sid = this.map_info.Eval("WindowID(0)");
+            return new Window(Convert.ToInt32(sid), this.map_info);
         }
         
         /// <summary>
@@ -111,7 +106,7 @@ namespace MapinfoWrapper.MapOperations
         {
             get
             {
-                return this.mapinfo.Eval("WindowInfo({0},{1})".FormatWith(this.ID,(int)WindowInfo.Clonewindow));
+                return this.map_info.Eval("WindowInfo({0},{1})".FormatWith(this.ID,(int)WindowInfo.Clonewindow));
             }
         }
     }

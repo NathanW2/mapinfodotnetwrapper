@@ -1,21 +1,22 @@
 using System.Linq;
-using MapinfoWrapper.Core.Wrappers;
-using MapinfoWrapper.DataAccess.Entities;
+using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Core.Wrappers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
+using MapInfo.Wrapper.DataAccess.Entities;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.DataAccess
+
+namespace MapInfo.Wrapper.DataAccess
 {
     /// <summary>
-    /// Represents a collection of tables from a MapinfoSession.
+    /// Represents a collection of tables from a mapInfoSession.
     /// </summary>
     public class TableCollection : IEnumerable<Table>
     {
-        private readonly MapinfoSession mi_session;
+        private readonly MapInfoSession mi_session;
         private readonly TableInfoWrapper tableinfo;
         private readonly MapbasicWrapper mapbasic;
         private readonly TableFactory tablefactory;
@@ -25,7 +26,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public event EventHandler<EventArgs<ITable>> TableOpened;
 
-        public TableCollection(MapinfoSession miSession)
+        public TableCollection(MapInfoSession miSession)
         {
             this.mi_session = miSession;
             this.tableinfo = new TableInfoWrapper(miSession);
@@ -43,7 +44,7 @@ namespace MapinfoWrapper.DataAccess
         /// Opens a new table in Mapinfo and returns the opened table.
         /// </summary>
         /// <param name="tablePath">The path to the Mapinfo tab file to open.</param>
-        /// <returns>An instance of <see cref="MapinfoWrapper.DataAccess.ITable"/></returns>
+        /// <returns>An instance of <see cref="ITable"/></returns>
         public Table OpenTable(string tablePath)
         {
             Guard.AgainstNull(tablePath, "tablePath");
@@ -63,7 +64,7 @@ namespace MapinfoWrapper.DataAccess
         /// <typeparam name="TEntity">The entity type to use a the entity for the table,
         /// this will allow strong typed access to the columns in the table and LINQ support.</typeparam>
         /// <param name="tablePath"></param>
-        /// <returns>An instance of <see cref="MapinfoWrapper.DataAccess.ITable&lt;TEntity&gt;"/></returns>
+        /// <returns>An instance of <see cref="ITable{TTableDef}"/></returns>
         public Table<TEntity> OpenTable<TEntity>(string tablePath)
             where TEntity : BaseEntity, new()
         {

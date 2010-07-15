@@ -1,7 +1,7 @@
-namespace MapinfoWrapper.UI
-{
-    using Core.Extensions;
+using MapInfo.Wrapper.Core.Extensions;
 
+namespace MapInfo.Wrapper.UI
+{
     /// <summary>
     /// Represents a Mapinfo push button.  Can be added to <see cref="ButtonPad"/> buttons collection, which can then be creating in 
     /// Mapinfo.

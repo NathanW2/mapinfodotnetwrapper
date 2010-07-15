@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MapinfoWrapper.DataAccess.Entities
+namespace MapInfo.Wrapper.DataAccess.Entities
 {
     /// <summary>
     /// Represents a basic row in a Mapinfo table.

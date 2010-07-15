@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper", "MapinfoWrapper.csproj", "{FDA41A1F-5922-493C-AD86-DDF8D447023E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapInfo.Wrapper", "MapInfo.Wrapper.csproj", "{FDA41A1F-5922-493C-AD86-DDF8D447023E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapinfoWrapper.Tests", "..\tests\MapinfoWrapper.Tests.csproj", "{AD417C06-1A89-46A5-8339-2CA728B08DA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "..\ConsoleApplication1\ConsoleApplication1.csproj", "{29A4381A-A80E-414A-8C93-A9CAFEB032C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapInfoInteropTemplate1", "..\MapInfoInteropTemplate1\MapInfoInteropTemplate1.csproj", "{121825F6-69BC-4581-9254-C9FBB8E05F7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapInfo.Wrapper.1050Extensions", "..\MapInfo.Wrapper.1050Extensions\MapInfo.Wrapper.1050Extensions.csproj", "{2B901ED6-F029-4E99-8C7F-EDA946A67399}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,14 @@ Global
 		{29A4381A-A80E-414A-8C93-A9CAFEB032C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29A4381A-A80E-414A-8C93-A9CAFEB032C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29A4381A-A80E-414A-8C93-A9CAFEB032C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{121825F6-69BC-4581-9254-C9FBB8E05F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121825F6-69BC-4581-9254-C9FBB8E05F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121825F6-69BC-4581-9254-C9FBB8E05F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121825F6-69BC-4581-9254-C9FBB8E05F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B901ED6-F029-4E99-8C7F-EDA946A67399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B901ED6-F029-4E99-8C7F-EDA946A67399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B901ED6-F029-4E99-8C7F-EDA946A67399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B901ED6-F029-4E99-8C7F-EDA946A67399}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

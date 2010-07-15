@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace MapinfoWrapper.Core.Extensions
+namespace MapInfo.Wrapper.Core.Extensions
 {
     /// <summary>
     /// Contains a collection of exenstion methods that can be used on strings.

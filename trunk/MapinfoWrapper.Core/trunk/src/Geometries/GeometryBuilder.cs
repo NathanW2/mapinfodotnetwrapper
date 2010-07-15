@@ -1,26 +1,25 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.Core.Extensions;
+﻿using MapInfo.Wrapper.Core.Extensions;
+using System;
+using MapInfo.Wrapper.Geometries.Points;
+using MapInfo.Wrapper.Mapinfo;
 
+
+namespace MapInfo.Wrapper.Geometries
+{
     class GeometryBuilder
     {
-        public GeometryBuilder(string tableName, MapinfoSession MISession)
+        public GeometryBuilder(string tableName, IMapInfoWrapper miSession)
         {
             this.TableName = tableName;
-            this.MapinfoSession = MISession;
+            this.MapInfoSession = miSession;
         }
 
         public string TableName { get; set; }
-        public MapinfoSession MapinfoSession { get; set; }
+        public IMapInfoWrapper MapInfoSession { get; set; }
 
         public Geometry CreateGeometry()
         {
-            string objecttype = this.MapinfoSession.Eval("ObjectInfo({0}.obj,1)".FormatWith(this.TableName));
+            string objecttype = this.MapInfoSession.Eval("ObjectInfo({0}.obj,1)".FormatWith(this.TableName));
             ObjectType type = (ObjectType)Convert.ToInt32(objecttype);
             switch (type)
             {
@@ -33,8 +32,8 @@
                 case ObjectType.Polyline:
                     break;
                 case ObjectType.Point:
-                    string sx = this.MapinfoSession.Eval("CentroidX({0}.Obj)".FormatWith(this.TableName));
-                    string sy = this.MapinfoSession.Eval("CentroidY({0}.Obj)".FormatWith(this.TableName));
+                    string sx = this.MapInfoSession.Eval("CentroidX({0}.Obj)".FormatWith(this.TableName));
+                    string sy = this.MapInfoSession.Eval("CentroidY({0}.Obj)".FormatWith(this.TableName));
                     double x = Convert.ToDouble(sx);
                     double y = Convert.ToDouble(sy);
                     return new Point(x, y);

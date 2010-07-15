@@ -1,6 +1,6 @@
 using System;
 
-namespace MapinfoWrapper.Core
+namespace MapInfo.Wrapper.Core
 {
     public class EventArgs<T> : EventArgs
     {

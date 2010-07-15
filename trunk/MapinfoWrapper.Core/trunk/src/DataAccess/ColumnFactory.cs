@@ -1,14 +1,12 @@
-﻿namespace MapinfoWrapper.DataAccess
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.Exceptions;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.DataAccess.RowOperations;
+﻿using MapInfo.Wrapper.Core.Extensions;
+using System;
+using MapInfo.Wrapper.DataAccess.Row;
+using MapInfo.Wrapper.Mapinfo;
 
+
+
+namespace MapInfo.Wrapper.DataAccess
+{
     enum ColumnAttribute
     {
         Name = 1,
@@ -22,14 +20,14 @@
 
     class ColumnInfoWrapper
     {
-        public ColumnInfoWrapper(MapinfoSession MISession, string tableName)
+        public ColumnInfoWrapper(MapInfoSession MISession, string tableName)
         {
-            this.MapinfoSession = MISession;
+            this.MapInfoSession = MISession;
             this.TableName = tableName;
         }
 
         public string TableName { get; private set; }
-        public MapinfoSession MapinfoSession { get; private set; }
+        public MapInfoSession MapInfoSession { get; private set; }
 
         public string GetColumnName(string columnName)
         {
@@ -47,7 +45,7 @@
         public object ColumnInfo(string columnName, ColumnAttribute attrbute)
         {
             int attributenumber = (int)attrbute;
-            return this.MapinfoSession.Eval("ColumnInfo({0},{1},{2})".FormatWith(this.TableName.InQuotes(),
+            return this.MapInfoSession.Eval("ColumnInfo({0},{1},{2})".FormatWith(this.TableName.InQuotes(),
                                                                                      columnName.InQuotes(),
                                                                                      attributenumber));
         }
@@ -71,17 +69,17 @@
     {
         private string[] specialcolumns = { "rowid", "obj" };
 
-        public ColumnFactory(MapinfoSession MISession, ITable table)
+        public ColumnFactory(MapInfoSession MISession, ITable table)
         {
-            this.MapinfoSession = MISession;
+            this.MapInfoSession = MISession;
             this.Table = table;
             this.ColumnInfo = new ColumnInfoWrapper(MISession,table.Name);
         }
 
         /// <summary>
-        /// Gets the current <see cref="MapinfoSession"/> assigned to this object.
+        /// Gets the current <see cref="MapInfoSession"/> assigned to this object.
         /// </summary>
-        public MapinfoSession MapinfoSession { get; private set; }
+        public MapInfoSession MapInfoSession { get; private set; }
         
         /// <summary>
         /// Gets the <see cref="Table"/> that is associated with this <see cref="ColumnFactory"/>.

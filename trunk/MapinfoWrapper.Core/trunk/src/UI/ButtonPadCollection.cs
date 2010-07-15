@@ -1,15 +1,15 @@
-namespace MapinfoWrapper.UI
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using MapinfoWrapper.Mapinfo;
+using MapInfo.Wrapper.Mapinfo;
+using System.Collections;
+using System.Collections.Generic;
 
+namespace MapInfo.Wrapper.UI
+{
     public class ButtonPadCollection : IEnumerable<ButtonPad>
     {
-        private MapinfoSession misession;
+        private MapInfoSession misession;
         private IList<ButtonPad> innerlist;
 
-        public ButtonPadCollection(MapinfoSession MISession)
+        public ButtonPadCollection(MapInfoSession MISession)
         {
             this.misession = MISession;
             this.innerlist = new List<ButtonPad>();

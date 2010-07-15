@@ -1,12 +1,13 @@
 ﻿using System.Runtime.InteropServices;
+using MapInfo.Wrapper;
 
-namespace MapinfoWrapper.Mapinfo
+namespace MapInfo.Wrapper.Mapinfo
 {
     /// <summary>
     /// Contains only the basic functions
     /// needed to communicate with Mapinfo.
     /// </summary>
-    public interface IMapinfoWrapper
+    public interface IMapInfoWrapper
     {
         /// <summary>
         /// Runs a specified Mapinfo command string in Mapinfo.
@@ -23,7 +24,7 @@ namespace MapinfoWrapper.Mapinfo
 
         /// <summary>
         /// Returns the underlying type of Mapinfo, this can be used to access to methods exposed by 
-        /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapinfoWrapper"/> interface.
+        /// Mapinfo's COM API but not contained in the wrapper or the <see cref="IMapInfoWrapper"/> interface.
         /// </summary>
         /// <returns>The underlying type of Mapinfo.</returns>
         object GetUnderlyingMapinfoInstance();
@@ -49,7 +50,7 @@ namespace MapinfoWrapper.Mapinfo
         /// Registers a object as a callback object for MapInfo.
         /// </summary>
         /// <param name="obj">The object to set as the MapInfo callback object, the object must use the <see cref="ComVisibleAttribute"/> in order to recive updates from
-        /// MapInfo.  The base class <see cref="MapinfoCallback"/>is included with the wrapper that provides basic events from Map</param>
+        /// MapInfo.  The base class <see cref="MapInfoCallback"/>is included with the wrapper that provides basic events from Map</param>
         void RegisterCallback(object obj);
     }
 }

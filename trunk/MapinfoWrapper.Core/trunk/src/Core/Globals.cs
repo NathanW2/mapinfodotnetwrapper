@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace MapinfoWrapper.Core
+namespace MapInfo.Wrapper.Core
 {
     public class Globals
     {

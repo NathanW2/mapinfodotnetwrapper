@@ -1,23 +1,24 @@
 ﻿using System;
-using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.MapOperations;
+using MapInfo.Wrapper.Mapinfo;
+using MapInfo.Wrapper.MapOperations;
 
-namespace MapinfoWrapper.Core.Wrappers
+
+namespace MapInfo.Wrapper.Core.Wrappers
 {
     public class MapperInfoWrapper
     {
-        private IMapinfoWrapper mapinfo;
+        private IMapInfoWrapper map_info;
 
-        public MapperInfoWrapper(IMapinfoWrapper miSession)
+        public MapperInfoWrapper(IMapInfoWrapper miSession)
         {
             Guard.AgainstNull(miSession, "MISession");
 
-            this.mapinfo = miSession;
+            this.map_info = miSession;
         }
 
         public string MapperInfo(int windowID, MapperInfoTypes attribute)
         {
-            return this.mapinfo.Eval(String.Format("MapperInfo({0},{1})", windowID, (int)attribute));
+            return this.map_info.Eval(String.Format("MapperInfo({0},{1})", windowID, (int)attribute));
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using MapinfoWrapper.MapbasicOperations;
+﻿using MapInfo.Wrapper.MapbasicOperations;
 
+namespace MapInfo.Wrapper.Geometries
+{
     public interface IMapbasicObject
     {
         ObjectTypeEnum ObjectType { get; }
