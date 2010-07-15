@@ -1,20 +1,19 @@
-﻿using MapinfoWrapper.Mapinfo;
-using MapinfoWrapper.DataAccess.RowOperations;
-
-namespace MapinfoWrapper.DataAccess
+﻿using MapInfo.Wrapper.DataAccess.Row;
+using MapInfo.Wrapper.Mapinfo;
+namespace MapInfo.Wrapper.DataAccess
 {
     public class MaterializerFactory
     {
-        private MapinfoSession misession;
+        private MapInfoSession misession;
 
-        public MaterializerFactory(MapinfoSession miSession)
+        public MaterializerFactory(MapInfoSession miSession)
         {
             this.misession = miSession;
         }
 
-        public EntityMaterializer CreateMaterializerFor(string tableName, IDataReader reader)
+        public EntityMaterializer CreateMaterializerFor(ITable table, IMapInfoDataReader reader)
         {
-            return new EntityMaterializer(this.misession, tableName, reader);
+            return new EntityMaterializer(this.misession, table, reader);
         }
     }
 }

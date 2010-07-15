@@ -1,9 +1,7 @@
-﻿using MapinfoWrapper.Geometries;
-using MapinfoWrapper.MapbasicOperations;
+﻿using MapInfo.Wrapper.Core.Extensions;
 using System;
-using MapinfoWrapper.Core.Extensions;
 
-namespace MapinfoWrapper.Wrapper.Geometries
+namespace MapInfo.Wrapper.Geometries
 {
     public class Polyline : Geometry
     {

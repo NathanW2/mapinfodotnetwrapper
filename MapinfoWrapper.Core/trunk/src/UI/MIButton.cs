@@ -1,8 +1,8 @@
-namespace MapinfoWrapper.UI
-{
-    using System;
-    using Mapinfo;
+using MapInfo.Wrapper.Mapinfo;
+using System;
 
+namespace MapInfo.Wrapper.UI
+{
     /// <summary>
     /// The base class for all button pad butttons in Mapinfo.
     /// </summary>
@@ -56,8 +56,8 @@ namespace MapinfoWrapper.UI
                     ButtonClicked(this);
         }
 
-        private MapinfoSession misession;
-        public MapinfoSession MISession
+        private MapInfoSession misession;
+        public MapInfoSession MISession
         {
             get
             {

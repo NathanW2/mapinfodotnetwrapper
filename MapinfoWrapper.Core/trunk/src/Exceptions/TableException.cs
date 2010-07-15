@@ -1,8 +1,8 @@
-﻿namespace MapinfoWrapper.Exceptions
-{
-    using System;
-    using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
+namespace MapInfo.Wrapper.Exceptions
+{
     [Serializable]
     public class TableException : Exception
     {

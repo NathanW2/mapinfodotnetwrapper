@@ -1,9 +1,9 @@
 ﻿using System;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.Mapinfo;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Mapinfo;
 
 
-namespace MapinfoWrapper.Embedding
+namespace MapInfo.Wrapper.Embedding
 {
     /// <summary>
     /// Contains methods for retiving application information about
@@ -11,14 +11,14 @@ namespace MapinfoWrapper.Embedding
     /// </summary>
     public class SystemInfo
     {
-        private readonly MapinfoSession misession;
+        private readonly MapInfoSession misession;
 
         /// <summary>
         /// Creates a new SystemInfo object used to retive information
-        /// about the current instace of mapinfo.
+        /// about the current instace of map_info.
         /// </summary>
-        /// <param name="miSession">A wrapper object containing the running instace of mapinfo.</param>
-        public SystemInfo(MapinfoSession miSession)
+        /// <param name="miSession">A wrapper object containing the running instace of map_info.</param>
+        public SystemInfo(MapInfoSession miSession)
         {
             this.misession = miSession;
         }

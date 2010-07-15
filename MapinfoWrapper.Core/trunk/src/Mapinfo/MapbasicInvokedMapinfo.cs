@@ -1,13 +1,14 @@
-﻿using MapinfoWrapper.Exceptions;
+﻿using MapInfo.Wrapper;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using MapInfo.Wrapper.Exceptions;
 
-namespace MapinfoWrapper.Mapinfo
+namespace MapInfo.Wrapper.Mapinfo
 {
     /// <summary>Holds an instance of MapInfo which has been created in the miadm.dll when calling a .NET assembly from MapBasic.</summary>
-    public class MapBasicInvokedMapInfo : IMapinfoWrapper
+    public class MapBasicInvokedMapInfo : IMapInfoWrapper
     {
         private const string LastErrorCodePropertyName = "LastErrorCode";
         private const string LastErrorMessagePropertyName = "LastErrorMessage";
@@ -116,7 +117,7 @@ namespace MapinfoWrapper.Mapinfo
             return this.mapInfoInstance;
         }
 
-        public MapinfoCallback Callback
+        public MapInfoCallback Callback
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }

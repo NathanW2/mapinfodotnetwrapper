@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.DataAccess.RowOperations
+﻿namespace MapInfo.Wrapper.DataAccess.Row
 {
     public enum ColumnType
     {

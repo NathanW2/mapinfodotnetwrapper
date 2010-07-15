@@ -1,6 +1,6 @@
-﻿using MapinfoWrapper.Geometries;
+﻿using MapInfo.Wrapper.Geometries;
 
-namespace MapinfoWrapper.DataAccess.Entities
+namespace MapInfo.Wrapper.DataAccess.Entities
 {
     /// <summary>
     /// Represents a mappable row in a table table.

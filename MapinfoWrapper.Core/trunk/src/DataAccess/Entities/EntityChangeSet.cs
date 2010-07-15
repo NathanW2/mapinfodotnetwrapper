@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace MapinfoWrapper.DataAccess.Entities
+namespace MapInfo.Wrapper.DataAccess.Entities
 {
     public class EntityChangeSet
     {

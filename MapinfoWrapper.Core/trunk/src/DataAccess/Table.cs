@@ -1,17 +1,9 @@
-﻿using MapinfoWrapper.DataAccess.Entities;
+﻿using MapInfo.Wrapper.DataAccess.Entities;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.DataAccess
+
+namespace MapInfo.Wrapper.DataAccess
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.DataAccess.LINQ;
-    using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-    using MapinfoWrapper.Mapinfo;
-
     /// <summary>
     /// Provides access to tables we you may not know/or care about the entity type.
     /// <para>This object is just a short hand version of 
@@ -23,7 +15,7 @@ namespace MapinfoWrapper.DataAccess
     /// </summary>
     public class Table : Table<BaseEntity>
 	{
-	    internal Table(MapinfoSession MISession, string tableName)
+	    internal Table(MapInfoSession MISession, string tableName)
             : base(MISession, tableName)
 	    { }
 	}

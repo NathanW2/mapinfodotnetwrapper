@@ -1,25 +1,18 @@
-﻿using MapinfoWrapper.Core.Wrappers;
-using MapinfoWrapper.DataAccess.Entities;
-using MapinfoWrapper.Geometries;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Core.Wrappers;
+using MapInfo.Wrapper.DataAccess.Entities;
+using MapInfo.Wrapper.DataAccess.LINQ.SQL;
+using MapInfo.Wrapper.Exceptions;
+using MapInfo.Wrapper.Geometries;
+using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.DataAccess
+namespace MapInfo.Wrapper.DataAccess
 {
-    using System;
-    using System.Collections.Generic;
-    using MapinfoWrapper.Core;
-    using MapinfoWrapper.Core.Extensions;
-    using MapinfoWrapper.DataAccess.RowOperations;
-    using MapinfoWrapper.DataAccess.RowOperations.Enumerators;
-    using MapinfoWrapper.Mapinfo;
-    using System.Collections.ObjectModel;
-    using MapinfoWrapper.Exceptions;
-    using System.Linq;
-    using MapinfoWrapper.DataAccess.LINQ;
-    using System.Linq.Expressions;
-    using MapinfoWrapper.MapbasicOperations;
-    using System.Reflection;
-    using MapinfoWrapper.DataAccess.LINQ.SQL;
-
     /// <summary>
     /// Represents a table that is currently opened in Mapinfo.
     /// <para>By supplying a generic <c>type</c> to represent a row you will be able to using Linq-To-Mapinfo 
@@ -48,21 +41,21 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public event Action<ITable> OnTableSaving;
 
-        internal Table(MapinfoSession MISession, string tableName)
+        internal Table(MapInfoSession miSession, string tableName)
         {
-            Guard.AgainstNull(MISession,"MISession");
+            Guard.AgainstNull(miSession,"MISession");
             Guard.AgainstNullOrEmpty(tableName,"tableName");
            
-            this.mapinfo = MISession;
+            this.MapInfoSession = miSession;
             this.name = tableName;
-            this.tableinfo = new TableInfoWrapper(MISession);
+            this.tableinfo = new TableInfoWrapper(miSession);
             this.TableManger = new TableChangeManger();
         }
 
         /// <summary>
-        /// Gets the <see cref="MapinfoSession"/> that this table is associated with.
+        /// Gets the <see cref="MapInfoSession"/> that this table is associated with.
         /// </summary>
-        public MapinfoSession mapinfo { get; private set; }
+        public MapInfoSession MapInfoSession { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="TableManger"/> for the current table.  Allows for access to current
@@ -152,41 +145,34 @@ namespace MapinfoWrapper.DataAccess
             }
         }
 
-        private int? cols;
-
         /// <summary>
         /// Returns the number of columns in the current table.
         /// </summary>
         /// <returns>The number of columns in the current table.</returns>
         public int GetNumberOfColumns()
         {
-            if (cols == null)
-            {
-                string value = (string)this.tableinfo.GetTableInfo(this.Name, TableInfo.Ncols);
-                cols = Convert.ToInt32(value);    
-            }
-            return cols.Value;
+                string noofcolumns = this.tableinfo.GetTableInfo(this.Name, TableInfo.Ncols);
+                return Convert.ToInt32(noofcolumns);    
         }
 
-        private IEnumerable<Column> columns;
+
+        /// <summary>
+        /// Gets a collection of columns for this table.
+        /// </summary>
         public IEnumerable<Column> Columns
         {
             get
             {
-                if (this.columns == null)
-                {
                     List<Column> cols = new List<Column>();
-                    ColumnFactory colfactory = new ColumnFactory(this.mapinfo,this);
+                    ColumnFactory colfactory = new ColumnFactory(this.MapInfoSession,this);
                     // Create the row id and object column.
-                    cols.Add(colfactory.CreateColumnForRowId());
-                    cols.Add(colfactory.CreateColumnForObj());
+                    yield return colfactory.CreateColumnForRowId();
+                    yield return colfactory.CreateColumnForObj();
+
                     for (int i = 1; i < this.GetNumberOfColumns() + 1; i++)
                     {
-                        cols.Add(colfactory.CreateColumnFor(i));
+                        yield return colfactory.CreateColumnFor(i);
                     }
-                    this.columns = cols;
-                }
-                return this.columns;
             }
         }
 
@@ -213,7 +199,7 @@ namespace MapinfoWrapper.DataAccess
             if (interactive)
                 command += " Interactive";
 
-            this.mapinfo.Do(command);
+            this.MapInfoSession.Do(command);
         }
 
         /// <summary>
@@ -230,7 +216,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public void DiscardChanges()
         {
-            this.mapinfo.Do("Rollback Table {0}".FormatWith(this.Name));
+            this.MapInfoSession.Do("Rollback Table {0}".FormatWith(this.Name));
         }
 
         /// <summary>
@@ -238,7 +224,7 @@ namespace MapinfoWrapper.DataAccess
         /// </summary>
         public void Close()
         {
-            this.mapinfo.Do("Close Table {0}".FormatWith(this.Name));
+            this.MapInfoSession.Do("Close Table {0}".FormatWith(this.Name));
         }
 
         /// <summary>
@@ -249,7 +235,7 @@ namespace MapinfoWrapper.DataAccess
         {
             Guard.AgainstIsZero(index, "index");
 
-            this.mapinfo.Do("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
+            this.MapInfoSession.Do("Delete From {0} Where Rowid = {1}".FormatWith(this.Name, index));
         }
 
         /// <summary>
@@ -265,9 +251,12 @@ namespace MapinfoWrapper.DataAccess
             entity.State = BaseEntity.EntityState.Deleted;
         }
 
+        /// <summary>
+        /// Deletes all the records from the current table.
+        /// </summary>
         public void DeleteAll()
         {
-            this.mapinfo.Do("Delete From {0}".FormatWith(this.Name));  
+            this.MapInfoSession.Do("Delete From {0}".FormatWith(this.Name));  
         }
 
         /// <summary>
@@ -277,7 +266,7 @@ namespace MapinfoWrapper.DataAccess
         /// <returns>A string containing the needed Mapbasic commands to insert the entity into the current table.</returns>
         public string GetInsertString(BaseEntity entity)
         {
-            SqlStringGenerator stringgenerator = new SqlStringGenerator(this.mapinfo);
+            SqlStringGenerator stringgenerator = new SqlStringGenerator(this.MapInfoSession);
             return stringgenerator.GenerateInsertString(entity, this.Name);
         }
 
@@ -285,7 +274,7 @@ namespace MapinfoWrapper.DataAccess
         /// Inserts a <see cref="Geometry"/> into the current table as a new record.
         /// </summary>
         /// <param name="obj">The object to be inserted.</param>
-        public void Insert(Geometries.Geometry obj)
+        public void Insert(Geometry obj)
         {
             MappableEntity mappable = new MappableEntity();
             mappable.obj = obj;
@@ -299,14 +288,18 @@ namespace MapinfoWrapper.DataAccess
         public void Insert(BaseEntity entity)
         {
             string insertstring = this.GetInsertString(entity);
-            this.mapinfo.Do(insertstring);
+            this.MapInfoSession.Do(insertstring);
         }
 
+        /// <summary>
+        /// Updates 
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(BaseEntity entity)
         {
-            SqlStringGenerator stringgenerator = new SqlStringGenerator(this.mapinfo);
-            Query updatequery = stringgenerator.GenerateUpdateQuery(entity);
-            updatequery.Excute();
+            SqlStringGenerator stringgenerator = new SqlStringGenerator(this.MapInfoSession);
+            UpdateQuery updatequery = stringgenerator.GenerateUpdateQuery(entity,this.Name);
+            updatequery.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -396,7 +389,7 @@ namespace MapinfoWrapper.DataAccess
         {
             int hash = 17;
             hash = (hash * 23) + this.Name.GetHashCode();
-            hash = (hash * 23) + this.mapinfo.GetHashCode();
+            hash = (hash * 23) + this.MapInfoSession.GetHashCode();
             return hash;
         }
 
@@ -413,7 +406,7 @@ namespace MapinfoWrapper.DataAccess
             if (other == null) 
                 return false;
 
-            return (this.mapinfo == other.mapinfo && this.name == other.Name);
+            return (this.MapInfoSession == other.MapInfoSession && this.name == other.Name);
         }
 
         public override bool Equals(object obj)
@@ -457,7 +450,7 @@ namespace MapinfoWrapper.DataAccess
         {
             get 
             {
-                return this.mapinfo.MapinfoProvider;
+                return this.MapInfoSession.MapinfoProvider;
             }
         }
 
@@ -477,7 +470,7 @@ namespace MapinfoWrapper.DataAccess
         /// Returns a new <see cref="Table{TEntity}"/> using the <typeparamref name="TEntity"/> as the
         /// tables row entity.
         /// 
-        /// <para>This function is usful if you have retrived an table from a <see cref="MapinfoSession"/>'s  <see cref="TableCollection"/> 
+        /// <para>This function is usful if you have retrived an table from a <see cref="MapInfoSession"/>'s  <see cref="TableCollection"/> 
         /// which are stored as <see cref="Table"/> but you know the entity type for it.</para>
         /// </summary>
         /// <typeparam name="TEntity">The type to use as the entity type for the table.</typeparam>
@@ -486,7 +479,7 @@ namespace MapinfoWrapper.DataAccess
             where TEntity : BaseEntity, new()
         {
 
-            TableFactory tabFactory = new TableFactory(this.mapinfo);
+            TableFactory tabFactory = new TableFactory(this.MapInfoSession);
 
             // We can return a new generic version of the table here,
             // because we have overriden Equals and GetHashCode, making the

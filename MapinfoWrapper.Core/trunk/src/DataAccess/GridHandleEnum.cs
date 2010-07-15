@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.DataAccess
+﻿namespace MapInfo.Wrapper.DataAccess
 {
     /// <summary>
     /// An enum containing different methods for opening VM GRD files.

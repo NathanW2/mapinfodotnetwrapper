@@ -1,15 +1,16 @@
-﻿namespace MapinfoWrapper.DataAccess.LINQ
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using MapinfoWrapper.DataAccess.RowOperations;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using MapInfo.Wrapper.DataAccess.Row;
 
+
+namespace MapInfo.Wrapper.DataAccess.Row.Enumerators
+{
     internal class ProjectionReader<T> : IEnumerable<T>
     {
         Enumerator enumerator;
 
-        public ProjectionReader(IDataReader reader, Func<IDataReader, T> projector)
+        public ProjectionReader(IMapInfoDataReader reader, Func<IMapInfoDataReader, T> projector)
         {
             this.enumerator = new Enumerator(reader, projector);
         }
@@ -33,11 +34,11 @@
 
         class Enumerator : IEnumerator<T>, IEnumerator, IDisposable
         {
-            IDataReader reader;
+            IMapInfoDataReader reader;
             T current;
-            Func<IDataReader, T> projector;
+            Func<IMapInfoDataReader, T> projector;
 
-            internal Enumerator(IDataReader reader, Func<IDataReader, T> projector)
+            internal Enumerator(IMapInfoDataReader reader, Func<IMapInfoDataReader, T> projector)
             {
                 this.reader = reader;
                 this.projector = projector;

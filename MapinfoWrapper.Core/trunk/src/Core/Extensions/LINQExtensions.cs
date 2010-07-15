@@ -1,12 +1,12 @@
-﻿namespace MapinfoWrapper.Core.Extensions
-{
-    using System;
-    using System.Linq;
-    using MapinfoWrapper.DataAccess.LINQ;
-    using MapinfoWrapper.Core;
-    using System.Linq.Expressions;
-    using System.Reflection;
+﻿using System;
+using System.Linq;
+using MapInfo.Wrapper.DataAccess.LINQ;
 
+using System.Linq.Expressions;
+using System.Reflection;
+
+namespace MapInfo.Wrapper.Core.Extensions
+{
     public static class LINQExtensions
     {
         public static IQueryable<T> Into<T>(this IQueryable<T> source, string tableName)

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.DataAccess.RowOperations;
+﻿using MapInfo.Wrapper.DataAccess.Row;
 
-namespace MapinfoWrapper.DataAccess
+
+namespace MapInfo.Wrapper.DataAccess
 {
     /// <summary>
     /// Represents a column in a Mapinfo table.

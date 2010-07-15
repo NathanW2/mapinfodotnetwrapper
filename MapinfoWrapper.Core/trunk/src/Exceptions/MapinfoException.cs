@@ -1,7 +1,7 @@
-﻿namespace MapinfoWrapper.Exceptions
-{
-    using System;
+﻿using System;
 
+namespace MapInfo.Wrapper.Exceptions
+{
     [global::System.Serializable]
     public class MapinfoException : ApplicationException
     {

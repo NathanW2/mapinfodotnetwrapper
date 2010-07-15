@@ -1,24 +1,21 @@
-﻿namespace MapinfoWrapper.DataAccess.Row
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using MapinfoWrapper.Mapinfo;
-    using MapinfoWrapper.DataAccess.RowOperations;
+﻿using MapInfo.Wrapper.Mapinfo;
 
+
+
+namespace MapInfo.Wrapper.DataAccess.Row
+{
     class DataReaderFactory
     {
-        public DataReaderFactory(MapinfoSession MISession)
+        public DataReaderFactory(MapInfoSession MISession)
         {
-            this.MapinfoSession = MISession;
+            this.MapInfoSession = MISession;
         }
 
-        public MapinfoSession MapinfoSession { get; private set; }
+        public MapInfoSession MapInfoSession { get; private set; }
 
-        public IDataReader GetReaderFor(string tableName)
+        public IMapInfoDataReader GetReaderFor(string tableName)
         {
-            return new DataReader(this.MapinfoSession, tableName);
+            return new MapInfoDataReader(this.MapInfoSession, tableName);
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿namespace MapinfoWrapper.UI
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Core;
-    using Core.Extensions;
-    using Mapinfo;
+﻿using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.Mapinfo;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
+namespace MapInfo.Wrapper.UI
+{
     /// <summary>
     /// Represents a button pad in Mapinfo.
     /// 
@@ -25,7 +25,7 @@
         }
 
         private ICollection<MIButton> buttons;
-        private MapinfoSession misession;
+        private MapInfoSession misession;
 
         public ButtonPad(string title)
         {
@@ -276,7 +276,7 @@
             return this.GetEnumerator();
         }
 
-        public MapinfoSession MISession
+        public MapInfoSession MISession
         {
             get { return misession; }
             internal set { misession = value; }

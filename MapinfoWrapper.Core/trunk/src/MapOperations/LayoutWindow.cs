@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.Mapinfo;
+﻿using MapInfo.Wrapper.Mapinfo;
 
-namespace MapinfoWrapper.MapOperations
+namespace MapInfo.Wrapper.MapOperations
 {
     public class LayoutWindow: Window 
     {
-        public LayoutWindow(int windowID, MapinfoSession mapinfo)
-            : base(windowID, mapinfo)
+        public LayoutWindow(int windowID, MapInfoSession map_info)
+            : base(windowID, map_info)
         { }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MapinfoWrapper.DataAccess.Entities;
+﻿using System.Collections.Generic;
+using MapInfo.Wrapper.DataAccess.Entities;
 
-namespace MapinfoWrapper.DataAccess
+namespace MapInfo.Wrapper.DataAccess
 {
     public class TableChangeManger
     {

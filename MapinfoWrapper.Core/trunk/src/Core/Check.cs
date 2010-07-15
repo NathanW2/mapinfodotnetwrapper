@@ -1,9 +1,8 @@
 using System;
 using System.IO;
-using MapinfoWrapper.Core.Extensions;
+using MapInfo.Wrapper.Core.Extensions;
 
-
-namespace MapinfoWrapper.Core
+namespace MapInfo.Wrapper.Core
 {
     public static class Check
     {

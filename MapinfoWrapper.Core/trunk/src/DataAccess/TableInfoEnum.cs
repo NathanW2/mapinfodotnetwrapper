@@ -1,4 +1,4 @@
-﻿namespace MapinfoWrapper.DataAccess
+﻿namespace MapInfo.Wrapper.DataAccess
 {
     public enum TableInfo
     {

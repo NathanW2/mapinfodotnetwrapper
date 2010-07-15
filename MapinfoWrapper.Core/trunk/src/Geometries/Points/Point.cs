@@ -1,9 +1,8 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using System;
-    using MapinfoWrapper.Geometries;
-    using MapinfoWrapper.Core.Extensions;
+﻿using MapInfo.Wrapper.Core.Extensions;
+using System;
 
+namespace MapInfo.Wrapper.Geometries.Points
+{
     /// <summary>
     /// Represents a point object.
     /// </summary>

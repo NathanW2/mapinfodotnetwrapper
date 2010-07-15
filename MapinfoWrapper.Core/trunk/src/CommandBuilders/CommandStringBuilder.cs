@@ -1,7 +1,7 @@
-﻿namespace MapinfoWrapper.CommandBuilders
-{
-    using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
+namespace MapInfo.Wrapper.CommandBuilders
+{
     public abstract class CommandStringBuilder : ICommandStringBuilder
     {
         /// <summary>

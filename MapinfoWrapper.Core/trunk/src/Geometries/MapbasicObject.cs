@@ -1,10 +1,11 @@
-﻿namespace MapinfoWrapper.Geometries
-{
-    using System;
-    using MapinfoWrapper.Exceptions;
-    using MapinfoWrapper.MapbasicOperations;
-    using MapinfoWrapper.Mapinfo;
+﻿using MapInfo.Wrapper.Exceptions;
+using System;
+using MapInfo.Wrapper.MapbasicOperations;
+using MapInfo.Wrapper.Mapinfo;
 
+
+namespace MapInfo.Wrapper.Geometries
+{
     /// <summary>
     /// Provides a wrapper around a mapbasic object type,
     /// allows access to basic information about the object.
@@ -12,9 +13,9 @@
     public class MapbasicObject : IMapbasicObject
     {
         private readonly IVariable innervariable;
-        protected readonly MapinfoSession misession;
+        protected readonly MapInfoSession misession;
 
-        internal MapbasicObject(MapinfoSession MISession,IVariable variable)
+        internal MapbasicObject(MapInfoSession MISession,IVariable variable)
         {
             this.innervariable = variable;
             this.misession = MISession;

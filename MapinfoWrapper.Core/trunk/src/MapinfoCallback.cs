@@ -1,8 +1,8 @@
-﻿namespace MapinfoWrapper
-{
-    using System;
-    using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
+namespace MapInfo.Wrapper
+{
     /// <summary>
     /// A base callback class which can be used with Mapinfo,
     /// provides StatusText changed event and WindowContentsChanged event.
@@ -11,7 +11,7 @@
     /// You can also override the defult implementation of the base events if need be. </para>
     /// </summary>
     [ComVisible(true)]
-    public class MapinfoCallback
+    public class MapInfoCallback
     {
         public event Action<string> OnStatusChanged;
 

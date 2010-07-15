@@ -1,9 +1,8 @@
-﻿using MapinfoWrapper.DataAccess.Entities;
+﻿using System.Collections.Generic;
+using MapInfo.Wrapper.DataAccess.Entities;
 
-namespace MapinfoWrapper.DataAccess
+namespace MapInfo.Wrapper.DataAccess
 {
-    using System.Collections.Generic;
-
     public interface ITable
     {
         string Name { get; }
@@ -17,6 +16,9 @@ namespace MapinfoWrapper.DataAccess
         void InsertOnCommit(BaseEntity entity);
         void DeleteOnCommit(BaseEntity entity);
         void UpdateOnCommit(BaseEntity entity);
+
+        
+
         Table<TEntity> ToGenericTable<TEntity>()
             where TEntity : BaseEntity, new();
     }

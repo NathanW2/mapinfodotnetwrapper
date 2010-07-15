@@ -1,17 +1,17 @@
-﻿using MapinfoWrapper.DataAccess.Entities;
+﻿using MapInfo.Wrapper.DataAccess;
+using MapInfo.Wrapper.DataAccess.Entities;
+using System.Collections.Generic;
 
-namespace MapinfoWrapper.DataAccess.RowOperations.Enumerators
+namespace MapInfo.Wrapper.DataAccess.Row.Enumerators
 {
-    using System.Collections.Generic;
-
     class RowEnumerator<T> : IEnumerator<T>
         where T : BaseEntity, new()
     {
-        private IDataReader datareader;
+        private IMapInfoDataReader datareader;
         private T current;
         private readonly EntityMaterializer entityfactory;
 
-        public RowEnumerator(IDataReader recordSelector, EntityMaterializer entityFactory)
+        public RowEnumerator(IMapInfoDataReader recordSelector, EntityMaterializer entityFactory)
         {
             this.datareader = recordSelector;
             this.entityfactory = entityFactory;

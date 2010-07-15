@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess;
-using MapinfoWrapper.Embedding;
-using MapinfoWrapper.Mapinfo.Internals;
-using MapinfoWrapper.MapOperations;
-using MapinfoWrapper.UI;
+using MapInfo.Wrapper.Core;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.DataAccess;
+using MapInfo.Wrapper.DataAccess.LINQ;
+using MapInfo.Wrapper.Embedding;
+using MapInfo.Wrapper.Exceptions;
+using MapInfo.Wrapper.MapOperations;
+using MapInfo.Wrapper.UI;
 using Microsoft.Win32;
-using MapinfoWrapper.DataAccess.LINQ;
-using MapinfoWrapper.Core;
-using MapinfoWrapper.Exceptions;
 using System.Runtime.InteropServices;
 
-namespace MapinfoWrapper.Mapinfo
+namespace MapInfo.Wrapper.Mapinfo
 {
-    public class MapinfoSession : IMapinfoWrapper
+    public class MapInfoSession : IMapInfoSession
     {
         private ButtonPadCollection buttonpads;
-        private readonly IMapinfoWrapper mapinfo;
+        private readonly IMapInfoWrapper map_info;
         private SystemInfo systeminfo;
         private TableCollection tables;
 
@@ -33,9 +32,9 @@ namespace MapinfoWrapper.Mapinfo
         public event EventHandler SessionEnded;
 
 
-        public MapinfoSession(IMapinfoWrapper wrapedInstance)
+        public MapInfoSession(IMapInfoWrapper wrapedInstance)
         {
-            this.mapinfo = wrapedInstance;
+            this.map_info = wrapedInstance;
             this.LoadOptions = null;
         }
 
@@ -111,16 +110,16 @@ namespace MapinfoWrapper.Mapinfo
         {
             get
             {
-                return this.mapinfo.Visible;
+                return this.map_info.Visible;
             }
             set
             {
-                this.mapinfo.Visible = value;
+                this.map_info.Visible = value;
             }
         }
 
         private IQueryProvider provider;
-        internal IQueryProvider MapinfoProvider
+        public IQueryProvider MapinfoProvider
         {
             get
             {
@@ -166,7 +165,7 @@ namespace MapinfoWrapper.Mapinfo
 
             try
             {
-                string value = this.mapinfo.Eval(commandString);
+                string value = this.map_info.Eval(commandString);
                 return value;
             }
             catch (COMException comex)
@@ -185,17 +184,17 @@ namespace MapinfoWrapper.Mapinfo
         {
             try
             {
-                string value = this.mapinfo.Eval(commandString);
+                string value = this.map_info.Eval(commandString);
 
-                if (this.mapinfo.LastErrorCode > 0)
+                if (this.map_info.LastErrorCode > 0)
                 {
-                    throw new MapinfoException(this.mapinfo.LastErrorMessage, null, this.mapinfo.LastErrorCode);
+                    throw new MapinfoException(this.map_info.LastErrorMessage, null, this.map_info.LastErrorCode);
                 }
                 return value;
             }
             catch (COMException comex)
             {
-                throw new MapinfoException(comex.Message, comex, this.mapinfo.LastErrorCode);
+                throw new MapinfoException(comex.Message, comex, this.map_info.LastErrorCode);
             }
         }
 
@@ -216,7 +215,7 @@ namespace MapinfoWrapper.Mapinfo
 
             try
             {
-                this.mapinfo.Do(commandString);
+                this.map_info.Do(commandString);
             }
             catch (COMException comex)
             {
@@ -236,16 +235,16 @@ namespace MapinfoWrapper.Mapinfo
 
             try
             {
-                this.mapinfo.Do(commandString);
+                this.map_info.Do(commandString);
 
-                if (this.mapinfo.LastErrorCode > 0)
+                if (this.map_info.LastErrorCode > 0)
                 {
-                    throw new MapinfoException(this.mapinfo.LastErrorMessage, null, this.mapinfo.LastErrorCode);
+                    throw new MapinfoException(this.map_info.LastErrorMessage, null, this.map_info.LastErrorCode);
                 }
             }
             catch (COMException comex)
             {
-                throw new MapinfoException(comex.Message, comex, this.mapinfo.LastErrorCode);
+                throw new MapinfoException(comex.Message, comex, this.map_info.LastErrorCode);
             }
             
         }
@@ -256,7 +255,7 @@ namespace MapinfoWrapper.Mapinfo
         /// <returns></returns>
         public object GetUnderlyingMapinfoInstance()
         {
-            return this.mapinfo.GetUnderlyingMapinfoInstance();
+            return this.map_info.GetUnderlyingMapinfoInstance();
         }
 
         /// <summary>
@@ -277,11 +276,16 @@ namespace MapinfoWrapper.Mapinfo
         public void CloseMapinfo()
         {
             this.Do("End Mapinfo");
-            Marshal.ReleaseComObject(this.mapinfo.GetUnderlyingMapinfoInstance());
+            Marshal.ReleaseComObject(this.map_info.GetUnderlyingMapinfoInstance());
             GC.Collect();
 
             if (this.SessionEnded != null)
                 this.SessionEnded(this,EventArgs.Empty);
+        }
+
+        public Query CreateQuery(string querystring)
+        {
+            return new Query(this, querystring);
         }
 
         /// <summary>
@@ -308,16 +312,16 @@ namespace MapinfoWrapper.Mapinfo
         }
 
         /// <summary>
-        /// Creates a new instance of Mapinfo and returns a <see cref="MapinfoSession"/>
+        /// Creates a new instance of Mapinfo and returns a <see cref="MapInfoSession"/>
         /// which contains the instance. 
         /// <para>The returned objet can be passed into objects and
         /// methods that need it in the MapinfoWrapper API.</para>
         /// </summary>
-        /// <returns>A new <see cref="COMMapinfo"/> containing the running instance of Mapinfo.</returns>
-        public static MapinfoSession CreateMapInfoInstance()
+        /// <returns>A new <see cref="ComMapInfo"/> containing the running instance of Mapinfo.</returns>
+        public static IMapInfoSession CreateMapInfoInstance()
         {
-            IMapinfoWrapper mapinfo = COMMapinfo.CreateMapInfoInstance();
-            MapinfoSession session = new MapinfoSession(mapinfo);
+            IMapInfoWrapper mapinfo = ComMapInfo.CreateMapInfoInstance();
+            MapInfoSession session = new MapInfoSession(mapinfo);
             if (SessionCreated != null)
                 SessionCreated(session,EventArgs.Empty);
             return session;
@@ -329,9 +333,9 @@ namespace MapinfoWrapper.Mapinfo
         /// the miadm.dll would.
         /// </summary>
         /// <returns></returns>
-        public static MapinfoSession GetLoadedInstance()
+        public static IMapInfoSession GetLoadedInstance()
         {
-            return new MapinfoSession(MapBasicInvokedMapInfo.CreateMapInfoFromInstance());
+            return new MapInfoSession(MapBasicInvokedMapInfo.CreateMapInfoFromInstance());
         }
 
         /// <summary>
@@ -339,7 +343,7 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         public int LastErrorCode
         {
-            get { return this.mapinfo.LastErrorCode; }
+            get { return this.map_info.LastErrorCode; }
         }
 
         /// <summary>
@@ -347,17 +351,17 @@ namespace MapinfoWrapper.Mapinfo
         /// </summary>
         public string LastErrorMessage
         {
-            get { return this.mapinfo.LastErrorMessage; }
+            get { return this.map_info.LastErrorMessage; }
         }
 
         /// <summary>
         /// Registers a object as a callback object for MapInfo.
         /// </summary>
         /// <param name="obj">The object to set as the MapInfo callback object, the object must use the <see cref="ComVisibleAttribute"/> in order to recive updates from
-        /// MapInfo.  The base class <see cref=""/>is included with the wrapper that provides basic events from Map</param>
+        /// MapInfo.  The base class <see cref="MapInfoCallback"/>is included with the wrapper that provides basic events from Map</param>
         public void RegisterCallback(object obj)
         {
-            this.mapinfo.RegisterCallback(obj);
+            this.map_info.RegisterCallback(obj);
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
-using MapinfoWrapper.Core.Extensions;
-using MapinfoWrapper.DataAccess;
+using MapInfo.Wrapper.Core.Extensions;
+using MapInfo.Wrapper.DataAccess;
 
-namespace MapinfoWrapper.CommandBuilders
+
+namespace MapInfo.Wrapper.CommandBuilders
 {
     /// <summary>
     /// Contains methods for constructing a the Open Table mapinfo command string.

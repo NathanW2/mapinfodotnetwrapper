@@ -2,9 +2,10 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using MapinfoWrapper.DataAccess.RowOperations;
+using MapInfo.Wrapper.DataAccess.Row;
 
-namespace MapinfoWrapper.DataAccess.LINQ.SQL
+
+namespace MapInfo.Wrapper.DataAccess.LINQ.SQL
 {
     internal class ColumnProjector : ExpressionVisitor
     {
@@ -16,7 +17,7 @@ namespace MapinfoWrapper.DataAccess.LINQ.SQL
         {
             if (getvaluemethodinfo == null)
             {
-                getvaluemethodinfo = typeof(IDataReader).GetMethod("Get",new Type[] {typeof(string)});
+                getvaluemethodinfo = typeof(IMapInfoDataReader).GetMethod("Get",new Type[] {typeof(string)});
             }
         }
 

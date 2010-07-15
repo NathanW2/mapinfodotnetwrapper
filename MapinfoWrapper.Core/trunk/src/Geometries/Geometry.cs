@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-namespace MapinfoWrapper.Geometries
+
+namespace MapInfo.Wrapper.Geometries
 {
     public abstract class Geometry
     {
